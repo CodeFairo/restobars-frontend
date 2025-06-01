@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Registrar Restaurante</h2>
+<form [formGroup]="form" (ngSubmit)="registrar()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descripción</mat-label>
+    <input matInput formControlName="description" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Logo URL</mat-label>
+    <input matInput formControlName="logoUrl" />
+  </mat-form-field>
+
+  <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit">Registrar</button>
+  </div>
+</form>

@@ -1,0 +1,31 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer mode="side" [opened]="!isCollapsed" class="sidenav" fixedInViewport>
+    <mat-toolbar color="primary">Menú</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard">Dashboard</a>
+      <a mat-list-item routerLink="/ordenes">Órdenes</a>
+      <a mat-list-item routerLink="/productos">Productos</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="topbar">
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">RestauranteApp</span>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon> Perfil
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>Mi cuenta</button>
+        <button mat-menu-item (click)="cerrarSesion()">Cerrar sesión</button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

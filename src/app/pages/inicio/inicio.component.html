@@ -1,0 +1,62 @@
+<div class="card-container">
+  <mat-card>
+    
+    <mat-card-header>
+      <mat-card-title>Lista de Restaurantes</mat-card-title>
+    </mat-card-header>
+    <div class="button-container-left">
+      <button mat-raised-button color="accent" (click)="registrarRestaurante()">
+        Registrar tu restaurante
+      </button>
+    </div>
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="listaRestaurante" matSort class="mat-elevation-z8">
+
+          <!-- Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <!-- Descripción -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+
+                  <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef> Categoría </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantityInventory">
+          <th mat-header-cell *matHeaderCellDef> Cantidad Inventario </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+          <!-- Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="warn" (click)="eliminarProducto(element)">Eliminar</button>
+              <button mat-button color="primary" (click)="cargarEnPantallaUnProducto(element)">Actualizar</button>
+              <button mat-button color="primary" (click)="abrirDialogoCargarMenu(element.id)">Subir Carta</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+
+  </mat-card>
+</div>

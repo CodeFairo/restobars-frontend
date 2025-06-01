@@ -1,0 +1,14 @@
+<h2>Subir menú del restaurante</h2>
+
+<input type="file" (change)="onFileSelected($event)" accept="image/*" />
+<button mat-raised-button color="primary" (click)="upload()" [disabled]="!file || uploadInProgress">
+  {{ uploadInProgress ? 'Subiendo...' : 'Subir y generar QR' }}
+</button>
+<!--
+<div *ngIf="qrReady">
+  <p>¡URL del menú cargada!</p>
+  <a [href]="uploadedUrl" target="_blank">{{ uploadedUrl }}</a>
+  <qr-code [value]="uploadedUrl" size="200" errorCorrectionLevel="M"></qr-code>
+</div>-->
+
+<button mat-button (click)="cerrar()">Cerrar</button>
