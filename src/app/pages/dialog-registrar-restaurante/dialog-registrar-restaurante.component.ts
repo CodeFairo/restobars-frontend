@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { RestauranteService } from '../../services/restobar.service';
+import { RestobarService } from '../../services/restobar.service';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dialog.component';
@@ -26,7 +26,7 @@ import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dia
 export class DialogRegistrarRestauranteComponent {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<DialogRegistrarRestauranteComponent>);
-  private restauranteService = inject(RestauranteService);
+  private restobarService = inject(RestobarService);
   private authService = inject(AuthService); // Inyectamos AuthService
   private userId = this.authService.getUserId() ?? '';
 
@@ -59,7 +59,7 @@ export class DialogRegistrarRestauranteComponent {
 
         this.alert.loading('Registrando restaurante...');
 
-        this.restauranteService.registrar(nuevoRestaurante).subscribe({
+        this.restobarService.registrar(nuevoRestaurante).subscribe({
           next: () => {
             this.alert.close(); // Cierra la alerta de carga
             this.alert.success('Registro exitoso', 'El restaurante fue registrado correctamente');

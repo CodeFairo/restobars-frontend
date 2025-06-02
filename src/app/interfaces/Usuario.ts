@@ -4,7 +4,7 @@ export interface Usuario{
 }
 
 export interface UsuarioRegistro{
-     nombre:string,
+     fullName:string,
      email:string,
      password:string,
      rol:string

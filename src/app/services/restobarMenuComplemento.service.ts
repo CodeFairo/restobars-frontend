@@ -20,7 +20,7 @@ export class RestobarMenuComplementoService {
   }
 
   create(dto: RestobarMenuComplemento): Observable<RestobarMenuComplemento> {
-    return this.http.post<RestobarMenuComplemento>(this.baseUrl, dto)
+    return this.http.post<RestobarMenuComplemento>(`${this.baseUrl}api/restobarcomplemento`, dto)
       .pipe(catchError(this.handleError));
   }
 

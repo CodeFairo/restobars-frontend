@@ -1,4 +1,4 @@
-export interface Restaurante {
+export interface Restobar {
      id: string,
      userId: string,
      name: string,
@@ -6,4 +6,4 @@ export interface Restaurante {
      logoUrl:string
 }
 
-export interface ResponseRestaurante { restaurante: Restaurante[]; }
+export interface ResponseRestobar { restobar: Restobar[]; }

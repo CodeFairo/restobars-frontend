@@ -35,10 +35,20 @@ export class MainLayoutComponent {
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
+  
+  miDashboard(){
+    this.router.navigate(['miDashboard']);  
+  }
+
+  misRestobars(){
+    this.router.navigate(['misRestobar']);
+  }
 
   cerrarSesion(){
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+          location.reload();
+        });
   }
 
 }

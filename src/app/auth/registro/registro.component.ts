@@ -25,18 +25,17 @@ export class RegistroComponent {
      public formBuild = inject(FormBuilder);
 
      public formRegistro: FormGroup = this.formBuild.group({
-          nombre: ['',Validators.required],
+          fullName: ['',Validators.required],
           email: ['',Validators.required],
           password: ['',Validators.required],
           rol: ['',Validators.required],
      })
 
      registrarse(){
-          debugger
           if(this.formRegistro.invalid) return;
 
           const objeto:UsuarioRegistro = {
-               nombre: this.formRegistro.value.nombre,
+               fullName: this.formRegistro.value.nombre,
                email: this.formRegistro.value.email,
                password: this.formRegistro.value.password,
                rol: this.formRegistro.value.rol
@@ -51,6 +50,7 @@ export class RegistroComponent {
           })
 
      }
+
 
      volver(){
           this.router.navigate([''])

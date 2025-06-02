@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   // Ignorar login y creación de usuario
-  if (req.url.includes('login') || req.url.includes('createUser')) {
+  if (req.url.includes('login') || req.url.includes('register')) {
     return next(req);
   }
 
@@ -27,7 +27,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       if (err.status === 401) {
         // Token inválido o expirado
         authService.logout();
-        router.navigate(['/login']);
+        //router.navigate(['/login']);
+        router.navigate(['/login']).then(() => {
+          location.reload();
+        });
       }
       return throwError(() => err);
     })

@@ -16,11 +16,15 @@
                     <div class="flex">
                          <button mat-flat-button color="primary" (click)="iniciarSesion()">Iniciar Sesion</button>
                          <button mat-flat-button color="warn" (click)="registrarse()" style="margin-left:8px">Registrarse</button>
+                         <button mat-flat-button color="warn" (click)="volver()" style="margin-left:8px">Volver</button>
+                         
                     </div>
-                    <!--<div class="login-buttons">
-                         <button mat-raised-button color="primary" (click)="loginWithGoogle()">Login con Google</button>
-                         <button mat-raised-button color="accent" (click)="loginWithFacebook()">Login con Facebook</button>
-                    </div>-->
+                    <div class="google-login">
+                         <button mat-stroked-button color="accent" (click)="loginConGoogle()">
+                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20" style="margin-right:8px;">
+                         Ingresar con Google
+                         </button>
+                    </div>
 
                </form>
           </mat-card-content>

@@ -17,8 +17,8 @@ import { ProductoService } from '../../services/producto.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Producto } from '../../interfaces/Producto';
 import { ReporteService } from '../../services/reporte.service';
-import { RestauranteService } from '../../services/restobar.service';
-import { Restaurante } from '../../interfaces/Restaurante';
+import { RestobarService } from '../../services/restobar.service';
+import { Restobar } from '../../interfaces/Restobar';
 import { DialogRegistrarRestauranteComponent } from '../dialog-registrar-restaurante/dialog-registrar-restaurante.component';
 import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dialog.component';
 
@@ -45,8 +45,8 @@ export class InicioComponent implements OnInit {
      public listaProducto: Producto[] = [];     
      public displayedColumns: string[] = ['name', 'description','actions'];
 
-     private restaurateServicio = inject(RestauranteService);
-     public listaRestaurante: Restaurante[] = [];
+     private restobarService = inject(RestobarService);
+     public listaRestaurante: Restobar[] = [];
 
      public productoForm: FormGroup;
      public productoFormActualizar: FormGroup;
@@ -78,7 +78,7 @@ export class InicioComponent implements OnInit {
      }
      
      listarRestaurantes(){
-          this.restaurateServicio.lista().subscribe({
+          this.restobarService.lista().subscribe({
                next: (data) => {
                     this.listaRestaurante = data;
                },

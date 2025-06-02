@@ -82,6 +82,7 @@ export class AuthService {
     localStorage.removeItem(this.USERNAME_KEY);
     localStorage.removeItem(this.ROLE_KEY);
     localStorage.removeItem(this.REFRESH_TOKEN);
+    
   }
 
   async refreshToken(): Promise<void> {

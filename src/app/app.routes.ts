@@ -6,6 +6,7 @@ import { authGuard } from './custom/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { LandingComponent } from './landing/landing/landing.component';
+import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent ,pathMatch: 'full'},
@@ -17,7 +18,8 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'inicio', component: InicioComponent }
+      { path: 'miDashboard', component: UserDashboardComponent },
+      { path: 'misRestobar', component: InicioComponent }
       // Puedes agregar más rutas privadas aquí
     ]
   },

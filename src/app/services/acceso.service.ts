@@ -18,7 +18,7 @@ export class AccesoService {
      constructor() { }
 
      registrarse(objeto: UsuarioRegistro): Observable<ResponseAcceso> {
-          return this.http.post<ResponseAcceso>(`${appsettings.apiUrlBAse}auth/register`, objeto)
+          return this.http.post<ResponseAcceso>(`${appsettings.apiUrlBAse}api/users/register`, objeto)
      }
 
      login(objeto: Login): Observable<ResponseAcceso> {

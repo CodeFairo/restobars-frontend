@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     
     // Solo este va dentro de importProvidersFrom porque es un módulo Angular clásico
-    importProvidersFrom(HttpClientModule), provideFirebaseApp(() => initializeApp({"projectId":"restobarsonline","appId":"1:232399103085:web:dabbcb1215194ff79a8b64","storageBucket":"restobarsonline.firebasestorage.app","apiKey":"AIzaSyDQT8-g_vpMRjSoSTV4OyWwXiQ7z3Dqyu8","authDomain":"restobarsonline.firebaseapp.com","messagingSenderId":"232399103085","measurementId":"G-LYMZ14DWWX"})), provideStorage(() => getStorage())
-
+    importProvidersFrom(HttpClientModule), 
+      provideFirebaseApp(() => initializeApp(environment.firebase)), provideStorage(() => getStorage()), provideAuth(() => getAuth())
+      
   ]
 };

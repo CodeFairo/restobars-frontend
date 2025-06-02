@@ -1,0 +1,21 @@
+<h2>Visualizar menú del restaurante</h2>
+
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Selecciona un restaurante</mat-label>
+  <mat-select [(value)]="selectedRestobarId" (selectionChange)="onRestobarSelected()">
+    <mat-option *ngFor="let restobar of restobares" [value]="restobar.id">
+      {{ restobar.nombre }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div *ngIf="loading">Cargando menú...</div>
+
+<div *ngIf="urlMenu && !loading">
+  <p><strong>URL del menú:</strong> <a [href]="urlMenu" target="_blank">{{ urlMenu }}</a></p>
+  <qr-code [value]="urlMenu" size="200" errorCorrectionLevel="M"></qr-code>
+</div>
+
+<div *ngIf="!urlMenu && selectedRestobarId && !loading">
+  <p>No hay menú disponible para este restaurante.</p>
+</div>
