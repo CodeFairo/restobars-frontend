@@ -7,6 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { LandingComponent } from './landing/landing/landing.component';
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
+import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent ,pathMatch: 'full'},
@@ -19,7 +20,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'miDashboard', component: UserDashboardComponent },
-      { path: 'misRestobar', component: InicioComponent }
+      { path: 'misRestobar', component: InicioComponent },
+      { path: 'compartirCarta', component: CompartirCartamenuComponent }
+      
       // Puedes agregar más rutas privadas aquí
     ]
   },

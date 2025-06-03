@@ -41,7 +41,11 @@ export class MainLayoutComponent {
   }
 
   misRestobars(){
-    this.router.navigate(['misRestobar']);
+    this.router.navigate(['misRestobar']);  
+  }
+
+  compartirCarta(){
+    this.router.navigate(['compartirCarta']);
   }
 
   cerrarSesion(){

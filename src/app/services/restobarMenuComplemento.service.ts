@@ -15,7 +15,7 @@ export class RestobarMenuComplementoService {
   constructor(private http: HttpClient) {}
 
   getByRestobarId(restobarId: number): Observable<RestobarMenuComplemento> {
-    return this.http.get<RestobarMenuComplemento>(`${this.baseUrl}/restobarid/${restobarId}`)
+    return this.http.get<RestobarMenuComplemento>(`${this.baseUrl}api/restobarcomplemento/restobarid/${restobarId}`)
       .pipe(catchError(this.handleError));
   }
 
