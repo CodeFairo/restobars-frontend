@@ -86,14 +86,17 @@ export class LoginComponent {
                     throw new Error('Faltan datos del usuario de Google');
                }
 
+               const esAdmin = await this.alert.confirm('Importante', '¿Eres un administrador del restaurante?');
+               const rolElegido = esAdmin ? 'RESTAURANTE' : 'TRABAJADOR';
+
                const passwordGenerada = user.uid;
                const nuevoUsuario: UsuarioRegistro = {
                     fullName: user.displayName,
                     email: user.email,
                     password: passwordGenerada,
-                    rol: 'USER'
+                    rol: rolElegido
                };
-
+               
                try {
                     await firstValueFrom(this.accesoService.registrarse(nuevoUsuario));
                } catch (error: any) {
