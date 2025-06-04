@@ -11,14 +11,17 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-button color="primary" (click)="abrirDialogoCargarMenu()">Subir Carta</button>
-
-  <div *ngIf="loading" class="loading-text">
-    Cargando menú...
+  <div *ngIf="selectedRestobarId && !loading" class="loading-text">
+    <button mat-raised-button color="primary" (click)="abrirDialogoCargarMenu()">Cargar nueva carta</button>
   </div>
 
+  <!-- <div *ngIf="loading" class="loading-text">
+    Cargando menú...
+  </div>-->
+
   <div *ngIf="urlMenu && !loading" class="menu-content">
-    <!-- esta seccion es para reenderizar la carta en el mismo componete
+    
+    <!-- esta seccion es para reenderizar la carta en el mismo componente
   <h3>Vista previa del menú</h3>
   <ng-container *ngIf="urlMenu.endsWith('.pdf'); else imagePreview">
     <iframe [src]="urlMenu | safeUrl" width="100%" height="500px"></iframe>

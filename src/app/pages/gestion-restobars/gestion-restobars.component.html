@@ -25,34 +25,18 @@
           <!-- Descripción -->
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
-            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.estaActivo }}</td>
           </ng-container>
-
-          <!-- Precio -->
-          <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef>Precio</th>
-            <td mat-cell *matCellDef="let element">{{ element.price }}</td>
-          </ng-container>
-
-          <!-- Categoría -->
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef>Categoría</th>
-            <td mat-cell *matCellDef="let element">{{ element.category }}</td>
-          </ng-container>
-
-          <!-- Inventario -->
-          <ng-container matColumnDef="quantityInventory">
-            <th mat-header-cell *matHeaderCellDef>Cantidad Inventario</th>
-            <td mat-cell *matCellDef="let element">{{ element.quantityInventory }}</td>
-          </ng-container>
-
+        
           <!-- Acciones -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
               <div class="action-buttons">
-                <button mat-button color="warn" (click)="eliminarProducto(element)">Eliminar</button>
-                <button mat-button color="primary" (click)="cargarEnPantallaUnProducto(element)">Actualizar</button>
+                <button mat-button color="warn" (click)="inactivarActivar(element)">
+                  {{ element.estaActivo ? 'Inactivar' : 'Activar' }}
+                </button>
+                <button mat-button color="primary" (click)="actualizarRestaurante(element)">Actualizar</button>
               </div>
             </td>
           </ng-container>

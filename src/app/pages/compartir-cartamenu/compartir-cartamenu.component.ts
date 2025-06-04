@@ -34,7 +34,6 @@ export class CompartirCartamenuComponent implements OnInit{
   selectedRestobarId: number | null = null;
   urlMenu: string = '';
   loading = false;
-  restobarId: number | undefined;
 
   constructor(
     private restobarService: RestobarService,
@@ -53,13 +52,11 @@ export class CompartirCartamenuComponent implements OnInit{
     if (!this.selectedRestobarId) return;
     this.loading = true;
     this.urlMenu = '';
-    this.restobarId;
 
     this.menuService.getByRestobarId(this.selectedRestobarId).subscribe({
       next: (res: RestobarMenuComplemento | null) => {
         this.urlMenu = res?.urlMenu || '';
         this.loading = false;
-        this.restobarId = res?.restobarId;
       },
       error: (err) => {
         console.error('Error obteniendo menú', err);
@@ -67,12 +64,11 @@ export class CompartirCartamenuComponent implements OnInit{
       }
     });
   }
-
+ 
   abrirDialogoCargarMenu() {
-    var restobarId = this.restobarId;
-      this.dialog.open(UploadMenuDialogComponent, {
-            data: { restobarId }
-      });
+    this.dialog.open(UploadMenuDialogComponent, {
+      data: { restobarId: this.selectedRestobarId }
+    });
   }    
 
   copyLink(): void {
