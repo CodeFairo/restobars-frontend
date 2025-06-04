@@ -1,34 +1,26 @@
 .card-container {
-  margin: auto;
-  margin-top: 10px;
-  width: 90%;
-}
-
-.form-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.form-field {
-  flex: 1;
-  min-width: 200px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
 .button-container {
-  width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
-.mat-elevation-z8 {
-  margin-top: 20px;
+.table-container {
+  overflow-x: auto;
 }
 
-.button-container-left {
+table {
+  width: 100%;
+}
+
+.action-buttons {
   display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   justify-content: flex-start;
-  padding: 0 16px 8px 16px;
 }

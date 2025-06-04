@@ -20,7 +20,7 @@ import { ReporteService } from '../../services/reporte.service';
 import { RestobarService } from '../../services/restobar.service';
 import { Restobar } from '../../interfaces/Restobar';
 import { DialogRegistrarRestauranteComponent } from '../dialog-registrar-restaurante/dialog-registrar-restaurante.component';
-import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dialog.component';
+
 
 @Component({
      selector: 'app-inicio',
@@ -28,7 +28,7 @@ import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dia
      imports: [CommonModule, MatFormFieldModule, 
           MatInputModule, MatSelectModule, 
           MatCardModule, MatTableModule, 
-          MatButtonModule, MatDialogModule, 
+          MatButtonModule, 
           ReactiveFormsModule, MatPaginatorModule,
           MatSortModule
      ],
@@ -100,12 +100,6 @@ export class InicioComponent implements OnInit {
                }
           });
      }
-
-     abrirDialogoCargarMenu(restobarId: number) {
-          this.dialog.open(UploadMenuDialogComponent, {
-               data: { restobarId }
-          });
-     }    
 
      listarProductos() {
           this.productoServicio.lista().subscribe({
