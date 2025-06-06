@@ -27,11 +27,18 @@ export class MainLayoutComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   isCollapsed = false;
+  isMobile = false;
 
   ngOnInit(): void {
-          
+    this.checkScreenWidth();
+    window.addEventListener('resize', () => this.checkScreenWidth());
   }
 
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 768;
+    this.isCollapsed = this.isMobile; // Oculta por defecto en móvil
+  }
+  
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }

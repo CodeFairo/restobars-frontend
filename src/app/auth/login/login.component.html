@@ -1,33 +1,43 @@
-<div class="card-container">
-     <mat-card>
+<div class="login-wrapper">
+     <div class="background-image"></div>
+     <mat-card class="login-card">
           <mat-card-header>
-               <mat-card-title>Iniciar Sesion</mat-card-title>
+               <mat-card-title>
+                    🍷 Bienvenido a GastroBar
+               </mat-card-title>
+               <mat-card-subtitle>
+                    Inicia sesión para continuar
+               </mat-card-subtitle>
           </mat-card-header>
+
           <mat-card-content>
-               <form class="form-custom" [formGroup]="formLogin">
-                    <mat-form-field class="input-custom">
-                         <mat-label>Correo</mat-label>
-                         <input matInput formControlName="email">
+               <form [formGroup]="formLogin" class="form-custom">
+                    <mat-form-field appearance="outline" class="full-width">
+                         <mat-label>Correo electrónico</mat-label>
+                         <input matInput formControlName="email" type="email" placeholder="ejemplo@correo.com">
                     </mat-form-field>
-                    <mat-form-field class="input-custom">
-                         <mat-label>Password</mat-label>
-                         <input type="password" matInput formControlName="password">
+
+                    <mat-form-field appearance="outline" class="full-width">
+                         <mat-label>Contraseña</mat-label>
+                         <input matInput formControlName="password" type="password" placeholder="••••••••">
                     </mat-form-field>
-                    <div class="flex">
-                         <button mat-flat-button color="primary" (click)="iniciarSesion()">Iniciar Sesion</button>
-                         <button mat-flat-button color="warn" (click)="registrarse()" style="margin-left:8px">Registrarse</button>
-                         <button mat-flat-button color="warn" (click)="volver()" style="margin-left:8px">Volver</button>
-                         
-                    </div>
-                    <div class="google-login">
-                         <button mat-stroked-button color="accent" (click)="loginConGoogle()">
-                         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20" style="margin-right:8px;">
-                         Ingresar con Google
-                         </button>
+
+                    <div class="button-group">
+                         <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+                         <button mat-stroked-button color="accent" (click)="registrarse()">Registrarse</button>
+                         <button mat-stroked-button color="warn" (click)="volver()">Volver</button>
                     </div>
 
+                    <div class="divider"><span>o</span></div>
+
+                    <div class="google-login">
+                         <button mat-stroked-button color="primary" (click)="loginConGoogle()">
+                              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
+                                   width="20" height="20">
+                              Ingresar con Google
+                         </button>
+                    </div>
                </form>
           </mat-card-content>
      </mat-card>
-
 </div>

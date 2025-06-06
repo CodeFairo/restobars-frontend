@@ -4,6 +4,7 @@ export interface Restobar {
      name: string,
      description: string,
      logoUrl:string
+     estaActivo:Boolean
 }
 
 export interface ResponseRestobar { restobar: Restobar[]; }

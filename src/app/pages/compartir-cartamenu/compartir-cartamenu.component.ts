@@ -8,10 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule, NgIf } from '@angular/common';
 import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { SafeUrlPipe } from '../../utils/safe-url.pipe';
 import { MatOptionModule } from '@angular/material/core';
+import { QrCodeComponent  } from 'ng-qrcode';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-compartir-cartamenu',
@@ -23,8 +23,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
-    SafeUrlPipe,
-    //UploadMenuDialogComponent,
+    QrCodeComponent,
+    
   ],
   templateUrl: './compartir-cartamenu.component.html',
   styleUrl: './compartir-cartamenu.component.css'
@@ -37,7 +37,8 @@ export class CompartirCartamenuComponent implements OnInit{
 
   constructor(
     private restobarService: RestobarService,
-    private menuService: RestobarMenuComplementoService
+    private menuService: RestobarMenuComplementoService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +64,12 @@ export class CompartirCartamenuComponent implements OnInit{
       }
     });
   }
+ 
+  abrirDialogoCargarMenu() {
+    this.dialog.open(UploadMenuDialogComponent, {
+      data: { restobarId: this.selectedRestobarId }
+    });
+  }    
 
   copyLink(): void {
     navigator.clipboard.writeText(this.urlMenu).then(() => {
@@ -70,15 +77,54 @@ export class CompartirCartamenuComponent implements OnInit{
     });
   }
 
-  downloadQR(): void {
-    const qrElement = document.getElementById('qr-code');
-    if (!qrElement) return;
-
-    html2canvas(qrElement).then((canvas) => {
-      const link = document.createElement('a');
-      link.download = 'menu-qr.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
+  verCartaMenu(): void {
+    window.open(this.urlMenu, '_blank');
   }
+
+downloadQR(): void {
+  const qrElement = document.getElementById('qr-code');
+  if (!qrElement) return;
+
+  html2canvas(qrElement, { backgroundColor: null }).then((canvas) => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const { data, width, height } = imgData;
+
+    let top = height, left = width, right = 0, bottom = 0;
+
+    // Detect non-transparent pixel bounds
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (y * width + x) * 4;
+        const alpha = data[idx + 3];
+        if (alpha > 0) {
+          if (x < left) left = x;
+          if (x > right) right = x;
+          if (y < top) top = y;
+          if (y > bottom) bottom = y;
+        }
+      }
+    }
+
+    const croppedWidth = right - left + 1;
+    const croppedHeight = bottom - top + 1;
+
+    // Create cropped canvas
+    const croppedCanvas = document.createElement('canvas');
+    croppedCanvas.width = croppedWidth;
+    croppedCanvas.height = croppedHeight;
+    const croppedCtx = croppedCanvas.getContext('2d');
+    if (!croppedCtx) return;
+
+    croppedCtx.putImageData(ctx.getImageData(left, top, croppedWidth, croppedHeight), 0, 0);
+
+    // Trigger download
+    const link = document.createElement('a');
+    link.download = 'menu-qr.png';
+    link.href = croppedCanvas.toDataURL();
+    link.click();
+  });
+}
 }

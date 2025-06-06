@@ -1,18 +1,82 @@
-.card-container {
+.login-wrapper {
+     position: relative;
+     height: 100vh;
      display: flex;
-     justify-content: center;/* Centrar horizontalmente */
-     
-     align-items: center; /* Centrar verticalmente */
-    
-     margin-top: 100px;
+     justify-content: center;
+     align-items: center;
+     overflow: hidden;
 }
 
+.background-image {
+     position: absolute;
+     top: 0;
+     left: 0;
+     height: 100%;
+     width: 100%;
+     background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+     background-size: cover;
+     background-position: center;
+     filter: blur(6px) brightness(0.7);
+     z-index: 1;
+}
+
+.login-card {
+     position: relative;
+     z-index: 2;
+     width: 100%;
+     max-width: 420px;
+     padding: 20px;
+     border-radius: 16px;
+     background-color: rgba(255, 248, 240, 0.95);
+     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
 
 .form-custom {
-     min-width: 150px;
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+}
+
+.full-width {
      width: 100%;
 }
 
-.input-custom {
-     width: 100%;
+.button-group {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+
+.google-login {
+     display: flex;
+     justify-content: center;
+     margin-top: 16px;
+
+     button img {
+          margin-right: 8px;
+     }
+}
+
+.divider {
+     text-align: center;
+     margin: 16px 0;
+     position: relative;
+
+     span {
+          background-color: rgba(255, 248, 240, 0.95);
+          padding: 0 10px;
+          position: relative;
+          z-index: 1;
+     }
+
+     &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: #ccc;
+          z-index: 0;
+     }
 }

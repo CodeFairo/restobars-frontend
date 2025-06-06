@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { InicioComponent } from './pages/inicio/inicio.component';
+import { InicioComponent } from './pages/gestion-restobars/gestion-restobars.component';
 import { authGuard } from './custom/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';

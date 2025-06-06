@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>Registrar Restaurante</h2>
+<h2 mat-dialog-title>{{ isEditMode ? 'Actualizar Restaurante' : 'Registrar Restaurante' }}</h2>
+
 <form [formGroup]="form" (ngSubmit)="registrar()">
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Nombre</mat-label>
@@ -16,7 +17,9 @@
   </mat-form-field>
 
   <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
-    <button mat-button (click)="cancelar()">Cancelar</button>
-    <button mat-flat-button color="primary" type="submit">Registrar</button>
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit">
+      {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+    </button>
   </div>
 </form>
