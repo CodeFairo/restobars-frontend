@@ -20,5 +20,9 @@ export const environment = {
   },
   uploadConfig: {
     maxFileSizeMB: 3  // Tamaño máximo de archivo en megabytes
+  },
+  googleMapsApiKey:{
+    googleMapsApiKey: 'AIzaSyBob0Mi6DZYkb1CZtG1Fo4Klg_FwqCVoiA',
   }
+  
 };

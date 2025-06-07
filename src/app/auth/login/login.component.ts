@@ -58,7 +58,7 @@ export class LoginComponent {
 
                     if (data?.accessToken && data.accessToken.split('.').length === 3) {
                          this.authService.saveSession(data.accessToken, data.refreshToken);
-                         this.router.navigate(['miDashboard']);
+                         this.router.navigate(['restobarDashboard']);
                     } else {
                          this.alert.error('Credenciales incorrectas', 'Verifica tu correo y contraseña');
                     }
@@ -113,12 +113,11 @@ export class LoginComponent {
 
                this.accesoService.login(login).subscribe({
                     next: (data) => {
-                         console.log(data);
                          this.alert.close(); // Cierra la alerta de carga
 
                          if (data?.accessToken && data.accessToken.split('.').length === 3) {
                               this.authService.saveSession(data.accessToken, data.refreshToken);
-                              this.router.navigate(['miDashboard']);
+                              this.router.navigate(['restobarDashboard']);
                          } else {
                               this.alert.error('Credenciales incorrectas', 'Verifica tu correo y contraseña');
                          }

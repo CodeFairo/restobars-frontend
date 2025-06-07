@@ -5,10 +5,10 @@ import { Component } from '@angular/core';
   selector: 'app-user-dashboard',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './user-dashboard.component.html',
-  styleUrl: './user-dashboard.component.css'
+  templateUrl: './restobar-dashboard.component.html',
+  styleUrl: './restobar-dashboard.component.css'
 })
-export class UserDashboardComponent {
+export class RestobarDashboardComponent {
 
   userName = 'Juan Pérez'; // Esto se debe extraer del token o backend
   reservas = [

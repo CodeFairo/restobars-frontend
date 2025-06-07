@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatCardModule } from '@angular/material/card'
-import { MatTableModule } from '@angular/material/table'
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -19,42 +19,58 @@ import { Restobar } from '../../interfaces/Restobar';
 import { DialogRegistrarRestauranteComponent } from '../dialog-registrar-restaurante/dialog-registrar-restaurante.component';
 import { AlertService } from '../../services/alert.service';
 
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
      selector: 'app-inicio',
      standalone: true,
-     imports: [CommonModule, MatFormFieldModule, 
-          MatInputModule, MatSelectModule, 
-          MatCardModule, MatTableModule, 
-          MatButtonModule, 
+     imports: [
+          CommonModule, MatFormFieldModule,
+          MatInputModule, MatSelectModule,
+          MatCardModule, MatTableModule,
+          MatButtonModule,MatIconModule,
           ReactiveFormsModule, MatPaginatorModule,
-          MatSortModule
-     ],
+          MatSortModule,MatTooltipModule
+,     ],
      templateUrl: './gestion-restobars.component.html',
      styleUrls: ['./gestion-restobars.component.css'],
 })
-
-export class InicioComponent implements OnInit {
+export class InicioComponent implements OnInit, OnDestroy {
      public isAdminLoggedIn = false;
-     
-     private reporteServicio = inject(ReporteService);
-     public displayedColumns: string[] = ['name', 'description','actions'];
 
+     private reporteServicio = inject(ReporteService);
      private restobarService = inject(RestobarService);
+     private breakpointObserver = inject(BreakpointObserver);
+     private dialog = inject(MatDialog);
+     private alert = inject(AlertService);
+
      public listaRestaurante: Restobar[] = [];
 
+     public displayedColumns: string[] = ['name', 'description', 'actions'];
+     private breakpointSub!: Subscription;
 
      ngOnInit(): void {
-          this.listaRestaurante = [];          
+          this.listarRestaurantes();
+
+          this.breakpointSub = this.breakpointObserver.observe([
+               Breakpoints.XSmall,
+               Breakpoints.Small
+          ]).subscribe(result => {
+               if (result.matches) {
+                    this.displayedColumns = ['name', 'actions']; // Oculta description en pantallas pequeñas
+               } else {
+                    this.displayedColumns = ['name', 'description', 'actions']; // Muestra todas en pantallas más grandes
+               }
+          });
      }
 
-     constructor(
-          private dialog: MatDialog,
-          private alert: AlertService,
-     ) {       
-          this.listarRestaurantes();
+     ngOnDestroy(): void {
+          this.breakpointSub.unsubscribe();
      }
-     
+
      listarRestaurantes(){
           this.restobarService.lista().subscribe({
                next: (data) => {
@@ -68,7 +84,8 @@ export class InicioComponent implements OnInit {
 
      registrarRestaurante() {
           const dialogRef = this.dialog.open(DialogRegistrarRestauranteComponent, {
-               width: '400px'
+               width: '90vw',
+               maxWidth: '50vw'
           });
 
           dialogRef.afterClosed().subscribe(result => {
@@ -78,10 +95,15 @@ export class InicioComponent implements OnInit {
           });
      }
 
-     actualizarRestaurante(restobar: Restobar) {
+     gestionarRestaurante(restobar: Restobar) {
+           if (!restobar.estaActivo) {
+               this.alert.warning('Alerta!','El restaurante está inactivo.');
+               return;
+          }
           const dialogRef = this.dialog.open(DialogRegistrarRestauranteComponent, {
-               width: '400px',
-               data: restobar // Le pasamos el objeto
+               width: '90vw',
+               maxWidth: '50vw',
+               data: restobar
           });
 
           dialogRef.afterClosed().subscribe(result => {
@@ -91,11 +113,11 @@ export class InicioComponent implements OnInit {
           });
      }
 
-     inactivar(id: number) {
+     /*inactivar(id: number) {
           this.alert.confirm('¿Eliminar restaurante?', 'Esta acción no se puede deshacer').then(result => {
                if (!result.isConfirmed) return;
 
-               this.alert.loading('Eliminando restaurante...'+id);
+               this.alert.loading('Eliminando restaurante...' + id);
                this.restobarService.eliminar(id).subscribe({
                     next: () => {
                          this.alert.close();
@@ -109,7 +131,7 @@ export class InicioComponent implements OnInit {
                     }
                });
           });
-     }
+     }*/
 
      inactivarActivar(element: any) {
           const nuevoEstado = !element.estaActivo;
@@ -142,21 +164,20 @@ export class InicioComponent implements OnInit {
 
      generarReporte() {
           this.reporteServicio.generarReporte().subscribe({
-            next: (data: Blob) => {
-              const blob = new Blob([data], { type: 'application/pdf' });
-              const url = window.URL.createObjectURL(blob);
-        
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = 'reporte_inventario_bajo.pdf';
-              a.click();
-        
-              window.URL.revokeObjectURL(url);
-            },
-            error: (err) => {
-              console.error('Error al generar el reporte:', err);
-            }
-          });
-        }
+               next: (data: Blob) => {
+                    const blob = new Blob([data], { type: 'application/pdf' });
+                    const url = window.URL.createObjectURL(blob);
 
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'reporte_inventario_bajo.pdf';
+                    a.click();
+
+                    window.URL.revokeObjectURL(url);
+               },
+               error: (err) => {
+                    console.error('Error al generar el reporte:', err);
+               }
+          });
+     }
 }

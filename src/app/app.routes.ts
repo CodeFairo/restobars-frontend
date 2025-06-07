@@ -6,7 +6,7 @@ import { authGuard } from './custom/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { LandingComponent } from './landing/landing/landing.component';
-import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
+import { RestobarDashboardComponent } from './pages/restobar-dashboard/restobar-dashboard.component';
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 
 export const routes: Routes = [
@@ -19,7 +19,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'miDashboard', component: UserDashboardComponent },
+      { path: 'restobarDashboard', component: RestobarDashboardComponent },
       { path: 'misRestobar', component: InicioComponent },
       { path: 'compartirCarta', component: CompartirCartamenuComponent }
       

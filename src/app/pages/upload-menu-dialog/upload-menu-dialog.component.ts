@@ -62,7 +62,7 @@ export class UploadMenuDialogComponent {
     if (!this.file) return;
 
     const extension = this.file.name.split('.').pop()?.toLowerCase() ?? 'pdf';
-    const filePath = `menus/restobar-${this.data.restobarId}/menu.${extension}`;
+    const filePath = `restobars/restobar-${this.data.restobarId}/menu.${extension}`;
 
     this.alert.loading('Cargando la carta...');
     try {

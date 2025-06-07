@@ -3,7 +3,10 @@ export interface Restobar {
      userId: string,
      name: string,
      description: string,
-     logoUrl:string
+     direccion: string,
+     latitud: string,
+     longitud: string,
+     logoUrl:string,
      estaActivo:Boolean
 }
 

@@ -43,8 +43,8 @@ export class MainLayoutComponent {
     this.isCollapsed = !this.isCollapsed;
   }
   
-  miDashboard(){
-    this.router.navigate(['miDashboard']);  
+  restobarDashboard(){
+    this.router.navigate(['restobarDashboard']);  
   }
 
   misRestobars(){

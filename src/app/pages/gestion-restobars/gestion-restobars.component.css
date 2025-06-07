@@ -4,18 +4,18 @@
   padding: 24px;
 }
 
+table {
+  width: 100%;
+}
 .button-container {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 16px;
 }
-
-.table-container {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
+@media (max-width: 599px) {
+  .button-container {
+    justify-content: center;
+  }
 }
 
 .action-buttons {
@@ -23,4 +23,35 @@ table {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-start;
+}
+
+.full-width-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-card {
+  margin: 16px;
+  border-radius: 12px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-activo {
+  color: #4caf50; /* verde */
+}
+
+.icon-inactivo {
+  color: #f44336; /* rojo */
+}
+.mat-column-actions {
+  text-align: center;
 }

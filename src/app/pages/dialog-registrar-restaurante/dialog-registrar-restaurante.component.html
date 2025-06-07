@@ -1,25 +1,43 @@
-<h2 mat-dialog-title>{{ isEditMode ? 'Actualizar Restaurante' : 'Registrar Restaurante' }}</h2>
+<div class="dialog-container">
+  <h2 mat-dialog-title class="dialog-title">
+    {{ isEditMode ? 'Actualizar Restaurante' : 'Registrar Restaurante' }}
+  </h2>
 
-<form [formGroup]="form" (ngSubmit)="registrar()">
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Nombre</mat-label>
-    <input matInput formControlName="name" />
-  </mat-form-field>
+  <form [formGroup]="form" (ngSubmit)="registrar()" class="dialog-form">
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Descripción</mat-label>
-    <input matInput formControlName="description" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Logo URL</mat-label>
-    <input matInput formControlName="logoUrl" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="description" />
+    </mat-form-field>
 
-  <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
-    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
-    <button mat-flat-button color="primary" type="submit">
-      {{ isEditMode ? 'Actualizar' : 'Registrar' }}
-    </button>
-  </div>
-</form>
+    <!-- Mapa -->
+    <div id="map" class="map-container"></div>
+
+    <!-- Input para mostrar la dirección -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Dirección seleccionada</mat-label>
+      <input matInput formControlName="direccion" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Logo URL</mat-label>
+      <input matInput formControlName="logoUrl" />
+    </mat-form-field>
+
+    <div class="button-group">
+      <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+      </button>
+    </div>
+
+  </form>
+</div>
