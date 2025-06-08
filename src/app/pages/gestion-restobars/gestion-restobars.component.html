@@ -1,0 +1,72 @@
+<div fxLayout="column" fxLayoutGap="16px" class="card-container" fxFlexFill>
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Lista de Restaurantes</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content fxLayout="column" fxLayoutGap="16px">
+
+      <!-- Botón registrar -->
+      <div class="button-container">
+        <button mat-raised-button color="accent" (click)="registrarRestaurante()">
+          Registrar tu restaurante
+        </button>
+      </div>
+      
+      <!-- Tabla -->
+      <div class="table-container" fxFlex>
+        <table mat-table [dataSource]="listaRestaurante" matSort class="mat-elevation-z8 full-width-table">
+
+          <!-- Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <!-- Descripción -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+
+          <!-- Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" fxLayout.lt-sm="column">
+                <button *ngIf="element.estaActivo" mat-button color="primary" (click)="gestionarRestaurante(element)">Gestionar
+                </button>
+                <button *ngIf="element.estaActivo && element.latitud" mat-icon-button color="primary" (click)="verUbicacion(element)"
+                  matTooltip="Ver en Google Maps">
+                  <mat-icon>location_on</mat-icon>
+                </button>
+
+                <button *ngIf="element.estaActivo && element.urlLogo" mat-icon-button color="primary" (click)="verLogo(element)"
+                  matTooltip="Ver logo en nueva ventana">
+                  <mat-icon>image</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" (click)="inactivarActivar(element)" [matTooltip]="element.estaActivo ? 'Inactivar' : 'Activar'">
+                  <mat-icon [ngClass]="element.estaActivo ? 'icon-activo' : 'icon-inactivo'">
+                    {{ element.estaActivo ? 'toggle_on' : 'toggle_off' }}
+                  </mat-icon>
+                </button>
+                
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      </div>
+
+      <!-- Paginador -->
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

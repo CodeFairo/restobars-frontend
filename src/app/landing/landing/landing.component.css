@@ -1,0 +1,19 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.landing-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.landing-img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+}

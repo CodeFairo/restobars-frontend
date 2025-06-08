@@ -1,0 +1,19 @@
+<h2 mat-dialog-title style="text-align: center;">Subir logo del restaurante</h2>
+<mat-divider></mat-divider>
+
+<div style="padding: 16px;">
+  <!-- Campo para seleccionar imagen -->
+  <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+
+  <div style="margin-top: 16px;">
+    <button mat-raised-button color="primary"
+            (click)="upload()"
+            [disabled]="!file || uploadInProgress">
+      {{ uploadInProgress ? 'Subiendo...' : 'Sube tu logo o foto de tu restaurante' }}
+    </button>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <button mat-button color="warn" (click)="cerrar()">Cerrar</button>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title class="dialog-title">
+    {{ isEditMode ? 'Actualizar Restaurante' : 'Registrar Restaurante' }}
+  </h2>
+
+  <div class="dialog-scrollable-content">
+    <form [formGroup]="form" (ngSubmit)="registrar()" class="dialog-form">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+      
+    </form>
+  </div>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="registrar()" [disabled]="form.invalid">
+      {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+    </button>
+  </mat-dialog-actions>
+</div>

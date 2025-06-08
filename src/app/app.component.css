@@ -1,0 +1,40 @@
+/*.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 1rem;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-left, .navbar-right {
+    flex: 1;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .username, .notifications {
+    margin: 0 1rem;
+    font-weight: bold;
+  }
+  
+  .username::before {
+    content: '👤';
+    margin-right: 0.5rem;
+  }
+  
+  .notifications::before {
+    content: '🔔';
+    margin-right: 0.5rem;
+  }*/
+  

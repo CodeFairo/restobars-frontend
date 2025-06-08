@@ -1,0 +1,29 @@
+<div class="dashboard p-6">
+  <h2 class="text-2xl font-bold mb-4">Bienvenido, {{ userName }}</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="card bg-white shadow-md p-4 rounded">
+      <h3 class="font-semibold">Reservas próximas</h3>
+      <ul *ngIf="reservas.length > 0; else noReservas">
+        <li *ngFor="let r of reservas">{{ r.fecha }} - {{ r.restaurante }}</li>
+      </ul>
+      <ng-template #noReservas><p>No tienes reservas próximas.</p></ng-template>
+    </div>
+
+    <div class="card bg-white shadow-md p-4 rounded">
+      <h3 class="font-semibold">Pedidos recientes</h3>
+      <ul *ngIf="pedidos.length > 0; else noPedidos">
+        <li *ngFor="let p of pedidos">{{ p.fecha }} - {{ p.total }} soles</li>
+      </ul>
+      <ng-template #noPedidos><p>No has hecho pedidos aún.</p></ng-template>
+    </div>
+
+    <div class="card bg-white shadow-md p-4 rounded">
+      <h3 class="font-semibold">Favoritos</h3>
+      <ul *ngIf="favoritos.length > 0; else noFavoritos">
+        <li *ngFor="let f of favoritos">{{ f.nombre }}</li>
+      </ul>
+      <ng-template #noFavoritos><p>No hay favoritos.</p></ng-template>
+    </div>
+  </div>
+</div>
