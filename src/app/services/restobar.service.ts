@@ -18,11 +18,11 @@ export class RestobarService {
      constructor() { }
 
      lista() : Observable<any>{
-        return  this.http.get<any>(`${this.baseUrl}api/restobar/userid/${this.userId}`)
-     }   
- 
-     registrar(data: any): Observable<Restobar> {          
-          return this.http.post<Restobar>(`${this.baseUrl}api/restobar`,  data );
+        return  this.http.get<any>(`${this.baseUrl}api/restobar/userid/${this.userId}`);
+     }
+
+     registrar(data: any): Observable<Restobar> {
+          return this.http.post<Restobar>(`${this.baseUrl}api/restobar`, data);
      }
    
      actualizar(id: string, body: any) {
@@ -37,4 +37,8 @@ export class RestobarService {
      { 
           return this.http.delete<any>(`${this.baseUrl}api/restobar/${id}`);
      } 
+
+     listaAll() : Observable<any>{
+        return  this.http.get<any>(`${this.baseUrl}api/restobar`);
+     }
 }

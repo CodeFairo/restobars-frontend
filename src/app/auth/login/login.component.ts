@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../interfaces/Login';
 
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
@@ -17,11 +17,11 @@ import { firstValueFrom } from 'rxjs';
 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [MatCardModule,MatFormFieldModule,MatInputModule,MatButtonModule,ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+     selector: 'app-login',
+     standalone: true,
+     imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+     templateUrl: './login.component.html',
+     styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
@@ -34,11 +34,11 @@ export class LoginComponent {
      constructor(
           private notificationService: NotificationService,
           private alert: AlertService
-     ) {}
-     
+     ) { }
+
      public formLogin: FormGroup = this.formBuild.group({
-          email: ['',Validators.required],
-          password: ['',Validators.required],
+          email: ['', Validators.required],
+          password: ['', Validators.required],
      })
 
      iniciarSesion() {
@@ -96,7 +96,7 @@ export class LoginComponent {
                     password: passwordGenerada,
                     rol: rolElegido
                };
-               
+
                try {
                     await firstValueFrom(this.accesoService.registrarse(nuevoUsuario));
                } catch (error: any) {
@@ -141,11 +141,11 @@ export class LoginComponent {
           }
      }
 
-     registrarse(){
+     registrarse() {
           this.router.navigate(['registro'])
      }
 
-     volver(){
-          this.router.navigate([''])
+     volver() {
+          this.router.navigate(['inicio'])
      }
 }

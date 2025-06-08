@@ -1,12 +1,35 @@
-<mat-toolbar color="primary" class="toolbar">
-  <span class="logo">🍽️ Mi Restaurante</span>
+
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+
+<mat-toolbar class="toolbar">
+  <span class="logo">🍽️ RestobarsOnline</span>
   <span class="spacer"></span>
   <button mat-button (click)="registrarse()">Registrarse</button>
   <button mat-button (click)="ingresar()">Ingresar</button>
 </mat-toolbar>
 
 <div class="landing-content">
-  <h1>Bienvenido a Mi Restaurante</h1>
+
+  <h1>Bienvenido a RestobarsOnline</h1>
   <p>Deliciosos platos, excelente atención y un ambiente inigualable.</p>
-  <img src="assets/comida.jpg" alt="Comida deliciosa" class="landing-img">
+
+  <div class="restobars-container">
+    <mat-card *ngFor="let r of restobares" class="restobar-card">
+      <img mat-card-image [src]="r.logoUrl || 'assets/default.jpg'" alt="{{ r.name }}">
+      <mat-card-header>
+        <mat-card-title>{{ r.name }}</mat-card-title>
+        <!--<mat-card-subtitle>{{ r.ubicacion }}</mat-card-subtitle>-->
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ r.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="verDetalle(r)">Ver Detalle</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
+
+
+<app-footer></app-footer>

@@ -7,7 +7,7 @@
     [fixedInViewport]="true"
     (backdropClick)="toggleSidebar()"
   >
-    <mat-toolbar color="primary">Menú</mat-toolbar>
+    <mat-toolbar color="sidebar">Menú</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item (click)="miDashboard()">Dashboard</a>
       <a mat-list-item (click)="misRestobars()">Mis Restobars</a>
@@ -16,11 +16,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="topbar">
+    <mat-toolbar class="toolbar">
       <button mat-icon-button (click)="toggleSidebar()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class="app-title">RestauranteApp</span>
+      <span class="app-title">RestobarsOnline</span>
       <span class="spacer"></span>
       <button mat-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>account_circle</mat-icon> Perfil

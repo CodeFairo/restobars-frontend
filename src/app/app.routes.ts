@@ -10,7 +10,8 @@ import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.co
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent ,pathMatch: 'full'},
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'inicio', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   

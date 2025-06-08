@@ -10,7 +10,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   // Ignorar login y creación de usuario
-  if (req.url.includes('login') || req.url.includes('register')) {
+  const rutasPublicas = ['login', 'register', 'inicio'];
+  if (rutasPublicas.some(path => req.url.includes(path))) {
     return next(req);
   }
 

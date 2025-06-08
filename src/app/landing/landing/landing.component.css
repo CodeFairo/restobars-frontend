@@ -1,19 +1,91 @@
+/* Fondo borroso */
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDg4fHx8ZW58MHx8fHx8');
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+  z-index: -2;
+}
+
+/* Capa oscura para contraste */
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+/* Barra superior */
 .toolbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
+  padding: 0 24px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: white;
+
+  .logo {
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  button {
+    color: white;
+  }
 }
 
-.spacer {
-  flex: 1 1 auto;
-}
-
+/* Contenido principal */
 .landing-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 96px;
   text-align: center;
-  padding: 2rem;
+  color: white;
 }
 
-.landing-img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 1rem;
+/* Contenedor de tarjetas */
+.restobars-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 32px;
+}
+
+/* Estilo de tarjetas */
+.restobar-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+
+  img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  mat-card-title,
+  mat-card-content {
+    color: #000;
+  }
 }
