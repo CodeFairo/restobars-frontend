@@ -4,21 +4,23 @@ import { FirebaseStorageService } from '../../services/firebaseStorage.service';
 import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
 import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
 import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
 import { environment } from '../../../environments/environment';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
-  selector: 'app-upload-menu-dialog',
+  selector: 'app-upload-logo-dialog',
   standalone: true, 
   imports: [
     MatButtonModule,
     MatDividerModule,
+    NgIf
   ],
-  templateUrl: './upload-menu-dialog.component.html',
-  styleUrl: './upload-menu-dialog.component.css'
+  templateUrl: './upload-logo-dialog.component.html',
+  styleUrl: './upload-logo-dialog.component.css'
 })
-export class UploadMenuDialogComponent {
+export class UploadLogoDialogComponent {
   file: File | null = null;
   uploadInProgress = false;
   uploadedUrl = '';
@@ -29,7 +31,7 @@ export class UploadMenuDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { restobarId: number },
-    private dialogRef: MatDialogRef<UploadMenuDialogComponent>,
+    private dialogRef: MatDialogRef<UploadLogoDialogComponent>,
     private storageService: FirebaseStorageService,
     private complementoService: RestobarMenuComplementoService,
     private alert: AlertService,
@@ -40,7 +42,7 @@ export class UploadMenuDialogComponent {
     if (input.files && input.files.length > 0) {
       const selectedFile = input.files[0];
 
-      const isImageOrPdf = selectedFile.type.startsWith('image/') || selectedFile.type === 'application/pdf';
+      const isImageOrPdf = selectedFile.type.startsWith('image/');
 
       if (!isImageOrPdf) {
         this.alert.error('Formato no válido', 'Solo se permiten archivos PDF o imágenes.');
@@ -63,9 +65,9 @@ export class UploadMenuDialogComponent {
     if (!this.file) return;
 
     const extension = this.file.name.split('.').pop()?.toLowerCase() ?? 'pdf';
-    const filePath = `restobars/restobar-${this.data.restobarId}/menu.${extension}`;
+    const filePath = `restobars/restobar-${this.data.restobarId}/logo.${extension}`;
 
-    this.alert.loading('Cargando la carta...');
+    this.alert.loading('Cargando la imagen...');
     try {
       const url = await this.storageService.uploadFile(this.file, filePath);
       this.uploadedUrl = url;
@@ -73,23 +75,22 @@ export class UploadMenuDialogComponent {
 
       const dto: RestobarMenuComplemento = {
         restobarId: this.data.restobarId,
-        urlMenu: url
+        urlLogo: url
       };
 
       this.complementoService.create(dto).subscribe({
         next: () => {
           this.alert.close();
-          this.alert.success('Carta cargada correctamente.');
+          this.alert.success('Imagen cargada correctamente.');
           this.dialogRef.close(true);
         },
         error: (err) => {
           this.alert.close();
-          console.error('Error al registrar restaurante:', err);
-          this.alert.error('Error', 'Ocurrió un error al grabar la carta');
+          this.alert.error('Error', 'Ocurrió un error cargar imagen');
         }
       });
     } catch (err) {
-      this.alert.error('Error', 'Ocurrió un error al cargar la carta');
+      this.alert.error('Error', 'Ocurrió un error cargar imagen');
     } finally {
       this.alert.close();
     }

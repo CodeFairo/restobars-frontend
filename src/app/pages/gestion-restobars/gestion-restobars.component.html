@@ -35,7 +35,18 @@
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
               <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" fxLayout.lt-sm="column">
-                <button *ngIf="element.estaActivo" mat-button color="primary" (click)="gestionarRestaurante(element)">Gestionar </button>
+                <button *ngIf="element.estaActivo" mat-button color="primary" (click)="gestionarRestaurante(element)">Gestionar
+                </button>
+                <button *ngIf="element.estaActivo && element.latitud" mat-icon-button color="primary" (click)="verUbicacion(element)"
+                  matTooltip="Ver en Google Maps">
+                  <mat-icon>location_on</mat-icon>
+                </button>
+
+                <button *ngIf="element.estaActivo && element.urlLogo" mat-icon-button color="primary" (click)="verLogo(element)"
+                  matTooltip="Ver logo en nueva ventana">
+                  <mat-icon>image</mat-icon>
+                </button>
+
                 <button mat-icon-button color="warn" (click)="inactivarActivar(element)" [matTooltip]="element.estaActivo ? 'Inactivar' : 'Activar'">
                   <mat-icon [ngClass]="element.estaActivo ? 'icon-activo' : 'icon-inactivo'">
                     {{ element.estaActivo ? 'toggle_on' : 'toggle_off' }}

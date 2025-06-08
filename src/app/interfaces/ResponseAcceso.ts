@@ -2,5 +2,10 @@ export interface ResponseAcceso{
      isSuccess:boolean,
      accessToken:string,
      refreshToken:string,
-     role:string,
+     rol:string,
+}
+
+export interface ResponseVerificaEmail{
+     email:string,
+     rol:string,
 }

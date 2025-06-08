@@ -4,7 +4,7 @@
   </h2>
 
   <div class="dialog-scrollable-content">
-    <form [formGroup]="form" (ngSubmit)="registrar()" class="dialog-form">
+    <form [formGroup]="form" (ngSubmit)="actualizar()" class="dialog-form">
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre</mat-label>
@@ -18,13 +18,38 @@
         <mat-label>Descripción</mat-label>
         <input matInput formControlName="description" />
       </mat-form-field>
-      
+
+      <!-- Mapa -->
+      <div id="map" class="map-container"></div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Dirección seleccionada</mat-label>
+        <input matInput formControlName="direccion" readonly>
+      </mat-form-field>
+
+      <div class="logo-upload center-button">
+  <button
+    mat-raised-button
+    color="accent"
+    type="button"
+    (click)="onLogoSelected()"
+    class="upload-button"
+  >
+    <mat-icon class="upload-icon">cloud_upload</mat-icon>
+    Subir Logo
+  </button>
+
+  <span *ngIf="form.get('logoUrl')?.value" class="logo-name">
+    Logo cargado
+  </span>
+</div>
+
     </form>
   </div>
 
   <mat-dialog-actions align="end" class="dialog-actions">
     <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
-    <button mat-flat-button color="primary" (click)="registrar()" [disabled]="form.invalid">
+    <button mat-flat-button color="primary" (click)="actualizar()" [disabled]="form.invalid">
       {{ isEditMode ? 'Actualizar' : 'Registrar' }}
     </button>
   </mat-dialog-actions>

@@ -23,6 +23,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { GoogleMapsService } from '../../services/googlemaps.service';
+import { DialogGestionarRestauranteComponent } from '../dialog-gestionar-restaurante/dialog-gestionar-restaurante.component';
+import { RestobarEventService } from '../../services/RestobarEvent.service';
 
 @Component({
      selector: 'app-inicio',
@@ -38,7 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
      templateUrl: './gestion-restobars.component.html',
      styleUrls: ['./gestion-restobars.component.css'],
 })
-export class InicioComponent implements OnInit, OnDestroy {
+export class GestionRestobarComponent implements OnInit, OnDestroy {
      public isAdminLoggedIn = false;
 
      private reporteServicio = inject(ReporteService);
@@ -46,12 +49,20 @@ export class InicioComponent implements OnInit, OnDestroy {
      private breakpointObserver = inject(BreakpointObserver);
      private dialog = inject(MatDialog);
      private alert = inject(AlertService);
+     
 
      public listaRestaurante: Restobar[] = [];
 
      public displayedColumns: string[] = ['name', 'description', 'actions'];
      private breakpointSub!: Subscription;
 
+     constructor(
+          private googleMapsService: GoogleMapsService,
+          private restobarEventService: RestobarEventService,
+     ) {
+
+     }
+    
      ngOnInit(): void {
           this.listarRestaurantes();
 
@@ -65,10 +76,24 @@ export class InicioComponent implements OnInit, OnDestroy {
                     this.displayedColumns = ['name', 'description', 'actions']; // Muestra todas en pantallas más grandes
                }
           });
+
+          this.restobarEventService.refresh$.subscribe(() => {
+               this.listarRestaurantes(); // ✅ se actualiza automáticamente
+          });
      }
 
      ngOnDestroy(): void {
           this.breakpointSub.unsubscribe();
+     }
+
+     verLogo(element: any) {
+          window.open(element.urlLogo, '_blank');
+     }
+
+     verUbicacion(element: any) {
+          const lat = element.latitud;
+          const lng = element.longitud;
+          this.googleMapsService.abrirEnGoogleMaps(lat, lng);
      }
 
      listarRestaurantes(){
@@ -83,9 +108,11 @@ export class InicioComponent implements OnInit, OnDestroy {
      }
 
      registrarRestaurante() {
+          const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
+
           const dialogRef = this.dialog.open(DialogRegistrarRestauranteComponent, {
-               width: '90vw',
-               maxWidth: '50vw'
+               width: isSmallScreen ? '90%' : '50%',
+               panelClass: 'custom-dialog',   
           });
 
           dialogRef.afterClosed().subscribe(result => {
@@ -100,10 +127,11 @@ export class InicioComponent implements OnInit, OnDestroy {
                this.alert.warning('Alerta!','El restaurante está inactivo.');
                return;
           }
-          const dialogRef = this.dialog.open(DialogRegistrarRestauranteComponent, {
-               width: '90vw',
-               maxWidth: '50vw',
-               data: restobar
+          const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
+          const dialogRef = this.dialog.open(DialogGestionarRestauranteComponent, {
+               width: isSmallScreen ? '90%' : '50%',
+               panelClass: 'custom-dialog',    
+               data: restobar 
           });
 
           dialogRef.afterClosed().subscribe(result => {
@@ -112,27 +140,7 @@ export class InicioComponent implements OnInit, OnDestroy {
                }
           });
      }
-
-     /*inactivar(id: number) {
-          this.alert.confirm('¿Eliminar restaurante?', 'Esta acción no se puede deshacer').then(result => {
-               if (!result.isConfirmed) return;
-
-               this.alert.loading('Eliminando restaurante...' + id);
-               this.restobarService.eliminar(id).subscribe({
-                    next: () => {
-                         this.alert.close();
-                         this.alert.success('Restaurante eliminado');
-                         this.listarRestaurantes();
-                    },
-                    error: (err) => {
-                         this.alert.close();
-                         console.error('Error al eliminar restaurante', err);
-                         this.alert.error('Error al eliminar', 'No se pudo eliminar el restaurante');
-                    }
-               });
-          });
-     }*/
-
+      
      inactivarActivar(element: any) {
           const nuevoEstado = !element.estaActivo;
           const accion = nuevoEstado ? 'activar' : 'inactivar';

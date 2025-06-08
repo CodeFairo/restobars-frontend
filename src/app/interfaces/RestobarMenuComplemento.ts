@@ -1,5 +1,6 @@
 export interface RestobarMenuComplemento {
   id?: number;
   restobarId: number;
-  urlMenu: string;
+  urlMenu?: string;
+  urlLogo?: string;
 }

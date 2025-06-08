@@ -14,26 +14,37 @@ import { AlertService } from '../../services/alert.service';
 import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { UsuarioRegistro } from '../../interfaces/Usuario';
 import { firstValueFrom } from 'rxjs';
+import { SeleccionRolDialogComponent } from '../complemento/seleccion-rol-dialog/seleccion-rol-dialog.component';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { ResponseVerificaEmail } from '../../interfaces/ResponseAcceso';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule,MatFormFieldModule,MatInputModule,MatButtonModule,ReactiveFormsModule],
+  imports: [
+     MatCardModule,
+     MatFormFieldModule,
+     MatInputModule,
+     MatButtonModule,
+     ReactiveFormsModule,
+
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
      private accesoService = inject(AccesoService);
      private authService = inject(AuthService);
      private router = inject(Router);
      public formBuild = inject(FormBuilder);
      private auth: Auth = inject(Auth);
+     private dialog = inject(MatDialog);
      public isLoading: boolean = false;
+
      constructor(
           private notificationService: NotificationService,
-          private alert: AlertService
+          private alert: AlertService,
      ) {}
      
      public formLogin: FormGroup = this.formBuild.group({
@@ -86,35 +97,60 @@ export class LoginComponent {
                     throw new Error('Faltan datos del usuario de Google');
                }
 
-               const esAdmin = await this.alert.confirm('Importante', '¿Eres un administrador del restaurante?');
-               const rolElegido = esAdmin ? 'RESTAURANTE' : 'TRABAJADOR';
-
+               const email = user.email;
                const passwordGenerada = user.uid;
-               const nuevoUsuario: UsuarioRegistro = {
-                    fullName: user.displayName,
-                    email: user.email,
-                    password: passwordGenerada,
-                    rol: rolElegido
-               };
-               
+               const verificaEmail: Login = { email, password: passwordGenerada };
+
+               // Verificar si ya existe el usuario en tu sistema
+               let usuarioExistente: ResponseVerificaEmail | null = null;
                try {
-                    await firstValueFrom(this.accesoService.registrarse(nuevoUsuario));
+                    usuarioExistente = await firstValueFrom(this.accesoService.obtenerPorCorreo(verificaEmail));
                } catch (error: any) {
-                    if (error.status !== 409) throw error;
-                    // Si es 409 (usuario ya existe), continúa
+                    if (error.status !== 404) {
+                         throw error;
+                    }
                }
 
-               const login: Login = {
-                    email: user.email,
-                    password: passwordGenerada
-               };
+               let rolElegido = usuarioExistente?.rol;
+
+               // Si no tiene rol, pedirle que elija uno
+               if (!rolElegido) {
+                    const dialogRef = this.dialog.open(SeleccionRolDialogComponent, {
+                         disableClose: true,
+                    });
+
+                    rolElegido = await firstValueFrom(dialogRef.afterClosed());
+
+                    if (!rolElegido) {
+                         this.alert.info('Proceso cancelado', 'No se seleccionó un rol');
+                         return;
+                    }
+
+                    // Si es nuevo usuario, registrarlo
+                    const nuevoUsuario: UsuarioRegistro = {
+                         fullName: user.displayName,
+                         email: email,
+                         password: passwordGenerada,
+                         rol: rolElegido
+                    };
+
+                    try {
+                         await firstValueFrom(this.accesoService.registrarse(nuevoUsuario));
+                    } catch (error: any) {
+                         if (error.status !== 409) throw error;
+                         // Usuario ya existe, pero pudo haberse registrado sin rol
+                         //await firstValueFrom(this.accesoService.actualizarRol(email, rolElegido));
+                    }
+               }
+
+               // Login normal
+               const login: Login = { email, password: passwordGenerada };
 
                this.alert.loading('Verificando credenciales...');
 
                this.accesoService.login(login).subscribe({
                     next: (data) => {
-                         this.alert.close(); // Cierra la alerta de carga
-
+                         this.alert.close();
                          if (data?.accessToken && data.accessToken.split('.').length === 3) {
                               this.authService.saveSession(data.accessToken, data.refreshToken);
                               this.router.navigate(['restobarDashboard']);
@@ -123,8 +159,7 @@ export class LoginComponent {
                          }
                     },
                     error: (error) => {
-                         this.alert.close(); // Cierra la alerta de carga
-
+                         this.alert.close();
                          if (error.status === 401) {
                               this.alert.error('Credenciales incorrectas', 'Correo o contraseña inválidos');
                          } else {
@@ -139,6 +174,8 @@ export class LoginComponent {
                this.alert.error('Fallo con Google', 'No se pudo autenticar con Google');
           }
      }
+
+
 
      registrarse(){
           this.router.navigate(['registro'])

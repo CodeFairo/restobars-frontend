@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { InicioComponent } from './pages/gestion-restobars/gestion-restobars.component';
+import { GestionRestobarComponent } from './pages/gestion-restobars/gestion-restobars.component';
 import { authGuard } from './custom/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
@@ -20,7 +20,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'restobarDashboard', component: RestobarDashboardComponent },
-      { path: 'misRestobar', component: InicioComponent },
+      { path: 'misRestobar', component: GestionRestobarComponent },
       { path: 'compartirCarta', component: CompartirCartamenuComponent }
       
       // Puedes agregar más rutas privadas aquí

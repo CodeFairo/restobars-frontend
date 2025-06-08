@@ -1,0 +1,35 @@
+.dialog-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.dialog-content {
+  text-align: center;
+  margin: 0 auto;
+  padding: 8px 16px;
+}
+
+.dialog-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.custom-button {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}

@@ -1,7 +1,7 @@
 .dialog-container {
   display: flex;
   flex-direction: column;
-  height: 55vh; /* Fija la altura total del diálogo */
+  height: 90vh; /* Fija la altura total del diálogo */
   padding: 16px 24px;
   box-sizing: border-box;
 }
@@ -18,12 +18,13 @@
   flex: 1 1 auto;
   overflow-y: auto;
   padding-right: 8px; /* espacio para evitar que el scroll tape contenido */
+  padding-top: 8px;
 }
 
 .dialog-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 5px;
 }
 
 .full-width {
@@ -56,3 +57,26 @@
   cursor: not-allowed !important;
 }
 
+.logo-upload {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.upload-button {
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  font-size: 16px;
+}
+
+.upload-icon {
+  margin-right: 0.5rem;
+}
+
+.center-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+}

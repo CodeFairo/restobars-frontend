@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { appsettings } from '../settings/appsettings';
 import { UsuarioRegistro } from '../interfaces/Usuario';
 import { Observable } from 'rxjs';
-import { ResponseAcceso } from '../interfaces/ResponseAcceso';
+import { ResponseAcceso, ResponseVerificaEmail } from '../interfaces/ResponseAcceso';
 import { Login } from '../interfaces/Login';
 import { RefreshTokenRequest, RefreshTokenResponse } from '../interfaces/RefreshToken';
 
@@ -23,6 +23,10 @@ export class AccesoService {
 
      login(objeto: Login): Observable<ResponseAcceso> {
           return this.http.post<ResponseAcceso>(`${appsettings.apiUrlBAse}auth/login`, objeto)
+     }
+
+     obtenerPorCorreo(objeto: Login): Observable<ResponseVerificaEmail> {
+          return this.http.post<ResponseVerificaEmail>(`${appsettings.apiUrlBAse}auth/verificaemail`, objeto)
      }
 
      refreshToken(objeto: RefreshTokenRequest): Observable<RefreshTokenResponse> {         

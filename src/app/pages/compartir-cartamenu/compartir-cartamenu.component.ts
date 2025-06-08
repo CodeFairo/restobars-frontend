@@ -66,8 +66,12 @@ export class CompartirCartamenuComponent implements OnInit{
   }
  
   abrirDialogoCargarMenu() {
-    this.dialog.open(UploadMenuDialogComponent, {
+    const dialogRef = this.dialog.open(UploadMenuDialogComponent, {
       data: { restobarId: this.selectedRestobarId }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // Vuelve a cargar el menú después de cerrar el diálogo
+      this.onRestobarSelected();
     });
   }    
 

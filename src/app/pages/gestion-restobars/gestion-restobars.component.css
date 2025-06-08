@@ -1,17 +1,28 @@
+/* === Contenedor principal === */
 .card-container {
-  max-width: 1000px;
+  width: 90%;
   margin: 0 auto;
   padding: 24px;
 }
 
-table {
+/* === Tablas === */
+table,
+.full-width-table {
   width: 100%;
 }
+
+.table-container,
+.full-width-table {
+  overflow-x: auto;
+}
+
+/* === Botones === */
 .button-container {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 16px;
 }
+
 @media (max-width: 599px) {
   .button-container {
     justify-content: center;
@@ -25,18 +36,10 @@ table {
   justify-content: flex-start;
 }
 
-.full-width-table {
-  width: 100%;
-  overflow-x: auto;
-}
-
+/* === Tarjetas === */
 .mat-card {
   margin: 16px;
   border-radius: 12px;
-}
-
-.table-container {
-  overflow-x: auto;
 }
 
 mat-card-header {
@@ -45,13 +48,82 @@ mat-card-header {
   align-items: center;
 }
 
+/* === Iconos de estado === */
 .icon-activo {
-  color: #4caf50; /* verde */
+  color: #4caf50;
 }
 
 .icon-inactivo {
-  color: #f44336; /* rojo */
+  color: #f44336;
 }
+
+/* === Columna de acciones en tabla === */
 .mat-column-actions {
   text-align: center;
+}
+
+/* === Dialog personalizado === */
+.custom-dialog .mat-dialog-container {
+  padding: 0;
+  height: 90vh;
+  max-height: 90vh;
+  width: 50vw;
+  max-width: 70vw;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+}
+
+@media (max-width: 599px) {
+  .custom-dialog .mat-dialog-container {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    height: 90vh !important;
+    max-height: 90vh !important;
+    border-radius: 8px;
+  }
+}
+
+/* === Dialog interno === */
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  padding: 0 24px;
+}
+
+.dialog-title {
+  padding: 16px 0;
+  font-size: 20px;
+}
+
+.dialog-scrollable-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 8px;
+  padding-bottom: 8px;
+}
+
+.dialog-actions {
+  padding: 16px 0;
+  border-top: 1px solid #ccc;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === Utilidades === */
+.full-width,
+.w-full {
+  width: 100%;
+}
+
+.map-container {
+  height: 200px;
+  width: 100%;
+  margin-bottom: 16px;
+  background-color: #e0e0e0; /* temporal si el mapa no carga */
 }

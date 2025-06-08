@@ -7,7 +7,9 @@ export interface Restobar {
      latitud: string,
      longitud: string,
      logoUrl:string,
-     estaActivo:Boolean
+     estaActivo:Boolean,
+     urlMenu:string,
+     urlLogo:string,
 }
 
 export interface ResponseRestobar { restobar: Restobar[]; }
