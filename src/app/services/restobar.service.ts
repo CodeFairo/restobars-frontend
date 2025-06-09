@@ -12,13 +12,13 @@ export class RestobarService {
 
      private http = inject(HttpClient);
      private authService = inject(AuthService);
-     private userId = this.authService.getUserId() ?? '';
      private baseUrl: string = appsettings.apiUrlBAse;
 
      constructor() { }
 
-     lista() : Observable<any>{
-        return  this.http.get<any>(`${this.baseUrl}api/restobar/userid/${this.userId}`);
+     listaRestobarsPorUsuario() : Observable<any>{
+        const userId = this.authService.getUserId();
+        return  this.http.get<any>(`${this.baseUrl}api/restobar/userid/${userId}`);
      }
 
      registrar(data: any): Observable<Restobar> {
@@ -38,7 +38,16 @@ export class RestobarService {
           return this.http.delete<any>(`${this.baseUrl}api/restobar/${id}`);
      } 
 
+     /*******BUSQUEDAS PARA EL LANDING PRINCIPAL******/
      listaAll() : Observable<any>{
-        return  this.http.get<any>(`${this.baseUrl}api/restobar`);
+          return  this.http.get<any>(`${this.baseUrl}api/restobar`);
+     }
+
+     buscarPorNombre(nombre: string) {
+          return this.http.get<any>(`${this.baseUrl}api/restobar/buscarestobarpornombre/${encodeURIComponent(nombre)}`);
+     }
+
+     buscarPorUbicacion(lat: number, lng: number, nombre: string) {
+          return this.http.get<any>(`${this.baseUrl}api/restobar/buscarestobarporubicacion/${lat}/${lng}/${encodeURIComponent(nombre)}`);
      }
 }

@@ -1,24 +1,22 @@
 /* Fondo desenfocado */
-.background-blur {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?w=600&auto=format&fit=crop&q=60');
-  background-size: cover;
-  background-position: center;
-  filter: blur(12px);
-  z-index: -2;
-}
-
-/* Capa oscura para contraste */
+.background-blur,
 .background-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: -2;
+}
+
+.background-blur {
+  background-image: url('https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?w=600&auto=format&fit=crop&q=60');
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+}
+
+.background-overlay {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: -1;
 }
@@ -43,23 +41,21 @@
 
 /* Contenedor general */
 .card-container {
-  padding: 0px;
+  padding: 0;
   background: linear-gradient(145deg, #f0f0f0, #ffffff);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  min-height: calc(100vh - 60px); /* Ajusta si el toolbar tiene otra altura */
   width: 100%;
-  height: calc(100vh - 60px); /* Fuerza a ocupar todo el alto disponible */
+  height: calc(100vh - 60px);
   display: flex;
 }
 
 /* Tarjeta principal */
 mat-card {
   width: 100%;
-  height: 100%; /* Esto hace que el mat-card se estire verticalmente */
-  max-width: none;
+  height: 100%;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -67,44 +63,49 @@ mat-card {
   backdrop-filter: blur(4px);
   box-sizing: border-box;
   display: flex;
-  flex-direction: column; /* Para que el contenido se organice en columnas */
+  flex-direction: column;
 }
 
-/* Tabla y botones */
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Botones === */
 .button-container {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 16px;
 }
 
-.table-container {  
-  overflow-x: auto;  
-  width: 100%;
+@media (max-width: 599px) {
+  .button-container {
+    justify-content: center;
+  }
 }
 
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+}
 
+/* === Tablas === */
+table,
 .full-width-table {
   width: 100%;
 }
 
-.action-buttons button {
-  margin-right: 8px;
+.table-container,
+.full-width-table {
+  overflow-x: auto;
 }
 
-.dashboard {
-  position: relative;
-  margin-top: 10px; /* altura toolbar */
-  margin-left: 30px; /* ancho sidebar */
-  padding: 32px 24px;
-  color: #000; /* contenido oscuro para contraste */
-  min-height: calc(100vh - 60px);
-  background-color: rgba(255,255,255,0.95);
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow-y: auto;
-}
 
+/* Diálogo personalizado */
+/* === Dialog personalizado === */
 .custom-dialog .mat-dialog-container {
   padding: 0;
   height: 90vh;
@@ -115,3 +116,4 @@ mat-card {
   flex-direction: column;
   border-radius: 12px;
 }
+

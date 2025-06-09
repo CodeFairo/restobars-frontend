@@ -55,11 +55,11 @@ export class MainLayoutComponent {
     this.router.navigate(['compartirCarta']);
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     this.authService.logout();
-    this.router.navigate(['/login']).then(() => {
-          location.reload();
-        });
+    this.router.navigate(['/']).then(() => {
+      location.reload();
+    });
   }
 
 }

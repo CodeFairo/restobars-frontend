@@ -10,8 +10,7 @@ import { RestobarDashboardComponent } from './pages/restobar-dashboard/restobar-
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: 'inicio', component: LandingComponent },
+  { path: 'busqueda', component: LandingComponent, pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
 

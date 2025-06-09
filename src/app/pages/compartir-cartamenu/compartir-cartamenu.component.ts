@@ -42,7 +42,7 @@ export class CompartirCartamenuComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.restobarService.lista().subscribe({
+    this.restobarService.listaRestobarsPorUsuario().subscribe({
       next: (data) => this.restobares = data,
       error: (err) => console.error('Error cargando restaurantes del usuario', err)
     });
@@ -85,50 +85,50 @@ export class CompartirCartamenuComponent implements OnInit{
     window.open(this.urlMenu, '_blank');
   }
 
-downloadQR(): void {
-  const qrElement = document.getElementById('qr-code');
-  if (!qrElement) return;
+  downloadQR(): void {
+    const qrElement = document.getElementById('qr-code');
+    if (!qrElement) return;
 
-  html2canvas(qrElement, { backgroundColor: null }).then((canvas) => {
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    html2canvas(qrElement, { backgroundColor: null }).then((canvas) => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const { data, width, height } = imgData;
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const { data, width, height } = imgData;
 
-    let top = height, left = width, right = 0, bottom = 0;
+      let top = height, left = width, right = 0, bottom = 0;
 
-    // Detect non-transparent pixel bounds
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const idx = (y * width + x) * 4;
-        const alpha = data[idx + 3];
-        if (alpha > 0) {
-          if (x < left) left = x;
-          if (x > right) right = x;
-          if (y < top) top = y;
-          if (y > bottom) bottom = y;
+      // Detect non-transparent pixel bounds
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const idx = (y * width + x) * 4;
+          const alpha = data[idx + 3];
+          if (alpha > 0) {
+            if (x < left) left = x;
+            if (x > right) right = x;
+            if (y < top) top = y;
+            if (y > bottom) bottom = y;
+          }
         }
       }
-    }
 
-    const croppedWidth = right - left + 1;
-    const croppedHeight = bottom - top + 1;
+      const croppedWidth = right - left + 1;
+      const croppedHeight = bottom - top + 1;
 
-    // Create cropped canvas
-    const croppedCanvas = document.createElement('canvas');
-    croppedCanvas.width = croppedWidth;
-    croppedCanvas.height = croppedHeight;
-    const croppedCtx = croppedCanvas.getContext('2d');
-    if (!croppedCtx) return;
+      // Create cropped canvas
+      const croppedCanvas = document.createElement('canvas');
+      croppedCanvas.width = croppedWidth;
+      croppedCanvas.height = croppedHeight;
+      const croppedCtx = croppedCanvas.getContext('2d');
+      if (!croppedCtx) return;
 
-    croppedCtx.putImageData(ctx.getImageData(left, top, croppedWidth, croppedHeight), 0, 0);
+      croppedCtx.putImageData(ctx.getImageData(left, top, croppedWidth, croppedHeight), 0, 0);
 
-    // Trigger download
-    const link = document.createElement('a');
-    link.download = 'menu-qr.png';
-    link.href = croppedCanvas.toDataURL();
-    link.click();
-  });
-}
+      // Trigger download
+      const link = document.createElement('a');
+      link.download = 'menu-qr.png';
+      link.href = croppedCanvas.toDataURL();
+      link.click();
+    });
+  }
 }

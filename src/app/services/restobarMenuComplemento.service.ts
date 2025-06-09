@@ -35,7 +35,7 @@ export class RestobarMenuComplementoService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('API error:', error);
+    //onsole.error('API error:', error);
     return throwError(() => new Error(error.error?.message || 'Error en el servidor'));
   }
 }

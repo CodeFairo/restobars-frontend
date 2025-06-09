@@ -97,7 +97,7 @@ export class GestionRestobarComponent implements OnInit, OnDestroy {
      }
 
      listarRestaurantes(){
-          this.restobarService.lista().subscribe({
+          this.restobarService.listaRestobarsPorUsuario().subscribe({
                next: (data) => {
                     this.listaRestaurante = data;
                },
