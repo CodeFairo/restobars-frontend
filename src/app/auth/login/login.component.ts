@@ -120,7 +120,6 @@ export class LoginComponent {
                     });
 
                     rolElegido = await firstValueFrom(dialogRef.afterClosed());
-
                     if (!rolElegido) {
                          this.alert.info('Proceso cancelado', 'No se seleccionó un rol');
                          return;
@@ -147,12 +146,13 @@ export class LoginComponent {
                const login: Login = { email, password: passwordGenerada };
 
                this.alert.loading('Verificando credenciales...');
-
+console.log("logra bieeeeeeeeeeeeeeeeeeeeeee111")
                this.accesoService.login(login).subscribe({
                     next: (data) => {
                          this.alert.close();
                          if (data?.accessToken && data.accessToken.split('.').length === 3) {
                               this.authService.saveSession(data.accessToken, data.refreshToken);
+                              console.log("logra bieeeeeeeeeeeeeeeeeeeeeee")
                               this.router.navigate(['restobarDashboard']);
                          } else {
                               this.alert.error('Credenciales incorrectas', 'Verifica tu correo y contraseña');

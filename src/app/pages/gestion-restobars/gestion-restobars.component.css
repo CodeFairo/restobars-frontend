@@ -43,25 +43,31 @@
 
 /* Contenedor general */
 .card-container {
-  max-width: 800px;
-  margin: 40px auto;
   padding: 0px;
   background: linear-gradient(145deg, #f0f0f0, #ffffff);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  min-height: calc(100vh - 60px); /* Ajusta si el toolbar tiene otra altura */
+  width: 100%;
+  height: calc(100vh - 60px); /* Fuerza a ocupar todo el alto disponible */
+  display: flex;
 }
 
 /* Tarjeta principal */
 mat-card {
   width: 100%;
-  max-width: 1200px;
+  height: 100%; /* Esto hace que el mat-card se estire verticalmente */
+  max-width: none;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   padding: 24px;
   backdrop-filter: blur(4px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* Para que el contenido se organice en columnas */
 }
 
 /* Tabla y botones */
@@ -72,6 +78,12 @@ mat-card {
 
 .table-container {  
   overflow-x: auto;  
+  width: 100%;
+}
+
+
+.full-width-table {
+  width: 100%;
 }
 
 .action-buttons button {
@@ -91,4 +103,15 @@ mat-card {
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-y: auto;
+}
+
+.custom-dialog .mat-dialog-container {
+  padding: 0;
+  height: 90vh;
+  max-height: 90vh;
+  width: 50vw;
+  max-width: 70vw;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
 }
