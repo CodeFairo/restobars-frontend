@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   // Ignorar login y creación de usuario
-  if (req.url.includes('login') || req.url.includes('register')|| req.url.includes('verificaemail')) {
+  if (req.url.includes('login') || req.url.includes('register')|| req.url.includes('verificaemail')|| req.url.includes('inicio')) {
     return next(req);
   }
 

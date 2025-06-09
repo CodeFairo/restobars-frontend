@@ -1,4 +1,6 @@
-<div fxLayout="column" fxLayoutGap="16px" class="card-container" fxFlexFill>
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+<div class="card-container">
   <mat-card>
 
     <mat-card-header>
@@ -13,10 +15,9 @@
           Registrar tu restaurante
         </button>
       </div>
-      
-      <!-- Tabla -->
-      <div class="table-container" fxFlex>
-        <table mat-table [dataSource]="listaRestaurante" matSort class="mat-elevation-z8 full-width-table">
+
+      <div class="table-container">
+        <table mat-table [dataSource]="listaRestaurante" matSort class="">
 
           <!-- Nombre -->
           <ng-container matColumnDef="name">

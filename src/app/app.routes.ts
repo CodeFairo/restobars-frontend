@@ -10,10 +10,11 @@ import { RestobarDashboardComponent } from './pages/restobar-dashboard/restobar-
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent ,pathMatch: 'full'},
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'inicio', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
-  
+
   {
     path: '',
     component: MainLayoutComponent,
@@ -22,7 +23,7 @@ export const routes: Routes = [
       { path: 'restobarDashboard', component: RestobarDashboardComponent },
       { path: 'misRestobar', component: GestionRestobarComponent },
       { path: 'compartirCarta', component: CompartirCartamenuComponent }
-      
+
       // Puedes agregar más rutas privadas aquí
     ]
   },

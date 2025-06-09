@@ -1,129 +1,94 @@
-/* === Contenedor principal === */
-.card-container {
-  width: 90%;
-  margin: 0 auto;
-  padding: 24px;
+/* Fondo desenfocado */
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?w=600&auto=format&fit=crop&q=60');
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+  z-index: -2;
 }
 
-/* === Tablas === */
-table,
-.full-width-table {
-  width: 100%;
+/* Capa oscura para contraste */
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
-.table-container,
-.full-width-table {
-  overflow-x: auto;
-}
-
-/* === Botones === */
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 599px) {
-  .button-container {
-    justify-content: center;
-  }
-}
-
-.action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-start;
-}
-
-/* === Tarjetas === */
-.mat-card {
-  margin: 16px;
-  border-radius: 12px;
-}
-
-mat-card-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* === Iconos de estado === */
-.icon-activo {
-  color: #4caf50;
-}
-
-.icon-inactivo {
-  color: #f44336;
-}
-
-/* === Columna de acciones en tabla === */
-.mat-column-actions {
-  text-align: center;
-}
-
-/* === Dialog personalizado === */
-.custom-dialog .mat-dialog-container {
-  padding: 0;
-  height: 90vh;
-  max-height: 90vh;
-  width: 50vw;
-  max-width: 70vw;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
-}
-
-@media (max-width: 599px) {
-  .custom-dialog .mat-dialog-container {
-    width: 90vw !important;
-    max-width: 90vw !important;
-    height: 90vh !important;
-    max-height: 90vh !important;
-    border-radius: 8px;
-  }
-}
-
-/* === Dialog interno === */
-.dialog-container {
-  display: flex;
-  flex-direction: column;
-  height: 90vh;
+/* Toolbar fijo superior */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
   padding: 0 24px;
-}
-
-.dialog-title {
-  padding: 16px 0;
-  font-size: 20px;
-}
-
-.dialog-scrollable-content {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding-right: 8px;
-  padding-bottom: 8px;
-}
-
-.dialog-actions {
-  padding: 16px 0;
-  border-top: 1px solid #ccc;
-}
-
-.dialog-form {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: white;
+  z-index: 1000;
 }
 
-/* === Utilidades === */
-.full-width,
-.w-full {
-  width: 100%;
+/* Contenedor general */
+.card-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0px;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.map-container {
-  height: 200px;
+/* Tarjeta principal */
+mat-card {
   width: 100%;
+  max-width: 1200px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+
+/* Tabla y botones */
+.button-container {
+  text-align: right;
   margin-bottom: 16px;
-  background-color: #e0e0e0; /* temporal si el mapa no carga */
+}
+
+.table-container {  
+  overflow-x: auto;  
+}
+
+.action-buttons button {
+  margin-right: 8px;
+}
+
+.dashboard {
+  position: relative;
+  margin-top: 10px; /* altura toolbar */
+  margin-left: 30px; /* ancho sidebar */
+  padding: 32px 24px;
+  color: #000; /* contenido oscuro para contraste */
+  min-height: calc(100vh - 60px);
+  background-color: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
 }
