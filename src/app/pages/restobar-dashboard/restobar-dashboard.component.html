@@ -1,31 +1,42 @@
 <div class="background-blur"></div>
 <div class="background-overlay"></div>
-<div class="dashboard p-6">
-  <h2 class="text-2xl font-bold mb-4">Bienvenido, {{ userName }}</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div class="card bg-white shadow-md p-4 rounded">
-      <h3 class="font-semibold">Reservas próximas</h3>
-      <ul *ngIf="reservas.length > 0; else noReservas">
-        <li *ngFor="let r of reservas">{{ r.fecha }} - {{ r.restaurante }}</li>
-      </ul>
-      <ng-template #noReservas><p>No tienes reservas próximas.</p></ng-template>
-    </div>
+<div class="card-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Bievenvido {{ userName }}</mat-card-title>
+    </mat-card-header>
 
-    <div class="card bg-white shadow-md p-4 rounded">
-      <h3 class="font-semibold">Pedidos recientes</h3>
-      <ul *ngIf="pedidos.length > 0; else noPedidos">
-        <li *ngFor="let p of pedidos">{{ p.fecha }} - {{ p.total }} soles</li>
-      </ul>
-      <ng-template #noPedidos><p>No has hecho pedidos aún.</p></ng-template>
-    </div>
+    <mat-card-content fxLayout="column" fxLayoutGap="16px">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="card bg-white shadow-md p-4 rounded">
+            <h3 class="font-semibold">Reservas próximas</h3>
+            <ul *ngIf="reservas.length > 0; else noReservas">
+              <li *ngFor="let r of reservas">{{ r.fecha }} - {{ r.restaurante }}</li>
+            </ul>
+            <ng-template #noReservas><p>No tienes reservas próximas.</p></ng-template>
+          </div>
 
-    <div class="card bg-white shadow-md p-4 rounded">
-      <h3 class="font-semibold">Favoritos</h3>
-      <ul *ngIf="favoritos.length > 0; else noFavoritos">
-        <li *ngFor="let f of favoritos">{{ f.nombre }}</li>
-      </ul>
-      <ng-template #noFavoritos><p>No hay favoritos.</p></ng-template>
-    </div>
-  </div>
+          <div class="card bg-white shadow-md p-4 rounded">
+            <h3 class="font-semibold">Pedidos recientes</h3>
+            <ul *ngIf="pedidos.length > 0; else noPedidos">
+              <li *ngFor="let p of pedidos">{{ p.fecha }} - {{ p.total }} soles</li>
+            </ul>
+            <ng-template #noPedidos><p>No has hecho pedidos aún.</p></ng-template>
+          </div>
+
+          <div class="card bg-white shadow-md p-4 rounded">
+            <h3 class="font-semibold">Favoritos</h3>
+            <ul *ngIf="favoritos.length > 0; else noFavoritos">
+              <li *ngFor="let f of favoritos">{{ f.nombre }}</li>
+            </ul>
+            <ng-template #noFavoritos><p>No hay favoritos.</p></ng-template>
+          </div>
+        </div>
+
+    </mat-card-content>
+
+    
+  </mat-card>
+
 </div>
