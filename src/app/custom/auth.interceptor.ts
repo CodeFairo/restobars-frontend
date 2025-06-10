@@ -5,36 +5,49 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { appsettings } from '../settings/appsettings';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  // Ignorar login y creación de usuario
-  if (req.url.includes('login') || req.url.includes('register')|| 
-      req.url.includes('verificaemail')||
-      req.url.includes('buscarestobarpornombre')||
-      req.url.includes('busqueda')||
-      req.url.includes('buscarestobarporubicacion') ) {
+
+  const publicPaths = [
+    '/auth/login',
+    '/auth/refresh',
+    '/auth/verificaemail',
+    '/api/users/register',
+    '/api/restobar/buscarestobarpornombre',
+    '/api/restobar/buscarestobarporubicacion',
+    '/api/restobar'
+  ];
+
+  const relativeUrl = req.url.replace(appsettings.apiUrlBAse, '');
+  const pathOnly = '/' + relativeUrl.split('?')[0];
+
+  // Si la URL está en las rutas públicas, no modificar la solicitud
+  if (publicPaths.includes(pathOnly)) {
     return next(req);
   }
 
   const token = localStorage.getItem('token');
 
-  const clonedRequest = req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  // Si no hay token, continuar la solicitud sin el header Authorization
+  const authReq = token
+    ? req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+    : req;
 
-  return next(clonedRequest).pipe(
-    catchError((err: HttpErrorResponse) => {
-      if (err.status === 401) {
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      // Redirigir solo si hubo intento de autenticación y se recibió 401
+      if (error.status === 401 && token) {
         authService.logout();
-        router.navigate(['/busqueda']).then(() => {
-          location.reload();
-        });
+        router.navigate(['']).then(() => location.reload());
       }
-      return throwError(() => err);
+      return throwError(() => error);
     })
   );
 };
