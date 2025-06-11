@@ -8,7 +8,7 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name" maxlength="100"/>
         <mat-error *ngIf="form.get('name')?.hasError('required')">
           El nombre es obligatorio.
         </mat-error>
@@ -16,7 +16,17 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Descripción</mat-label>
-        <input matInput formControlName="description" />
+        <input matInput formControlName="description" maxlength="500"/>
+      </mat-form-field>
+
+      <!-- Horario de Atención -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Horario de Atención</mat-label>
+        <input matInput formControlName="horarioAtencion" placeholder="Ej. Lunes a Viernes: 9:00 AM - 6:00 PM" maxlength="50"/>
+        <mat-hint>Ingrese los días y horas de atención al público</mat-hint>
+        <mat-error *ngIf="form.get('horarioAtencion')?.hasError('required')">
+          El horario de atención es obligatorio.
+        </mat-error>
       </mat-form-field>
 
       <!-- Mapa -->

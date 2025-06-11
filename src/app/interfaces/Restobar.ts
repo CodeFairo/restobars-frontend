@@ -10,6 +10,8 @@ export interface Restobar {
      estaActivo:Boolean,
      urlMenu:string,
      urlLogo:string,
+     horarioAtencion:string,
+
 }
 
 export interface ResponseRestobar { restobar: Restobar[]; }

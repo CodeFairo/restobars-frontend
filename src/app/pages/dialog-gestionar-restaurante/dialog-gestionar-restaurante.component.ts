@@ -14,6 +14,7 @@ import { FirebaseStorageService } from '../../services/firebaseStorage.service';
 import { UploadLogoDialogComponent } from '../upload-logo-dialog/upload-logo-dialog.component';
 import { MatIcon } from '@angular/material/icon';
 import { RestobarEventService } from '../../services/RestobarEvent.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-registrar-restaurante',
@@ -26,7 +27,8 @@ import { RestobarEventService } from '../../services/RestobarEvent.service';
     MatButtonModule,
     GoogleMapsModule,
     MatDialogActions,
-    MatIcon
+    MatIcon,
+    MatSelectModule
   ],
   templateUrl: './dialog-gestionar-restaurante.component.html',
   styleUrl: './dialog-gestionar-restaurante.component.css'
@@ -38,8 +40,6 @@ export class DialogGestionarRestauranteComponent {
   private authService = inject(AuthService);
   private userId = this.authService.getUserId() ?? '';
   public isEditMode = false;
-  private uploadedUrl = "";
-  private qrReady = false;
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
@@ -58,7 +58,8 @@ export class DialogGestionarRestauranteComponent {
     logoUrl: [''],
     direccion: ['', Validators.required],
     latitud: ['', Validators.required],
-    longitud: ['', Validators.required]
+    longitud: ['', Validators.required],
+    horarioAtencion: ['', Validators.required],
   });
 
   ngOnInit(): void {
@@ -70,7 +71,8 @@ export class DialogGestionarRestauranteComponent {
         logoUrl: this.data.logoUrl,
         direccion: this.data.direccion,
         latitud: this.data.latitud,
-        longitud: this.data.longitud
+        longitud: this.data.longitud,
+        horarioAtencion : this.data.horarioAtencion
       });
     }
   }

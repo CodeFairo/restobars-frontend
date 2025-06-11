@@ -4,39 +4,43 @@
 <div class="card-container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Bievenvido {{ userName }}</mat-card-title>
+      <mat-card-title>Bienvenido {{ dashboardData?.fullName }}</mat-card-title>
+      <mat-card-subtitle>{{ dashboardData?.email }} | Rol: {{ dashboardData?.rol }}</mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content fxLayout="column" fxLayoutGap="16px">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="card bg-white shadow-md p-4 rounded">
-            <h3 class="font-semibold">Reservas próximas</h3>
-            <ul *ngIf="reservas.length > 0; else noReservas">
-              <li *ngFor="let r of reservas">{{ r.fecha }} - {{ r.restaurante }}</li>
-            </ul>
-            <ng-template #noReservas><p>No tienes reservas próximas.</p></ng-template>
-          </div>
+    <mat-card-content>
+      <div class="dashboard-section">
+        <h3>Información de Restobars</h3>
+        <p>Total de Restobars: <strong>{{ dashboardData?.totalRestobars }}</strong></p>
+        <p>Restobars Activos: <strong>{{ dashboardData?.restobarsActivos }}</strong></p>
+        <p>Última Actualización: <strong>{{ dashboardData?.ultimaActualizacion }}</strong></p>
+      </div>
 
-          <div class="card bg-white shadow-md p-4 rounded">
-            <h3 class="font-semibold">Pedidos recientes</h3>
-            <ul *ngIf="pedidos.length > 0; else noPedidos">
-              <li *ngFor="let p of pedidos">{{ p.fecha }} - {{ p.total }} soles</li>
-            </ul>
-            <ng-template #noPedidos><p>No has hecho pedidos aún.</p></ng-template>
-          </div>
+      <mat-divider></mat-divider>
 
-          <div class="card bg-white shadow-md p-4 rounded">
-            <h3 class="font-semibold">Favoritos</h3>
-            <ul *ngIf="favoritos.length > 0; else noFavoritos">
-              <li *ngFor="let f of favoritos">{{ f.nombre }}</li>
-            </ul>
-            <ng-template #noFavoritos><p>No hay favoritos.</p></ng-template>
-          </div>
-        </div>
+      <div class="dashboard-section">
+        <h3>Plan de Usuario</h3>
+        <p>Tipo de Plan: <strong>{{ dashboardData?.tipoPlan ? 'Premium' : 'Gratuito' }}</strong></p>
+        <p>Fecha de Inicio: <strong>{{ dashboardData?.fechaInicioPlan }}</strong></p>
+        <p>Fecha de Fin: <strong>{{ dashboardData?.fechaFinPlan }}</strong></p>
+        <p>Máximo de Restaurantes: <strong>{{ dashboardData?.maximoRestaurantes }}</strong></p>
+        <p>¿Es Usuario de Pago?: <strong>{{ dashboardData?.esUsuarioDePago }}</strong></p>
+      </div>
 
+      <mat-divider></mat-divider>
+
+      <div class="dashboard-section">
+        <h3>Recursos Actuales</h3>
+        <p>Cantidad de Meseros: <strong>{{ dashboardData?.cantidadMesero }}</strong></p>
+        <p>Cantidad de Cajas: <strong>{{ dashboardData?.cantidadCaja }}</strong></p>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="dashboard-section">
+        <h3>Notificaciones</h3>
+        <p>{{ dashboardData?.notificaciones }}</p>
+      </div>
     </mat-card-content>
-
-    
   </mat-card>
-
 </div>

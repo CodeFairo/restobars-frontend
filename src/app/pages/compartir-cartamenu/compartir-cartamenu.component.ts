@@ -12,6 +12,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { QrCodeComponent  } from 'ng-qrcode';
 import { MatDialog } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-compartir-cartamenu',
@@ -24,6 +28,11 @@ import { MatDialog } from '@angular/material/dialog';
     MatSelectModule,
     MatOptionModule,
     QrCodeComponent,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule,
+    ReactiveFormsModule,          
     
   ],
   templateUrl: './compartir-cartamenu.component.html',
