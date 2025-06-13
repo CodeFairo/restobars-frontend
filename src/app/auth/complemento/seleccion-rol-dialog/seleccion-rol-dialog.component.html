@@ -10,13 +10,26 @@
 </mat-dialog-content>
 
 <mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre completo</mat-label>
+    <input matInput placeholder="Ingresa tu nombre completo" [(ngModel)]="nombreCompleto">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-content class="dialog-content">
   <p class="dialog-text">
     Selecciona el tipo de usuario con el que deseas acceder:
   </p>
 </mat-dialog-content>
 
 <mat-dialog-actions class="dialog-actions">
-  <button mat-flat-button color="primary" class="custom-button" (click)="seleccionar('ADMINISTRADOR')">
+  <button
+    mat-flat-button
+    color="primary"
+    class="custom-button"
+    (click)="seleccionar('ADMINISTRADOR')"
+    [disabled]="!nombreCompleto.trim()"
+  >
     Administrador del Restaurante
   </button>
 </mat-dialog-actions>

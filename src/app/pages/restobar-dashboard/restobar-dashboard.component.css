@@ -10,7 +10,6 @@
 }
 
 .background-blur {
-  background-image: url('https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?w=600&auto=format&fit=crop&q=60');
   background-size: cover;
   background-position: center;
   filter: blur(12px);
@@ -48,7 +47,6 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   width: 100%;
-  height: calc(100vh - 60px);
   display: flex;
 }
 

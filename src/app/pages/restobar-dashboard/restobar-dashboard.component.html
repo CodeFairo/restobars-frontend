@@ -19,17 +19,6 @@
       <mat-divider></mat-divider>
 
       <div class="dashboard-section">
-        <h3>Plan de Usuario</h3>
-        <p>Tipo de Plan: <strong>{{ dashboardData?.tipoPlan ? 'Premium' : 'Gratuito' }}</strong></p>
-        <p>Fecha de Inicio: <strong>{{ dashboardData?.fechaInicioPlan }}</strong></p>
-        <p>Fecha de Fin: <strong>{{ dashboardData?.fechaFinPlan }}</strong></p>
-        <p>Máximo de Restaurantes: <strong>{{ dashboardData?.maximoRestaurantes }}</strong></p>
-        <p>¿Es Usuario de Pago?: <strong>{{ dashboardData?.esUsuarioDePago }}</strong></p>
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <div class="dashboard-section">
         <h3>Recursos Actuales</h3>
         <p>Cantidad de Meseros: <strong>{{ dashboardData?.cantidadMesero }}</strong></p>
         <p>Cantidad de Cajas: <strong>{{ dashboardData?.cantidadCaja }}</strong></p>
@@ -38,8 +27,23 @@
       <mat-divider></mat-divider>
 
       <div class="dashboard-section">
+        <h3>Plan de Usuario</h3>
+        <p>Tipo de Plan: <strong>{{ dashboardData?.tipoPlan }}</strong></p>
+        <p>Fecha de Inicio: <strong>{{ dashboardData?.fechaInicioPlan }}</strong></p>
+        <p>Fecha de Fin: <strong>{{ dashboardData?.fechaFinPlan }}</strong></p>
+        <p>Máximo de Restaurantes: <strong>{{ dashboardData?.maximoRestaurantes }}</strong></p>
+        <p>Máximo de Meseros: <strong>{{ dashboardData?.maximoMeseros }}</strong></p>
+        <p>Máximo de Cajeros: <strong>{{ dashboardData?.maximoCajeros }}</strong></p>
+        <p>¿Es Usuario de Pago?: <strong>{{ dashboardData?.esUsuarioDePago? 'SI' : 'NO' }}</strong></p>
+      </div>
+
+      
+
+      <mat-divider></mat-divider>
+
+      <div class="dashboard-section">
         <h3>Notificaciones</h3>
-        <p>{{ dashboardData?.notificaciones }}</p>
+        <p>{{ dashboardData?.notificaciones? 'Habilitadas' : 'Inactivas'  }}</p>
       </div>
     </mat-card-content>
   </mat-card>

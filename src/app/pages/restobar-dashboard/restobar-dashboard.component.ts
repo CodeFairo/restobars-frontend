@@ -30,7 +30,7 @@ export class RestobarDashboardComponent {
     this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
         this.dashboardData = data;
-        console.log(data);
+        //console.log(data);
       },
       error: (err) => {
         console.error('Error al obtener el dashboard', err);

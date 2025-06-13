@@ -3,7 +3,7 @@
      <mat-card class="login-card">
           <mat-card-header>
                <mat-card-title>
-                    🍷 Bienvenido a GastroBar
+                    🍷 Bienvenido a Restobars Online
                </mat-card-title>
                <mat-card-subtitle>
                     Inicia sesión para continuar
@@ -24,18 +24,21 @@
 
                     <div class="button-group">
                          <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+                         <button mat-flat-button color="accent" (click)="loginConGoogle()" style="display: flex; align-items: center;">
+                              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20"
+                                   style="margin-right: 10px; background: white; border-radius: 50%;" />
+                              Ingresar con Google
+                         </button>
                          <button mat-stroked-button color="accent" (click)="registrarse()">Registrarse</button>
                          <button mat-stroked-button color="warn" (click)="volver()">Volver</button>
                     </div>
 
-                    <div class="divider"><span>o</span></div>
+                    <div class="divider"></div>
 
-                    <div class="google-login">
-                         <button mat-stroked-button color="primary" (click)="loginConGoogle()">
-                              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
-                                   width="20" height="20">
-                              Ingresar con Google
-                         </button>
+
+                    <div class="forgot-password">
+                         ¿Olvidaste tu contraseña?
+                         <a (click)="recuperarClave()">Haz clic aquí</a>
                     </div>
                </form>
           </mat-card-content>

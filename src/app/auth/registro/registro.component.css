@@ -1,48 +1,108 @@
+/* CONTENEDOR PRINCIPAL */
 .register-wrapper {
-      position: relative;
-     height: 100vh;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overflow: hidden;
 }
 
+/* FONDO DIFUMINADO */
 .background-image {
-     position: absolute;
-     top: 0;
-     left: 0;
-     height: 100%;
-     width: 100%;
-     background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
-     background-size: cover;
-     background-position: center;
-     filter: blur(6px) brightness(0.7);
-     z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) brightness(0.7);
+  z-index: 1;
 }
 
+/* TARJETA DE REGISTRO */
 .register-card {
-     position: relative;
-     z-index: 2;
-     width: 100%;
-     max-width: 480px;
-     padding: 24px;
-     border-radius: 16px;
-     background-color: rgba(255, 255, 255, 0.95);
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 24px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+/* ENCABEZADO DE LA TARJETA */
+.registro-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.registro-header mat-card-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
+  width: 100%;
+}
+
+.registro-header mat-card-subtitle {
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+  width: 100%;
+}
+
+/* FORMULARIO */
 .form-custom {
-     display: flex;
-     flex-direction: column;
-     gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* CAMPOS Y BOTONES */
 .full-width {
-     width: 100%;
+  width: 100%;
 }
 
 .button-group {
-     display: flex;
-     flex-direction: column;
-     gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* RESPONSIVE - móviles */
+@media (max-width: 600px) {
+  .register-card {
+    padding: 24px 16px;
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-custom {
+    gap: 12px;
+  }
+
+  .button-group {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .titulo-centrado mat-card-title {
+    font-size: 22px;
+  }
+
+  .titulo-centrado mat-card-subtitle {
+    font-size: 14px;
+  }
 }

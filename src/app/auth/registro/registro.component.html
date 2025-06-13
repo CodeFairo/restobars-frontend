@@ -3,17 +3,15 @@
 
   <mat-card class="register-card">
     <mat-card-header>
-      <mat-card-title>📝 Crear una cuenta</mat-card-title>
-      <mat-card-subtitle>Registra tu restaurante o únete como trabajador</mat-card-subtitle>
-    </mat-card-header>
+  <div class="registro-header">
+    <mat-card-title>📝 Crear una cuenta</mat-card-title>
+    <mat-card-subtitle>Registra tu restaurante o únete como trabajador</mat-card-subtitle>
+  </div>
+</mat-card-header>
 
     <mat-card-content>
       <form [formGroup]="formRegistro" class="form-custom">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" placeholder="Nombre completo">
-        </mat-form-field>
-
+   
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" placeholder="ejemplo@correo.com" type="email">
@@ -25,16 +23,24 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Rol</mat-label>
-          <mat-select formControlName="rol">
-            <mat-option value="RestoBar">Restaurante</mat-option>
-            <mat-option value="Trabajador">Trabajador</mat-option>
-          </mat-select>
+          <mat-label>Repita Contraseña</mat-label>
+          <input matInput type="password" formControlName="passwordConfirm" placeholder="••••••••">
         </mat-form-field>
 
         <div class="button-group">
-          <button mat-raised-button color="primary" (click)="registrarse()">Registrarse</button>
-          <button mat-stroked-button color="warn" (click)="volver()">Volver</button>
+          <button mat-raised-button color="primary" (click)="registrarseConEmailFirebase()">
+            Registrarse
+          </button>
+
+          <button mat-flat-button color="accent" (click)="registrarseConGoogle()" style="display: flex; align-items: center;">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20"
+              style="margin-right: 10px; background: white; border-radius: 50%;" />
+            Registrarse con Google
+          </button>
+        
+          <button mat-stroked-button color="warn" (click)="volver()">
+            Volver
+          </button>
         </div>
       </form>
     </mat-card-content>

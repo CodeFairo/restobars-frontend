@@ -22,25 +22,20 @@ export class RestobarService {
      }
 
      registrar(data: any): Observable<Restobar> {
-          return this.http.post<Restobar>(`${this.baseUrl}api/restobar`, data);
+          return this.http.post<Restobar>(`${this.baseUrl}api/restobar/crearrestobar`, data);
      }
    
      actualizar(id: string, body: any) {
-          return this.http.put(`${this.baseUrl}api/restobar/${id}`, body);
+          return this.http.put(`${this.baseUrl}api/restobar/actualizarrestobar/${id}`, body);
      }
 
      cambiarEstado(id: string, estado: boolean) {
-          return this.http.put(`${this.baseUrl}api/restobar/${id}/estado`, { estaActivo: estado });
+          return this.http.put(`${this.baseUrl}api/restobar/estadorestobar/${id}/estado`, { estaActivo: estado });
      }
-     
-     eliminar(id: number): Observable<Restobar> 
-     { 
-          return this.http.delete<any>(`${this.baseUrl}api/restobar/${id}`);
-     } 
-
+ 
      /*******BUSQUEDAS PARA EL LANDING PRINCIPAL******/
      listaAll() : Observable<any>{
-          return  this.http.get<any>(`${this.baseUrl}api/restobar`);
+          return  this.http.get<any>(`${this.baseUrl}api/restobar/buscatodosrestobarparalanding`);
      }
 
      buscarPorNombre(nombre: string) {

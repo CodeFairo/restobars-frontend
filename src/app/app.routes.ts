@@ -8,11 +8,14 @@ import { RegistroComponent } from './auth/registro/registro.component';
 import { LandingComponent } from './landing/landing/landing.component';
 import { RestobarDashboardComponent } from './pages/restobar-dashboard/restobar-dashboard.component';
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
+import { RecuperarClaveComponent } from './auth/recuperar-clave/recuperar-clave.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'recuperarclave', component: RecuperarClaveComponent },
+  
 
   {
     path: '',

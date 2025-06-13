@@ -7,8 +7,8 @@
 }
 
 .dialog-content {
-  text-align: center;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   padding: 8px 16px;
 }
 
@@ -32,4 +32,8 @@
   font-weight: 500;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.full-width {
+  width: 90%;
 }

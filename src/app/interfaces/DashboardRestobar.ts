@@ -1,6 +1,6 @@
 export interface DashboardRestobarResponse{
 
-     fullName:boolean,
+     fullName:string,
      email:string,
      rol:string,
      totalRestobars:string,
@@ -15,4 +15,7 @@ export interface DashboardRestobarResponse{
      cantidadMesero:string,
      cantidadCaja:string,
      notificaciones:string,
+
+     maximoMeseros:string,
+     maximoCajeros:string,
 }

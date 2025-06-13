@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
 import { UsuarioRegistro } from '../../interfaces/Usuario';
 import { firstValueFrom } from 'rxjs';
 import { SeleccionRolDialogComponent } from '../complemento/seleccion-rol-dialog/seleccion-rol-dialog.component';
@@ -52,7 +52,103 @@ export class LoginComponent {
           password: ['',Validators.required],
      })
 
-     iniciarSesion() {
+
+
+
+     async iniciarSesion() {
+          try {
+               const email = this.formLogin.value.email;
+               const password = this.formLogin.value.password;
+
+               const auth = getAuth();
+               const cred = await signInWithEmailAndPassword(auth, email, password);
+               const user = cred.user;
+
+               if (!user.emailVerified) {
+                    this.alert.warning('Verifica tu correo', 'Por favor verifica tu correo antes de continuar.');
+                    return;
+               }
+
+               const idToken = await user.getIdToken();
+               const passwordGenerada = user.uid; // opcional, si lo usas como "password" en tu backend
+
+               const verificaEmail: Login = { email, password: passwordGenerada };
+
+               // Verifica si el usuario ya está registrado en tu sistema
+               let usuarioExistente: ResponseVerificaEmail | null = null;
+               try {
+                    usuarioExistente = await firstValueFrom(this.accesoService.obtenerPorCorreo(verificaEmail));
+               } catch (error: any) {
+                    if (error.status !== 404) throw error;
+               }
+
+               // Si el usuario no existe en tu backend, lo registramos
+               //let rolElegido = usuarioExistente?.rol;
+
+               // Si no tiene rol, pedirle que elija uno
+               if (!usuarioExistente) {
+                    const dialogRef = this.dialog.open(SeleccionRolDialogComponent, {
+                         disableClose: true,
+                    });
+
+                    const resultado = await firstValueFrom(dialogRef.afterClosed());
+
+                    if (!resultado) {
+                         this.alert.info('Proceso cancelado', 'No se seleccionó un rol');
+                         return;
+                    }
+
+                    const { rol, nombreCompleto } = resultado;
+
+                    const nuevoUsuario: UsuarioRegistro = {
+                         fullName: nombreCompleto,
+                         email: email,
+                         password: passwordGenerada,
+                         rol: rol
+                    };
+
+                    try {
+                         await firstValueFrom(this.accesoService.registrarse(nuevoUsuario));
+                    } catch (error: any) {
+                         if (error.status !== 409) throw error;
+                         // Usuario ya existe, pero pudo haberse registrado sin rol
+                         //await firstValueFrom(this.accesoService.actualizarRol(email, rolElegido));
+                    }
+               }
+
+               // Ahora sí, hacer login en tu sistema backend
+               const login: Login = { email, password: passwordGenerada };
+
+               this.alert.loading('Verificando credenciales...');
+               this.accesoService.login(login).subscribe({
+                    next: (data) => {
+                         this.alert.close();
+                         if (data?.accessToken && data.accessToken.split('.').length === 3) {
+                              this.authService.saveSession(data.accessToken, data.refreshToken);
+                              this.router.navigate(['restobarDashboard']);
+                         } else {
+                              this.alert.error('Token inválido', 'Respuesta inesperada del backend.');
+                         }
+                    },
+                    error: (error) => {
+                         this.alert.close();
+                         if (error.status === 401) {
+                              this.alert.error('Credenciales incorrectas', 'Correo o contraseña inválidos');
+                         } else {
+                              this.alert.error('Error al iniciar sesión', 'Intenta nuevamente más tarde');
+                         }
+                    },
+                    complete: () => this.isLoading = false
+               });
+
+          } catch (error: any) {
+               console.error('Error al iniciar sesión:', error);
+               this.alert.error('Error de autenticación', error.message || 'Error inesperado');
+          }
+     }
+
+
+     /*iniciarSesion() {
           if (this.formLogin.invalid) return;
 
           const login: Login = {
@@ -85,7 +181,7 @@ export class LoginComponent {
                },
                complete: () => this.isLoading = false
           });
-     }
+     }*/
 
      async loginConGoogle() {
           try {
@@ -111,26 +207,27 @@ export class LoginComponent {
                     }
                }
 
-               let rolElegido = usuarioExistente?.rol;
-
                // Si no tiene rol, pedirle que elija uno
-               if (!rolElegido) {
+               if (!usuarioExistente) {
                     const dialogRef = this.dialog.open(SeleccionRolDialogComponent, {
                          disableClose: true,
+                         data: { displayName: user?.displayName }
                     });
 
-                    rolElegido = await firstValueFrom(dialogRef.afterClosed());
-                    if (!rolElegido) {
+                    const resultado = await firstValueFrom(dialogRef.afterClosed());
+
+                    if (!resultado) {
                          this.alert.info('Proceso cancelado', 'No se seleccionó un rol');
                          return;
                     }
 
-                    // Si es nuevo usuario, registrarlo
+                    const { rol, nombreCompleto } = resultado;
+
                     const nuevoUsuario: UsuarioRegistro = {
-                         fullName: user.displayName,
+                         fullName: nombreCompleto,
                          email: email,
                          password: passwordGenerada,
-                         rol: rolElegido
+                         rol: rol
                     };
 
                     try {
@@ -177,6 +274,10 @@ export class LoginComponent {
 
      registrarse(){
           this.router.navigate(['registro'])
+     }
+
+     recuperarClave(){
+          this.router.navigate(['recuperarclave'])
      }
 
      volver(){

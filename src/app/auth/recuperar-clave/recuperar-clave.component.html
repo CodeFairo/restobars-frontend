@@ -1,0 +1,18 @@
+<div class="recover-wrapper">
+  <mat-card class="recover-card">
+    <mat-card-title>🔒 Recuperar Contraseña</mat-card-title>
+    <mat-card-subtitle>Si tu correo es correcto y estas registrado te enviaremos un enlace para restablecerla</mat-card-subtitle>
+
+    <form [formGroup]="form" class="form-custom">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput placeholder="ejemplo@correo.com" formControlName="email" type="email">
+      </mat-form-field>
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" (click)="recuperarClave()">Enviar</button>
+        <button mat-stroked-button color="warn" (click)="volver()">Volver</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

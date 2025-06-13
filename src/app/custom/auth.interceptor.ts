@@ -18,7 +18,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     '/api/users/register',
     '/api/restobar/buscarestobarpornombre',
     '/api/restobar/buscarestobarporubicacion',
-    '/api/restobar'
+    '/api/restobar/buscatodosrestobarparalanding'
   ];
 
   const relativeUrl = req.url.replace(appsettings.apiUrlBAse, '');
