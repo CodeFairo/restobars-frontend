@@ -118,13 +118,6 @@ mat-card-title {
   flex-wrap: wrap;
 }
 
-.button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
 @media (max-width: 768px) {
   .button-group {
     justify-content: center;
@@ -144,6 +137,11 @@ mat-card-title {
   border-radius: 16px;
   background: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+}
+
+.qr-code {
+  transition: all 0.3s ease-in-out;
 }
 
 .background-blur {
@@ -167,4 +165,36 @@ mat-card-title {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: -1;
+}
+
+.daily-menu-section {
+  margin-top: 32px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+}
+
+.menu-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.no-margin {
+  margin: 0;
+  flex: 1; /* para que el input se estire al ancho disponible */
 }

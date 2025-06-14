@@ -93,9 +93,16 @@ export class DialogRegistrarRestauranteComponent {
           },
           error: (err) => {
             this.alert.close();
-            console.error('Error:', err);
-            const mensajeError = 'Error al registrar';
-            this.alert.error(mensajeError, 'Ocurrió un error en el proceso');
+
+            const codigo = err?.error?.code;
+            const mensaje = err?.error?.message;
+
+            if (codigo === 'LIMITE_RESTOBAR') {
+              this.alert.warning('Límite alcanzado', mensaje);
+            } else {
+              console.error('Error:', err);
+              this.alert.error('Error al registrar', mensaje || 'Ocurrió un error inesperado');
+            }
           }
         });
       });

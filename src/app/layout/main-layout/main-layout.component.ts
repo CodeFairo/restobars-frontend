@@ -55,6 +55,10 @@ export class MainLayoutComponent {
     this.router.navigate(['compartirCarta']);
   }
 
+  miperfil(){
+    this.router.navigate(['miperfil']);
+  }
+
   cerrarSesion() {
     this.authService.logout();
     this.router.navigate(['/']).then(() => {

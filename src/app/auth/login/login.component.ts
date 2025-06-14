@@ -14,7 +14,7 @@ import { AlertService } from '../../services/alert.service';
 import { Auth, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
 import { UsuarioRegistro } from '../../interfaces/Usuario';
 import { firstValueFrom } from 'rxjs';
-import { SeleccionRolDialogComponent } from '../complemento/seleccion-rol-dialog/seleccion-rol-dialog.component';
+import { SeleccionRolDialogComponent } from '../seleccion-rol-dialog/seleccion-rol-dialog.component';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ResponseVerificaEmail } from '../../interfaces/ResponseAcceso';
 

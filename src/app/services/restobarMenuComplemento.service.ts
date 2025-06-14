@@ -24,10 +24,10 @@ export class RestobarMenuComplementoService {
       .pipe(catchError(this.handleError));
   }
 
-  update(id: number, dto: RestobarMenuComplemento): Observable<RestobarMenuComplemento> {
+  /*update(id: number, dto: RestobarMenuComplemento): Observable<RestobarMenuComplemento> {
     return this.http.put<RestobarMenuComplemento>(`${this.baseUrl}/${id}`, dto)
       .pipe(catchError(this.handleError));
-  }
+  }*/
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`)
@@ -38,4 +38,13 @@ export class RestobarMenuComplementoService {
     //onsole.error('API error:', error);
     return throwError(() => new Error(error.error?.message || 'Error en el servidor'));
   }
+
+  guardarMenuDia(restobarId: number, menuDiaJson: string): Observable<any> {
+    const payload = {
+      menuDia: menuDiaJson // ya viene como cadena JSON desde el componente
+    };
+
+    return this.http.post(`${this.baseUrl}/api/restobarcomplemento/menudiario/${restobarId}/menu-dia`, payload);
+  }
+  
 }

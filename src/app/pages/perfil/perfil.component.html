@@ -1,0 +1,15 @@
+<mat-card *ngIf="!cargando && perfil">
+  <mat-card-header>
+    <mat-card-title>Mi Perfil</mat-card-title>
+    <mat-card-subtitle>{{ perfil.rol }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p><strong>Nombre:</strong> {{ perfil.nombreCompleto }}</p>
+    <p><strong>Correo:</strong> {{ perfil.email }}</p>
+    <p><strong>Tipo de Plan:</strong> {{ perfil.tipoPlan }}</p>
+    <p><strong>Creado el:</strong> {{ perfil.creadoEl | date:'medium' }}</p>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="cargando" class="loading">Cargando perfil...</div>
+<div *ngIf="error" class="error">Error al cargar el perfil.</div>

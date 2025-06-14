@@ -22,7 +22,7 @@ export class SeleccionRolDialogComponent {
 
   private dialogRef = inject(MatDialogRef<SeleccionRolDialogComponent>);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { displayName: string }) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { displayName: string }) { }
 
   ngOnInit() {
     this.nombreCompleto = this.data.displayName || '';

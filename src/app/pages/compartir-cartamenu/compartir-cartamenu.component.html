@@ -18,14 +18,35 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      
+      <div *ngIf="selectedRestobarId && !loading" class="loading-text">
+        <h3>Menú del día</h3>
+        <div class="daily-menu-section">
+
+          <div class="input-with-button">
+            <mat-form-field appearance="fill" class="full-width no-margin">
+              <mat-label>Ingresa un ítem del menú</mat-label>
+              <input matInput [(ngModel)]="menuDiaItem" />
+            </mat-form-field>
+            <button mat-icon-button color="primary" (click)="agregarItemMenuDia()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+          <ul class="menu-list" *ngIf="menuDia.length > 0">
+            <li *ngFor="let item of menuDia; let i = index">
+              {{ item }}
+              <button mat-icon-button color="warn" (click)="eliminarItemMenuDia(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
         <button mat-raised-button color="primary" (click)="abrirDialogoCargarMenu()">Cargar nueva carta</button>
       </div>
-
-      <!-- <div *ngIf="loading" class="loading-text">
-        Cargando menú...
-      </div>-->
 
       <div *ngIf="urlMenu && !loading" class="menu-content">
         
@@ -43,8 +64,8 @@
         <div class="link-section">
           <input matInput type="text" [value]="urlMenu" readonly class="url-input" />
           <div class="button-group">
-            <button mat-raised-button color="primary" (click)="copyLink()">Copiar enlace</button>
-            <button mat-raised-button color="accent" (click)="verCartaMenu()">Ver Carta del Menú</button>
+            <button mat-raised-button color="primary" aria-label="Copiar enlace" (click)="copyLink()">Copiar enlace</button>
+            <button mat-raised-button color="accent" aria-label="Copiar enlace" (click)="verCartaMenu()">Ver Carta del Menú</button>
           </div>
         </div>
 

@@ -37,7 +37,7 @@
         <mat-icon>account_circle</mat-icon> Perfil
       </button>
       <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item>Mi cuenta</button>
+        <button mat-menu-item (click)="miperfil()">Mi cuenta</button>
         <button mat-menu-item (click)="cerrarSesion()">Cerrar sesión</button>
       </mat-menu>
     </mat-toolbar>

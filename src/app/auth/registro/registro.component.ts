@@ -23,7 +23,7 @@ import { Login } from '../../interfaces/Login';
 import { ResponseVerificaEmail } from '../../interfaces/ResponseAcceso';
 import { firstValueFrom } from 'rxjs';
 import { AccesoService } from '../../services/acceso.service';
-import { SeleccionRolDialogComponent } from '../complemento/seleccion-rol-dialog/seleccion-rol-dialog.component';
+import { SeleccionRolDialogComponent } from '../seleccion-rol-dialog/seleccion-rol-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioRegistro } from '../../interfaces/Usuario';
 import { AuthService } from '../../services/auth.service';

@@ -1,0 +1,16 @@
+{
+  "logo": "🍽️ Mi Restaurante",
+  "links": [
+    { "label": "Inicio", "url": "/" },
+    { "label": "Quienes Somos", "url": "/quienes-somos" },
+    { "label": "Contacto", "url": "/contacto" },
+    { "label": "Términos", "url": "/terminos-condiciones" }
+  ],
+  "social": [
+    { "icon": "fab fa-facebook-f", "url": "https://facebook.com" },
+    { "icon": "fab fa-instagram", "url": "https://instagram.com" },
+    { "icon": "fab fa-twitter", "url": "https://twitter.com" },
+    { "icon": "fab fa-whatsapp", "url": "https://wa.me/123456789" }
+  ],
+  "copyright": "© 2025 Mi Restaurante. Todos los derechos reservados."
+}
