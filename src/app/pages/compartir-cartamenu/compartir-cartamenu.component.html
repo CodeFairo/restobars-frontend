@@ -20,7 +20,9 @@
       </mat-form-field>
       
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
-        <h3>Menú del día</h3>
+        <div class="section-divider">
+          <span>Menú del día</span>
+        </div>
         <div class="daily-menu-section">
 
           <div class="input-with-button">
@@ -43,8 +45,11 @@
           </ul>
         </div>
       </div>
-
+  
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
+        <div class="section-divider">
+          <span>Carga tu carta!</span>
+        </div>
         <button mat-raised-button color="primary" (click)="abrirDialogoCargarMenu()">Cargar nueva carta</button>
       </div>
 

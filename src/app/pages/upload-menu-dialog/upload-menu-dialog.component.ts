@@ -28,7 +28,7 @@ export class UploadMenuDialogComponent {
   readonly maxFileSizeBytes = this.maxFileSizeMB * 1024 * 1024;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { restobarId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { restobarId: number,menuDiario:string },
     private dialogRef: MatDialogRef<UploadMenuDialogComponent>,
     private storageService: FirebaseStorageService,
     private complementoService: RestobarMenuComplementoService,
@@ -73,7 +73,8 @@ export class UploadMenuDialogComponent {
 
       const dto: RestobarMenuComplemento = {
         restobarId: this.data.restobarId,
-        urlMenu: url
+        urlMenu: url,
+        menuDiario: this.data.menuDiario
       };
 
       this.complementoService.create(dto).subscribe({
