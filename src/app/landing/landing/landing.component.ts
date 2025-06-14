@@ -11,6 +11,11 @@ import { HttpClient } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { Breakpoints } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
+import { DialogRestobarDetalleComponent } from '../../pages/dialog-restobar-detalle/dialog-restobar-detalle.component';
+import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
 
 @Component({
   selector: 'app-landing',
@@ -24,7 +29,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatInputModule,
     MatIconModule
-  
+
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
@@ -33,9 +38,12 @@ export class LandingComponent implements OnInit {
   private router = inject(Router);
   private restobarService = inject(RestobarService);
   busquedaNombre: string = '';
-  constructor(private http: HttpClient) {}
+  breakpointObserver: any;
+  constructor(private dialog: MatDialog, private menuService: RestobarMenuComplementoService) { }
 
   restobares: Restobar[] = [];
+  urlMenu: string = '';
+  loading = false
 
   @ViewChild('carousel') carouselRef!: ElementRef;
 
@@ -48,6 +56,29 @@ export class LandingComponent implements OnInit {
   }
 
   verDetalle(restobar: Restobar) {
+    this.loading = true;
+    const id = Number(restobar.id);
+    const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
+
+    this.menuService.getByRestobarId(id).subscribe({
+      next: (res: RestobarMenuComplemento | null) => {
+        this.urlMenu = res?.urlMenu || '';
+        this.dialog.open(DialogRestobarDetalleComponent, {
+          width: isSmallScreen ? '90%' : '50%',
+          panelClass: 'full-dialog',
+          data: { restobar, urlMenu: this.urlMenu },
+          //width: 'auto',
+          maxWidth: 'none'
+        });
+        this.loading = false;
+        console.log('Menú cargado correctamente:', this.urlMenu);
+      },
+      error: (err) => {
+        console.error('Error obteniendo menú', err);
+        this.loading = false;
+      }
+    });
+
     console.log('Detalle de:', restobar);
   }
 
@@ -69,16 +100,16 @@ export class LandingComponent implements OnInit {
   }
 
   buscarPorNombre() {
-  if (!this.busquedaNombre || this.busquedaNombre.trim() === '') {
-    return;
+    if (!this.busquedaNombre || this.busquedaNombre.trim() === '') {
+      return;
+    }
+    this.restobarService.buscarPorNombre(this.busquedaNombre.trim()).subscribe({
+      next: (data) => {
+        this.restobares = data;
+      },
+      error: (err) => console.error('Error al buscar:', err)
+    });
   }
-  this.restobarService.buscarPorNombre(this.busquedaNombre.trim()).subscribe({
-    next: (data) => {
-      this.restobares = data;
-    },
-    error: (err) => console.error('Error al buscar:', err)
-  });
-}
 
   buscarPorUbicacion() {
     if (navigator.geolocation) {

@@ -1,0 +1,22 @@
+<div class="menu-content">
+  <h2 mat-dialog-title>{{ data.restobar.name }}</h2>  
+  <p><strong>Descripción:</strong> {{ data.restobar.description }}</p>
+  <h3>Compartir enlace</h3>
+  <div class="link-section">
+    <input matInput type="text" [value]="data.restobar.urlMenu" readonly class="url-input" />
+    <div class="button-group" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+      <button class="btn btn-primary" (click)="copyLink()">Copiar enlace</button>
+      <button class="btn btn-accent" (click)="verCartaMenu()">Ver Carta del Menú</button>
+    </div>
+  </div>
+  <h3>Compartir QR</h3>
+    <div class="qr-section">
+      <div id="qr-code" class="qr-code">
+        <qr-code [value]="data.restobar.urlMenu" size="200" ></qr-code>
+      </div>
+      <button class="btn btn-primary" (click)="downloadQR()">Descargar QR</button>
+    </div>
+    <!-- Mapa -->
+    <div id="map" class="map-container"></div>
+</div>
+
