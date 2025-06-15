@@ -18,7 +18,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
+
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
         <div class="section-divider">
           <span>Menú del día</span>
@@ -36,16 +36,21 @@
           </div>
 
           <ul class="menu-list" *ngIf="menuDia.length > 0">
-            <li *ngFor="let item of menuDia; let i = index">
+            <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
               {{ item }}
               <button mat-icon-button color="warn" (click)="eliminarItemMenuDia(i)">
                 <mat-icon>delete</mat-icon>
               </button>
             </li>
           </ul>
+          <div *ngIf="menuDia.length > 5" style="margin-top: 8px;">
+            <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems">
+              {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + menuDia.length + ')' }}
+            </button>
+          </div>
         </div>
       </div>
-  
+
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
         <div class="section-divider">
           <span>Carga tu carta!</span>
@@ -54,7 +59,7 @@
       </div>
 
       <div *ngIf="urlMenu && !loading" class="menu-content">
-        
+
         <!-- esta seccion es para reenderizar la carta en el mismo componente
       <h3>Vista previa del menú</h3>
       <ng-container *ngIf="urlMenu.endsWith('.pdf'); else imagePreview">
@@ -69,8 +74,10 @@
         <div class="link-section">
           <input matInput type="text" [value]="urlMenu" readonly class="url-input" />
           <div class="button-group">
-            <button mat-raised-button color="primary" aria-label="Copiar enlace" (click)="copyLink()">Copiar enlace</button>
-            <button mat-raised-button color="accent" aria-label="Copiar enlace" (click)="verCartaMenu()">Ver Carta del Menú</button>
+            <button mat-raised-button color="primary" aria-label="Copiar enlace" (click)="copyLink()">Copiar
+              enlace</button>
+            <button mat-raised-button color="accent" aria-label="Copiar enlace" (click)="verCartaMenu()">Ver Carta del
+              Menú</button>
           </div>
         </div>
 
@@ -90,4 +97,3 @@
     </div>
   </mat-card>
 </div>
-  

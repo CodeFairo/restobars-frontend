@@ -17,18 +17,15 @@ export class DialogRestobarDetalleComponent {
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
+  nivelSatisfaccion: number = 5; // Valor inicial
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('Datos del diálogo:', data);
   }
-  public form: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    description: ['', Validators.required],
-    logoUrl: [''],
-    direccion: ['', Validators.required],
-    latitud: ['', Validators.required],
-    longitud: ['', Validators.required],
-    horarioAtencion: ['', Validators.required],
-  });
+
+  ngAfterViewInit(){
+    this.mostrarMapa();
+  }
 
   copyLink(): void {
     navigator.clipboard.writeText(this.data.urlMenu).then(() => {
@@ -87,112 +84,24 @@ export class DialogRestobarDetalleComponent {
     });
   }
 
-  initMap(): void {
-  const mapElement = document.getElementById('map') as HTMLElement;
-  const defaultLocation = { lat: this.data.restobar.latitud, lng: this.data.restobar.longitud };
+  mostrarMapa(): void {
+    const mapaElemento = document.getElementById('map');
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const userLocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+    if (!mapaElemento) return;
 
-        this.map = new google.maps.Map(mapElement, {
-          center: defaultLocation,
-          zoom: 15
-        });
+    const ubicacion = new google.maps.LatLng(this.data.restobar.latitud, this.data.restobar.longitud);
 
-        this.placeMarker(userLocation);
-        this.updateLocation(userLocation.lat, userLocation.lng);
+    const opcionesMapa = {
+      center: ubicacion,
+      zoom: 15
+    };
 
-        this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
-          if (e.latLng) {
-            this.marker.setPosition(e.latLng);
-            this.updateLocation(e.latLng.lat(), e.latLng.lng());
-          }
-        });
+    const mapa = new google.maps.Map(mapaElemento, opcionesMapa);
 
-        this.marker.setDraggable(true);
-        this.marker.addListener('dragend', () => {
-          const pos = this.marker.getPosition();
-          if (pos) this.updateLocation(pos.lat(), pos.lng());
-        });
-      },
-      () => this.loadDefaultMap(mapElement)
-    );
-  } else {
-    this.loadDefaultMap(mapElement);
-  }
-}
-
-
-  loadDefaultMap(mapElement: HTMLElement) {
-    const defaultLocation = { lat: -12.0464, lng: -77.0428 };
-
-    this.map = new google.maps.Map(mapElement, {
-      center: defaultLocation,
-      zoom: 12
-    });
-
-    this.placeMarker(defaultLocation);
-    this.updateLocation(defaultLocation.lat, defaultLocation.lng);
-
-    this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
-      if (e.latLng) {
-        const lat = e.latLng.lat();
-        const lng = e.latLng.lng();
-        this.marker.setPosition(e.latLng);
-        this.updateLocation(lat, lng);
-      }
-    });
-
-    this.marker.setDraggable(true);
-    this.marker.addListener('dragend', () => {
-      const pos = this.marker.getPosition();
-      if (pos) {
-        this.updateLocation(pos.lat(), pos.lng());
-      }
-    });
-  }
-
-  placeMarker(position: { lat: number; lng: number }) {
-    if (this.marker) {
-      this.marker.setPosition(position);
-    } else {
-      this.marker = new google.maps.Marker({
-        position,
-        map: this.map,
-        title: 'Ubicación seleccionada',
-        draggable: true
-      });
-
-      // Se agrega aquí el listener por si se crea el marcador aquí
-      this.marker.addListener('dragend', () => {
-        const pos = this.marker.getPosition();
-        if (pos) {
-          this.updateLocation(pos.lat(), pos.lng());
-        }
-      });
-    }
-    this.map.panTo(position);
-  }
-
-  updateLocation(lat: number, lng: number) {
-    this.form.patchValue({
-      latitud: lat,
-      longitud: lng
-    });
-
-    this.geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-      if (status === 'OK' && results && results[0]) {
-        this.form.patchValue({
-          direccion: results[0].formatted_address
-        });
-      } else {
-        console.warn('No se pudo obtener la dirección:', status);
-      }
+    new google.maps.Marker({
+      position: ubicacion,
+      map: mapa,
+      title: 'Ubicación seleccionada'
     });
   }
 }

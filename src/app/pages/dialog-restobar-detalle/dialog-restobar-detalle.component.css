@@ -1,17 +1,26 @@
+.slider-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  height: 100%;
+}
 
 
-/* Estilos del contenido interno */
+/* Contenedor principal */
 .menu-content {
-  padding: 24px 8px; /* Menos espacio a los costados */
-  max-width: 500px;  /* Limita el ancho del contenido */
-  margin: 0 auto;    /* Centra horizontalmente */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  padding: 24px 16px;
+  width: 100%;
+  height: 100%;
+  max-width: none;         /* ← eliminar límite de ancho */
+  max-height: none;        /* ← eliminar límite de alto */
+  overflow-y: auto;
+  overflow-x: none; /* ← sin scroll horizontal */
+  margin: auto;               /* ← sin centrado */
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* Hace que los hijos ocupen todo el ancho disponible */
-  border-radius: 100px;  /* Más armonioso que 20% */
-  background: white;    /* Por si necesitás contraste */
+  align-items: flex-start;
+  border-radius: 0;        /* ← sin borde redondeado si deseas ocupar todo */
+  background: white;
+  box-sizing: border-box;
 }
 
 
@@ -40,6 +49,7 @@
 /* Input */
 .url-input {
   width: 100%;
+  min-width: 0;
   max-width: 500px;
   padding: 8px 12px;
   font-size: 14px;
@@ -108,7 +118,67 @@
 .map-container {
   width: 100%;
   height: 300px; /* O la altura que necesites */
-  margin-top: 20px;
+  margin-top: 0px;
   border: 1px solid #ccc; /* Opcional para ver el borde */
   border-radius: 8px;
+}
+
+/* Solo afecta al popover dentro del div.box */
+.box #modal[popover] {
+  padding: 24px 20px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  max-width: 320px;
+  width: 90vw;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.25s ease-in-out;
+  z-index: 1000;
+}
+
+/* Título del popover */
+.box #modal[popover] h2 {
+  font-size: 20px;
+  color: #3f51b5;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Texto de los platos */
+.box #modal[popover] p {
+  margin: 4px 0;
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* Botón cerrar exclusivo dentro del popover */
+.box #modal[popover] .btn {
+  margin-top: 16px;
+  width: 100%;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/* Responsividad general */
+@media (max-width: 480px) {
+  .menu-content {
+    padding: 16px 8px;
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .btn, .button-group button {
+    min-width: 100%;
+  }
+
+  .map-container {
+    height: 200px;
+  }
 }

@@ -10,7 +10,7 @@ import { UploadMenuDialogComponent } from '../upload-menu-dialog/upload-menu-dia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { QrCodeComponent  } from 'ng-qrcode';
+import { QrCodeComponent } from 'ng-qrcode';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,26 +33,27 @@ import { AlertService } from '../../services/alert.service';
     ReactiveFormsModule,
     MatCardModule,
     MatIconModule,
-    ReactiveFormsModule,          
+    ReactiveFormsModule,
     FormsModule,
   ],
   templateUrl: './compartir-cartamenu.component.html',
   styleUrl: './compartir-cartamenu.component.css'
 })
-export class CompartirCartamenuComponent implements OnInit{
+export class CompartirCartamenuComponent implements OnInit {
   restobares: Restobar[] = [];
   selectedRestobarId: number | null = null;
   urlMenu: string = '';
   loading = false;
   menuDiaItem: string = '';
   menuDia: string[] = [];
+  mostrarTodosLosItems: boolean = false;
 
   constructor(
     private restobarService: RestobarService,
     private complementoService: RestobarMenuComplementoService,
     private dialog: MatDialog,
     private alert: AlertService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.restobarService.listaRestobarsPorUsuario().subscribe({
@@ -88,12 +89,12 @@ export class CompartirCartamenuComponent implements OnInit{
       }
     });
   }
- 
+
   abrirDialogoCargarMenu() {
     const jsonMenu = JSON.stringify(this.menuDia);
     const dialogRef = this.dialog.open(UploadMenuDialogComponent, {
-      data: { 
-        restobarId: this.selectedRestobarId, 
+      data: {
+        restobarId: this.selectedRestobarId,
         menuDiario: jsonMenu
       }
     });
@@ -101,7 +102,7 @@ export class CompartirCartamenuComponent implements OnInit{
       // Vuelve a cargar el menú después de cerrar el diálogo
       this.onRestobarSelected();
     });
-  }    
+  }
 
   copyLink(): void {
     navigator.clipboard.writeText(this.urlMenu).then(() => {
@@ -164,6 +165,7 @@ export class CompartirCartamenuComponent implements OnInit{
   agregarItemMenuDia(): void {
     const item = this.menuDiaItem.trim();
     if (item) {
+      const nuevoItem = { texto: item, visible: true };
       this.menuDia.push(item);
       this.menuDiaItem = '';
     }
@@ -171,7 +173,15 @@ export class CompartirCartamenuComponent implements OnInit{
   }
 
   eliminarItemMenuDia(index: number): void {
-    this.menuDia.splice(index, 1);
+    if (!this.mostrarTodosLosItems) {
+      this.menuDia.splice(index, 1);
+    } else {
+      this.menuDia.splice(index, 1);
+    }
+
+    if (this.menuDia.length <= 5) {
+      this.mostrarTodosLosItems = false;
+    }
     this.actualizarMenuDia();
   }
 
@@ -184,6 +194,7 @@ export class CompartirCartamenuComponent implements OnInit{
 
     const dto: RestobarMenuComplemento = {
       restobarId: this.selectedRestobarId,
+      urlMenu: this.urlMenu,
       menuDiario: jsonMenu,
     };
 
@@ -196,7 +207,7 @@ export class CompartirCartamenuComponent implements OnInit{
         },
         error: (err) => {
           //this.alert.close();
-          this.alert.error('Error', 'Ocurrió un error al grabar el menu');
+          this.alert.error('Error', 'Ocurrió un error al grabar el menu1');
         }
       });
     } catch (err) {
@@ -205,5 +216,5 @@ export class CompartirCartamenuComponent implements OnInit{
       this.alert.close();
     }
   }
-  
+
 }

@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
 import { DialogRestobarDetalleComponent } from '../../pages/dialog-restobar-detalle/dialog-restobar-detalle.component';
@@ -38,7 +38,7 @@ export class LandingComponent implements OnInit {
   private router = inject(Router);
   private restobarService = inject(RestobarService);
   busquedaNombre: string = '';
-  breakpointObserver: any;
+  private breakpointObserver = inject(BreakpointObserver);
   constructor(private dialog: MatDialog, private menuService: RestobarMenuComplementoService) { }
 
   restobares: Restobar[] = [];
@@ -64,10 +64,10 @@ export class LandingComponent implements OnInit {
       next: (res: RestobarMenuComplemento | null) => {
         this.urlMenu = res?.urlMenu || '';
         this.dialog.open(DialogRestobarDetalleComponent, {
-          width: isSmallScreen ? '90%' : '50%',
+          width: isSmallScreen ? '100%' : '50%',
+          height: '100vh',
           panelClass: 'full-dialog',
-          data: { restobar, urlMenu: this.urlMenu },
-          //width: 'auto',
+          data: { restobar, urlMenu: this.urlMenu },        
           maxWidth: 'none'
         });
         this.loading = false;
@@ -78,8 +78,6 @@ export class LandingComponent implements OnInit {
         this.loading = false;
       }
     });
-
-    console.log('Detalle de:', restobar);
   }
 
   ngOnInit(): void {
