@@ -1,6 +1,6 @@
 <div class="menu-content">
   <div class="slider-wrapper">
-    <h2 mat-dialog-title>{{ data.restobar.name }}</h2>
+    <h2 mat-dialog-title>{{ data.restobar.name }}</h2>    
 
     <p>{{ data.restobar.description }}</p>
     <p><strong>Horario:</strong> {{ data.restobar.horarioAtencion }}</p>
@@ -11,17 +11,22 @@
       <div class="button-group" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
         <button class="btn btn-primary" (click)="copyLink()">Copiar enlace</button>
         <button class="btn btn-accent" (click)="verCartaMenu()">Ver Carta del Menú</button>
-        
+
         <div class="box">
           <button class="btn btn-primary" popovertarget="modal">Ver platos</button>
           <div id="modal" popover>
             <h2>Platos del Menú</h2>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <button class="btn btn-primary" popovertarget="modal">Close</button>
+            <ul class="menu-list" *ngIf="data.menuDia.length > 0">
+              <li *ngFor="let item of mostrarTodosLosItems ? data.menuDia : data.menuDia.slice(0, 5); let i = index">
+                {{ item }}
+              </li>
+            </ul>
+            <div class="popover-buttons" *ngIf="data.menuDia.length > 5">
+              <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems" class="btn btn-toggle">
+                {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + data.menuDia.length + ')' }}
+              </button>
+              <button class="btn btn-primary" popovertarget="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
@@ -36,5 +41,8 @@
     <!-- Mapa -->
     <h3>Ubicanos en:</h3>
     <div id="map" class="map-container"></div>
+  </div>
+  <div class="align-right">
+    <button class="btn btn-primary" (click)="cerrarDialog()">Cerrar</button>
   </div>
 </div>

@@ -1,14 +1,14 @@
 import { Component, inject, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import html2canvas from 'html2canvas';
 import { QrCodeComponent } from 'ng-qrcode';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-restobar-detalle',
   standalone: true,
-  imports: [QrCodeComponent],
+  imports: [QrCodeComponent, NgIf, NgFor],
   templateUrl: './dialog-restobar-detalle.component.html',
   styleUrl: './dialog-restobar-detalle.component.css'
 })
@@ -17,13 +17,14 @@ export class DialogRestobarDetalleComponent {
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
-  nivelSatisfaccion: number = 5; // Valor inicial
+  mostrarTodosLosItems: boolean = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+
+  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('Datos del diálogo:', data);
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.mostrarMapa();
   }
 
@@ -103,5 +104,9 @@ export class DialogRestobarDetalleComponent {
       map: mapa,
       title: 'Ubicación seleccionada'
     });
+  }
+
+  cerrarDialog(): void {
+    this.dialogRef.close();
   }
 }

@@ -10,15 +10,20 @@
   padding: 24px 16px;
   width: 100%;
   height: 100%;
-  max-width: none;         /* ← eliminar límite de ancho */
-  max-height: none;        /* ← eliminar límite de alto */
+  max-width: none;
+  /* ← eliminar límite de ancho */
+  max-height: none;
+  /* ← eliminar límite de alto */
   overflow-y: auto;
-  overflow-x: none; /* ← sin scroll horizontal */
-  margin: auto;               /* ← sin centrado */
+  overflow-x: none;
+  /* ← sin scroll horizontal */
+  margin: auto;
+  /* ← sin centrado */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-radius: 0;        /* ← sin borde redondeado si deseas ocupar todo */
+  border-radius: 0;
+  /* ← sin borde redondeado si deseas ocupar todo */
   background: white;
   box-sizing: border-box;
 }
@@ -99,27 +104,45 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
 }
 
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%; /* Importante para que tome todo el ancho del padre */  
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 16px; /* Espacio si lo necesitas */
+}
+
+
+
 .btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary {
-  background-color: #3f51b5; /* Azul Angular Material */
+  background-color: #3f51b5;
+  /* Azul Angular Material */
 }
 
 .btn-accent {
-  background-color: #ff4081; /* Rosa Angular Material */
+  background-color: #ff4081;
+  /* Rosa Angular Material */
 }
+
 .map-container {
   width: 100%;
-  height: 300px; /* O la altura que necesites */
+  height: 300px;
+  /* O la altura que necesites */
   margin-top: 0px;
-  border: 1px solid #ccc; /* Opcional para ver el borde */
+  border: 1px solid #ccc;
+  /* Opcional para ver el borde */
   border-radius: 8px;
 }
 
@@ -153,32 +176,102 @@
   text-align: center;
 }
 
-/* Botón cerrar exclusivo dentro del popover */
-.box #modal[popover] .btn {
-  margin-top: 16px;
-  width: 100%;
-}
+/* Botón para los botones del popover */
+.box #modal[popover] .popover-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  /* Tamaño consistente de los botones */
+  .box #modal[popover] .popover-buttons .btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .box #modal[popover] .btn-primary {
+    background-color: #3f51b5;
+  }
+
+  .box #modal[popover] .btn-toggle {
+    background-color: #ff4081;
+  }
 
 /* Animación suave */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+}
+
+.menu-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #555;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  color: #000;
+  transform: scale(1.2);
 }
 
 
 /* Responsividad general */
 @media (max-width: 480px) {
   .menu-content {
-    padding: 16px 8px;
-    max-width: 100%;
+    padding: 16px 0px;
+    max-width: 90%;
     border-radius: 0;
   }
 
-  .btn, .button-group button {
+  .btn,
+  .button-group button {
     min-width: 100%;
   }
 
   .map-container {
     height: 200px;
+  }  
+
+  .box #modal[popover] .popover-buttons .btn {
+    min-width: 45%;
   }
 }
+
+

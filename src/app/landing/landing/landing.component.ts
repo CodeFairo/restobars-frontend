@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
 import { DialogRestobarDetalleComponent } from '../../pages/dialog-restobar-detalle/dialog-restobar-detalle.component';
 import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-landing',
@@ -28,7 +30,9 @@ import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplement
     CommonModule,
     FormsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
+    MatMenuModule
 
   ],
   templateUrl: './landing.component.html',
@@ -42,8 +46,11 @@ export class LandingComponent implements OnInit {
   constructor(private dialog: MatDialog, private menuService: RestobarMenuComplementoService) { }
 
   restobares: Restobar[] = [];
-  urlMenu: string = '';
-  loading = false
+  loading = false;
+  menuDia: string[] = [];
+  isPopoverOpen = false;
+  isCollapsed = false;
+
 
   @ViewChild('carousel') carouselRef!: ElementRef;
 
@@ -62,16 +69,26 @@ export class LandingComponent implements OnInit {
 
     this.menuService.getByRestobarId(id).subscribe({
       next: (res: RestobarMenuComplemento | null) => {
-        this.urlMenu = res?.urlMenu || '';
+
+        if (res?.menuDiario) {
+          try {
+            this.menuDia = JSON.parse(res.menuDiario);
+          } catch (e) {
+            console.error('Error al parsear menú del día', e);
+            this.menuDia = [];
+          }
+        }
         this.dialog.open(DialogRestobarDetalleComponent, {
           width: isSmallScreen ? '100%' : '50%',
-          height: '100vh',
+          height: '90vh',
           panelClass: 'full-dialog',
-          data: { restobar, urlMenu: this.urlMenu },        
+          data: { restobar, menuDia: this.menuDia },
           maxWidth: 'none'
         });
         this.loading = false;
-        console.log('Menú cargado correctamente:', this.urlMenu);
+
+
+        console.log('Menú cargado correctamente:', this.menuDia);
       },
       error: (err) => {
         console.error('Error obteniendo menú', err);
@@ -128,4 +145,9 @@ export class LandingComponent implements OnInit {
       console.error('Geolocalización no soportada por el navegador.');
     }
   }
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
 }

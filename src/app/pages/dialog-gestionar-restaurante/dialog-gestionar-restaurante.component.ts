@@ -64,6 +64,7 @@ export class DialogGestionarRestauranteComponent {
 
   ngOnInit(): void {
     if (this.data) {
+      console.log('Datos recibidos en el diálogo:', this.data);
       this.isEditMode = true;
       this.form.patchValue({
         name: this.data.name,
@@ -249,7 +250,7 @@ export class DialogGestionarRestauranteComponent {
   
   onLogoSelected() {
     const dialogRef = this.dialog.open(UploadLogoDialogComponent, {
-      data: { restobarId: this.data.id }
+      data: { restobarId: this.data.id, urlMenu: this.data.urlMenu },
     });
 
     dialogRef.afterClosed().subscribe(result => {

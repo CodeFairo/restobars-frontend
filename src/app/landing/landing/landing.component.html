@@ -1,13 +1,29 @@
-
 <div class="background-blur"></div>
 <div class="background-overlay"></div>
 
 <mat-toolbar class="toolbar">
   <span class="logo">🍽️ RestobarsOnline</span>
   <span class="spacer"></span>
-  <button mat-button (click)="registrarse()">Registrarse</button>
-  <button mat-button (click)="ingresar()">Ingresar</button>
+
+  <!-- Botones grandes (desktop) -->
+  <div class="toolbar-buttons desktop-only">
+    <button mat-button (click)="registrarse()">Registrarse</button>
+    <button mat-button (click)="ingresar()">Ingresar</button>
+  </div>
+
+  <!-- Menú hamburguesa (mobile) -->
+  <div class="mobile-only">
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+
+<!-- Menú desplegable para móvil -->
+<mat-menu #mobileMenu="matMenu">
+  <button mat-menu-item (click)="registrarse()">Registrarse</button>
+  <button mat-menu-item (click)="ingresar()">Ingresar</button>
+</mat-menu>
 
 <div class="landing-content">
 
@@ -26,8 +42,8 @@
       </button>
     </mat-form-field>
   </div>
-  
-  <div class="carousel-wrapper">
+  <h2>Confían en nosotros....</h2>
+  <div class="carousel-wrapper">    
     <button class="carousel-btn left" (click)="scrollCarousel('left')" aria-label="Anterior">←</button>
 
     <div class="restobars-carousel" #carousel>

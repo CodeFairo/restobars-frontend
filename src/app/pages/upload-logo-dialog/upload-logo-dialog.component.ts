@@ -14,8 +14,7 @@ import { MatDividerModule } from '@angular/material/divider';
   standalone: true, 
   imports: [
     MatButtonModule,
-    MatDividerModule,
-    NgIf
+    MatDividerModule
   ],
   templateUrl: './upload-logo-dialog.component.html',
   styleUrl: './upload-logo-dialog.component.css'
@@ -30,7 +29,7 @@ export class UploadLogoDialogComponent {
   readonly maxFileSizeBytes = this.maxFileSizeMB * 1024 * 1024;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { restobarId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { restobarId: number, urlMenu: string },
     private dialogRef: MatDialogRef<UploadLogoDialogComponent>,
     private storageService: FirebaseStorageService,
     private complementoService: RestobarMenuComplementoService,
@@ -75,7 +74,8 @@ export class UploadLogoDialogComponent {
 
       const dto: RestobarMenuComplemento = {
         restobarId: this.data.restobarId,
-        urlLogo: url
+        urlLogo: url,
+        urlMenu: this.data.urlMenu,
       };
 
       this.complementoService.create(dto).subscribe({

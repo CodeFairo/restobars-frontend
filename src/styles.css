@@ -1,9 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
 
-html, body {
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -20,3 +28,44 @@ app-root {
   flex: 1;
 }
 
+/* Fondo de colores cálidos con blur */
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1543353071-087092ec393b?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+  background-size: cover;
+  background-image: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #1d4283);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  filter: blur(14px);
+  z-index: -2;
+}
+
+/* Capa oscura para mayor contraste */
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: -1;
+}
+
+/* Animación del degradado */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
