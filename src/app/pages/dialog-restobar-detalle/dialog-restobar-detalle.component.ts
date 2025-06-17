@@ -2,7 +2,7 @@ import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import html2canvas from 'html2canvas';
 import { QrCodeComponent } from 'ng-qrcode';
-import { FormBuilder} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -18,14 +18,16 @@ export class DialogRestobarDetalleComponent {
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
   mostrarTodosLosItems: boolean = false;
+  datosRestorbar: any;
 
 
   constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.datosRestorbar = this.data.restobar;
     console.log('Datos del diálogo:', data);
   }
 
   ngAfterViewInit() {
-    this.mostrarMapa();
+    this.mostrarMapa();    
   }
 
   copyLink(): void {
@@ -109,4 +111,5 @@ export class DialogRestobarDetalleComponent {
   cerrarDialog(): void {
     this.dialogRef.close();
   }
+
 }

@@ -79,7 +79,7 @@ export class LandingComponent implements OnInit {
           }
         }
         this.dialog.open(DialogRestobarDetalleComponent, {
-          width: isSmallScreen ? '100%' : '50%',
+          width: isSmallScreen ? '90%' : '50%',
           height: '90vh',
           panelClass: 'full-dialog',
           data: { restobar, menuDia: this.menuDia },

@@ -1,19 +1,21 @@
 <div class="menu-content">
   <div class="slider-wrapper">
-    <h2 mat-dialog-title>{{ data.restobar.name }}</h2>    
+    <h2 mat-dialog-title>{{ data.restobar.name }}</h2>
 
     <p>{{ data.restobar.description }}</p>
     <p><strong>Horario:</strong> {{ data.restobar.horarioAtencion }}</p>
     <p><strong>Ubicanos en:</strong> {{ data.restobar.direccion }}</p>
-    <h3>Compartir enlace</h3>
+    <h3 *ngIf="datosRestorbar.urlMenu">Compartir enlace</h3>
     <div class="link-section">
-      <input matInput type="text" [value]="data.restobar.urlMenu" readonly class="url-input" />
+      <input *ngIf="datosRestorbar.urlMenu" matInput type="text" [value]="datosRestorbar.urlMenu" readonly
+        class="url-input" />
       <div class="button-group" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
-        <button class="btn btn-primary" (click)="copyLink()">Copiar enlace</button>
-        <button class="btn btn-accent" (click)="verCartaMenu()">Ver Carta del Menú</button>
+        <button *ngIf="datosRestorbar.urlMenu" class="btn btn-primary" (click)="copyLink()">Copiar enlace</button>
+        <button *ngIf="datosRestorbar.urlMenu" class="btn btn-accent" (click)="verCartaMenu()">Ver Carta del
+          Menú</button>
 
         <div class="box">
-          <button class="btn btn-primary" popovertarget="modal">Ver platos</button>
+          <button *ngIf="data.menuDia.length > 0" class="btn btn-primary" popovertarget="modal">Ver platos</button>
           <div id="modal" popover>
             <h2>Platos del Menú</h2>
             <ul class="menu-list" *ngIf="data.menuDia.length > 0">
@@ -31,16 +33,18 @@
         </div>
       </div>
     </div>
-    <h3>Compartir QR</h3>
-    <div class="qr-section">
+    <h3 *ngIf="datosRestorbar.urlMenu">Compartir QR</h3>
+    <div *ngIf="datosRestorbar.urlMenu" class="qr-section">
       <div id="qr-code" class="qr-code">
         <qr-code [value]="data.restobar.urlMenu" size="200"></qr-code>
       </div>
       <button class="btn btn-primary" (click)="downloadQR()">Descargar QR</button>
     </div>
     <!-- Mapa -->
-    <h3>Ubicanos en:</h3>
-    <div id="map" class="map-container"></div>
+    <div *ngIf="datosRestorbar.latitud && datosRestorbar.longitud">
+      <h3>Ubicanos en:</h3>
+      <div id="map" class="map-container"></div>
+    </div>
   </div>
   <div class="align-right">
     <button class="btn btn-primary" (click)="cerrarDialog()">Cerrar</button>
