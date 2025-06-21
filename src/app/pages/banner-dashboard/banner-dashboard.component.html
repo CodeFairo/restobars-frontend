@@ -1,0 +1,86 @@
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+<div class="card-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Banners</mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column" fxLayoutGap="16px">
+            <!-- Botón registrar -->
+            <div class="button-container">
+                <button mat-raised-button class="btn btn-accent" (click)="mostrarFormulario()">
+                    Registrar nuevo banner
+                </button>
+            </div>
+            <div class="table-container">
+                <table mat-table [dataSource]="banners" matSort class="full-width-table">
+                    <ng-container matColumnDef="fraseBanner">
+                        <th mat-header-cell *matHeaderCellDef> Frase</th>
+                        <td mat-cell *matCellDef="let banner"> {{ banner.fraseBanner }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="urlBanner">
+                        <th mat-header-cell *matHeaderCellDef> Image </th>
+                        <td mat-cell *matCellDef="let banner">
+                            <img [src]="banner.urlBanner" alt="{{ banner.urlBanner }}" class="fixed-image" />
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Accciones </th>
+                        <td mat-cell *matCellDef="let banner">
+                            <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" fxLayout.lt-sm="column">
+                                <button *ngIf="banner.estadoBanner" mat-icon-button class="btn btn-green" matTooltip="Editar" (click)="actualizarBanner(banner)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button class="btn btn-primary" (click)="inactivarBanner(banner)"
+                                    [matTooltip]="banner.estadoBanner ? 'Inactivar' : 'Activar'">
+                                    <mat-icon [ngClass]="banner.estadoBanner ? 'icon-activo' : 'icon-inactivo'">
+                                        {{ banner.estadoBanner ? 'toggle_on' : 'toggle_off' }}
+                                    </mat-icon>
+                                </button>
+                                <button mat-icon-button class="btn btn-red" matTooltip="Eliminar" (click)="eliminarBanner(banner.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div class="overlay" *ngIf="mostrar" (click)="cerrarFormulario()">
+        <div class="box" (click)="$event.stopPropagation()">
+            <form [formGroup]="form" class="form-container">
+
+                <!-- Primer input ocupa toda la fila -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Frase de banner</mat-label>
+                    <input matInput formControlName="fraseBanner" />
+                </mat-form-field>
+
+                <!-- Input de archivo con nombre visible -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Imagen de Banner</mat-label>
+                    <input matInput [value]="fileName" readonly formControlName="urlBanner"/>
+                    <button mat-icon-button matSuffix (click)="fileInput.click()" type="button">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                    <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" />
+                </mat-form-field>
+
+                <mat-dialog-actions align="end" class="dialog-actions">
+                    <button mat-flat-button class="btn btn-primary" (click)="registrarBanner()">
+                        Registrar
+                    </button>
+                    <button mat-stroked-button class="btn btn-primary" (click)="cerrarFormulario()">Cancelar</button>
+                </mat-dialog-actions>
+
+            </form>
+        </div>
+    </div>
+
+</div>

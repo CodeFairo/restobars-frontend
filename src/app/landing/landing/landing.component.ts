@@ -18,6 +18,8 @@ import { DialogRestobarDetalleComponent } from '../../pages/dialog-restobar-deta
 import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { BannerService } from '../../services/banner.service';
+import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
 
 @Component({
   selector: 'app-landing',
@@ -41,11 +43,13 @@ import { MatMenuModule } from '@angular/material/menu';
 export class LandingComponent implements OnInit {
   private router = inject(Router);
   private restobarService = inject(RestobarService);
+  private bannerService = inject(BannerService);
   busquedaNombre: string = '';
   private breakpointObserver = inject(BreakpointObserver);
   constructor(private dialog: MatDialog, private menuService: RestobarMenuComplementoService) { }
 
   restobares: Restobar[] = [];
+  banners: DashBoardBanner[] = [];
   loading = false;
   menuDia: string[] = [];
   isPopoverOpen = false;

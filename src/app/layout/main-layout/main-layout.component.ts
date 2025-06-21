@@ -66,4 +66,8 @@ export class MainLayoutComponent {
     });
   }
 
+  bannerDashboard(){
+    this.router.navigate(['bannerDashboard']);
+  }
+
 }

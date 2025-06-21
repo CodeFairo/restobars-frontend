@@ -1,0 +1,30 @@
+<div class="overlay">
+    <div class="box" (click)="$event.stopPropagation()">
+        <form [formGroup]="form" class="form-container">
+
+            <!-- Primer input ocupa toda la fila -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Frase de banner</mat-label>
+                <input matInput formControlName="fraseBanner" />
+            </mat-form-field>
+
+            <!-- Input de archivo con nombre visible -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Imagen de Banner</mat-label>
+                <input matInput [value]="fileName" readonly formControlName="urlBanner" />
+                <button mat-icon-button matSuffix (click)="fileInput.click()" type="button">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" />
+            </mat-form-field>
+
+            <mat-dialog-actions align="end" class="dialog-actions">
+                <button mat-flat-button class="btn btn-primary" (click)="registrarBanner()">
+                    Registrar
+                </button>
+                <button mat-stroked-button class="btn btn-primary" (click)="cerrarFormulario(false)">Cancelar</button>
+            </mat-dialog-actions>
+
+        </form>
+    </div>
+</div>

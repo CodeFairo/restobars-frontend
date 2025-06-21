@@ -27,28 +27,32 @@
 
 <div class="landing-content">
 
-  <h1>Bienvenido a RestobarsOnline</h1>
-  <p>Deliciosos platos, excelente atención y un ambiente inigualable.</p>
+  <!-- Contenido encima -->
+  
+    <h1>Bienvenido a RestobarsOnline</h1>
+    <p>Deliciosos platos, excelente atención y un ambiente inigualable.</p>
 
-  <div class="search-bar">
-    <mat-form-field appearance="outline" class="search-input">
-      <mat-label>Buscar restaurante</mat-label>
-      <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" />
-      <button mat-icon-button matSuffix (click)="buscarPorNombre()">
-        <mat-icon>search</mat-icon>
-      </button>
-      <button mat-icon-button matSuffix (click)="buscarPorUbicacion()">
-        <mat-icon>place</mat-icon>
-      </button>
-    </mat-form-field>
-  </div>
-  <h2>Confían en nosotros....</h2>
-  <div class="carousel-wrapper">    
-    <button class="carousel-btn left" (click)="scrollCarousel('left')" aria-label="Anterior">←</button>
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Buscar restaurante</mat-label>
+        <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" />
+        <button mat-icon-button matSuffix (click)="buscarPorNombre()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button matSuffix (click)="buscarPorUbicacion()">
+          <mat-icon>place</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  
 
+  <!-- Carrusel horizontal de restobares -->
+  <h2>Confían en nosotros...</h2>
+  <div class="carousel-wrapper">
+    <button class="carousel-btn left" (click)="scrollCarousel('left')">←</button>
     <div class="restobars-carousel" #carousel>
       <mat-card *ngFor="let r of restobares" class="restobar-card">
-        <img mat-card-image [src]="r.urlLogo || 'assets/restobar_logo_default.png'" alt="{{ r.name }}">
+        <img mat-card-image [src]="r.urlLogo || 'assets/restobar_logo_default.png'" />
         <mat-card-header>
           <mat-card-title>{{ r.name }}</mat-card-title>
         </mat-card-header>
@@ -60,8 +64,7 @@
         </mat-card-actions>
       </mat-card>
     </div>
-
-    <button class="carousel-btn right" (click)="scrollCarousel('right')" aria-label="Siguiente">→</button>
+    <button class="carousel-btn right" (click)="scrollCarousel('right')">→</button>
   </div>
 </div>
 

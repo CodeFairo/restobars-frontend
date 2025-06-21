@@ -260,13 +260,13 @@
 }
 
 .search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 16px 0;
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+  text-align: center;
 }
 
 .search-input {
   width: 100%;
   max-width: 500px;
 }
-

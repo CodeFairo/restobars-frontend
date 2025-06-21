@@ -13,6 +13,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { QuienesSomosComponent } from './layout/quienes-somos/quienes-somos.component';
 import { ContactoComponent } from './layout/contacto/contacto.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
+import { BannerDashboardComponent } from './pages/banner-dashboard/banner-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full'},
@@ -32,7 +33,8 @@ export const routes: Routes = [
       { path: 'restobarDashboard', component: RestobarDashboardComponent },
       { path: 'misRestobar', component: GestionRestobarComponent },
       { path: 'compartirCarta', component: CompartirCartamenuComponent },
-      { path: 'miperfil', component: PerfilComponent }
+      { path: 'miperfil', component: PerfilComponent },
+      { path: 'bannerDashboard', component: BannerDashboardComponent }
 
       // Puedes agregar más rutas privadas aquí
     ]
