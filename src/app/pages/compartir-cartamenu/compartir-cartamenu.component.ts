@@ -163,13 +163,41 @@ export class CompartirCartamenuComponent implements OnInit {
 
 
   agregarItemMenuDia(): void {
-    const item = this.menuDiaItem.trim();
-    if (item) {
-      const nuevoItem = { texto: item, visible: true };
-      this.menuDia.push(item);
-      this.menuDiaItem = '';
+    
+    if (!this.selectedRestobarId) {
+      return;
     }
-    this.actualizarMenuDia();
+    
+    const item = this.menuDiaItem.trim();
+    if (!item) return;
+
+    const menuDiaSimulado = [...this.menuDia, item]; // copia temporal
+    const jsonMenu = JSON.stringify(menuDiaSimulado);
+
+    const dto: RestobarMenuComplemento = {
+      restobarId: this.selectedRestobarId,
+      urlMenu: this.urlMenu,
+      menuDiario: jsonMenu,
+    };
+
+    this.complementoService.create(dto).subscribe({
+      next: () => {
+        this.menuDia.push(item); // ahora sí lo agregamos
+        this.menuDiaItem = '';
+        this.alert.success('Menú del día cargado correctamente.');
+      },
+      error: (err) => {
+        const codigo = err?.error?.code;
+        const mensaje = err?.error?.message;
+
+        if (codigo === 'LIMITE_MENU_DIARIO') {
+          this.alert.warning('Límite alcanzado', mensaje);
+        } else {
+          console.error('Error:', err);
+          this.alert.error('Error al registrar', mensaje || 'Ocurrió un error inesperado');
+        }
+      }
+    });
   }
 
   eliminarItemMenuDia(index: number): void {
@@ -198,23 +226,24 @@ export class CompartirCartamenuComponent implements OnInit {
       menuDiario: jsonMenu,
     };
 
-    try {
-      // Aquí reemplaza por tu llamada real al backend
-      this.complementoService.create(dto).subscribe({
-        next: () => {
-          //this.alert.close();
-          //this.alert.success('Menu del día cargado correctamente.');
-        },
-        error: (err) => {
-          //this.alert.close();
-          this.alert.error('Error', 'Ocurrió un error al grabar el menu1');
+    this.complementoService.create(dto).subscribe({
+      next: () => {
+        //this.alert.success('Menú del día cargado correctamente.');
+      },
+      error: (err) => {
+        //this.alert.close();
+
+        const codigo = err?.error?.code;
+        const mensaje = err?.error?.message;
+
+        if (codigo === 'LIMITE_MENU_DIARIO') {
+          this.alert.warning('Límite alcanzado', mensaje);
+        } else {
+          console.error('Error:', err);
+          this.alert.error('Error al registrar', mensaje || 'Ocurrió un error inesperado');
         }
-      });
-    } catch (err) {
-      this.alert.error('Error', 'Ocurrió un error al grabar el menu');
-    } finally {
-      this.alert.close();
-    }
+      }
+    });
   }
 
 }
