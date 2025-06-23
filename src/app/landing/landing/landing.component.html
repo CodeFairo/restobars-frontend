@@ -2,7 +2,7 @@
 <div class="background-overlay"></div>
 
 <mat-toolbar class="toolbar">
-  <span class="logo">🍽️ RestobarsOnline</span>
+  <span class="logo">Restobars</span>
   <span class="spacer"></span>
 
   <!-- Botones grandes (desktop) -->
@@ -29,13 +29,13 @@
 
   <!-- Contenido encima -->
   
-    <h1>Bienvenido a RestobarsOnline</h1>
+    <h1>Bienvenido a Restobars</h1>
     <p>Deliciosos platos, excelente atención y un ambiente inigualable.</p>
 
     <div class="search-bar">
       <mat-form-field appearance="outline" class="search-input">
-        <mat-label>Buscar restaurante</mat-label>
-        <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" />
+        <mat-label style="color: wheat;">Buscar restobar</mat-label>
+        <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" style="color: wheat;"/>
         <button mat-icon-button matSuffix (click)="buscarPorNombre()">
           <mat-icon>search</mat-icon>
         </button>

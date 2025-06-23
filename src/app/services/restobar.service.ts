@@ -32,17 +32,5 @@ export class RestobarService {
      cambiarEstado(id: string, estado: boolean) {
           return this.http.put(`${this.baseUrl}api/restobar/estadorestobar/${id}/estado`, { estaActivo: estado });
      }
- 
-     /*******BUSQUEDAS PARA EL LANDING PRINCIPAL******/
-     listaAll() : Observable<any>{
-          return  this.http.get<any>(`${this.baseUrl}api/restobar/buscatodosrestobarparalanding`);
-     }
 
-     buscarPorNombre(nombre: string) {
-          return this.http.get<any>(`${this.baseUrl}api/restobar/buscarestobarpornombre/${encodeURIComponent(nombre)}`);
-     }
-
-     buscarPorUbicacion(lat: number, lng: number, nombre: string) {
-          return this.http.get<any>(`${this.baseUrl}api/restobar/buscarestobarporubicacion/${lat}/${lng}/${encodeURIComponent(nombre)}`);
-     }
 }

@@ -23,18 +23,12 @@ export class RestobarMenuComplementoService {
     return this.http.post<RestobarMenuComplemento>(`${this.baseUrl}api/restobarcomplemento`, dto);
   }
 
-  /*update(id: number, dto: RestobarMenuComplemento): Observable<RestobarMenuComplemento> {
-    return this.http.put<RestobarMenuComplemento>(`${this.baseUrl}/${id}`, dto)
-      .pipe(catchError(this.handleError));
-  }*/
-
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
-    //onsole.error('API error:', error);
     return throwError(() => new Error(error.error?.message || 'Error en el servidor'));
   }
 

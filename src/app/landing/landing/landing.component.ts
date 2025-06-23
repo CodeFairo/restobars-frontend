@@ -1,13 +1,11 @@
-import { Component, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { FooterComponent } from "../../layout/footer/footer.component";
 import { Restobar } from '../../interfaces/Restobar';
-import { RestobarService } from '../../services/restobar.service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { BannerService } from '../../services/banner.service';
 import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
+import { LandingService } from '../../services/landing.service';
 
 @Component({
   selector: 'app-landing',
@@ -37,12 +36,13 @@ import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
     MatMenuModule
 
   ],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
 export class LandingComponent implements OnInit {
   private router = inject(Router);
-  private restobarService = inject(RestobarService);
+  private landingService = inject(LandingService);
   private bannerService = inject(BannerService);
   busquedaNombre: string = '';
   private breakpointObserver = inject(BreakpointObserver);
@@ -71,7 +71,7 @@ export class LandingComponent implements OnInit {
     const id = Number(restobar.id);
     const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
 
-    this.menuService.getByRestobarId(id).subscribe({
+    this.landingService.getDetalleRestobar(id).subscribe({
       next: (res: RestobarMenuComplemento | null) => {
 
         if (res?.menuDiario) {
@@ -102,7 +102,7 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restobarService.listaAll().subscribe({
+    this.landingService.listaAll().subscribe({
       next: (data) => {
         this.restobares = data;
       },
@@ -122,7 +122,7 @@ export class LandingComponent implements OnInit {
     if (!this.busquedaNombre || this.busquedaNombre.trim() === '') {
       return;
     }
-    this.restobarService.buscarPorNombre(this.busquedaNombre.trim()).subscribe({
+    this.landingService.buscarPorNombre(this.busquedaNombre.trim()).subscribe({
       next: (data) => {
         this.restobares = data;
       },
@@ -136,7 +136,7 @@ export class LandingComponent implements OnInit {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
-        this.restobarService.buscarPorUbicacion(lat, lng, this.busquedaNombre).subscribe({
+        this.landingService.buscarPorUbicacion(lat, lng, this.busquedaNombre).subscribe({
           next: (data) => {
             this.restobares = data;
           },

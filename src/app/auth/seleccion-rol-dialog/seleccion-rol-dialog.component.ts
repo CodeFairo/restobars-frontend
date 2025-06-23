@@ -1,6 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field'; // ⬅ necesario
 import { MatInputModule } from '@angular/material/input'; // ⬅ necesario
 
