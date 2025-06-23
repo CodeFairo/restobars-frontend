@@ -12,13 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
-import { DialogRestobarDetalleComponent } from '../../pages/dialog-restobar-detalle/dialog-restobar-detalle.component';
 import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { BannerService } from '../../services/banner.service';
 import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
 import { LandingService } from '../../services/landing.service';
+import { DialogRestobarDetalleComponent } from '../dialog-restobar-detalle/dialog-restobar-detalle.component';
 
 @Component({
   selector: 'app-landing',
@@ -84,10 +84,8 @@ export class LandingComponent implements OnInit {
         }
         this.dialog.open(DialogRestobarDetalleComponent, {
           width: isSmallScreen ? '90%' : '50%',
-          height: '90vh',
-          panelClass: 'full-dialog',
-          data: { restobar, menuDia: this.menuDia },
-          maxWidth: 'none'
+          panelClass: 'custom-dialog',
+          data: { restobar, menuDia: this.menuDia }
         });
         this.loading = false;
 

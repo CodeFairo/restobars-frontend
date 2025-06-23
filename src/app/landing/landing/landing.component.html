@@ -2,7 +2,7 @@
 <div class="background-overlay"></div>
 
 <mat-toolbar class="toolbar">
-  <span class="logo">Restobars</span>
+  <span class="logo">RestobarsOnline</span>
   <span class="spacer"></span>
 
   <!-- Botones grandes (desktop) -->
@@ -29,8 +29,12 @@
 
   <!-- Contenido encima -->
   
-    <h1>Bienvenido a Restobars</h1>
-    <p>Deliciosos platos, excelente atención y un ambiente inigualable.</p>
+    <h1>Bienvenido a RestobarsOnline</h1>
+    <p>Tu carta, más viva que nunca 📲
+      Con RestobarsOnline podrás mostrar tu menú de forma moderna y rápida. Olvídate de imprimir o reenviar PDF: genera tu
+      QR, compártelo y edita tu carta cuando quieras.
+      Fácil, rápido y pensado para que tus clientes disfruten, y tú te concentres en lo que mejor sabes hacer: atenderlos
+      como se merecen.</p>
 
     <div class="search-bar">
       <mat-form-field appearance="outline" class="search-input">
@@ -47,8 +51,12 @@
   
 
   <!-- Carrusel horizontal de restobares -->
-  <h2>Confían en nosotros...</h2>
-  <div class="carousel-wrapper">
+  <p>🔎 Busca tu Restobar Favorito Cerca de Ti
+    Explora nuestra red de restaurantes afiliados y descubre nuevas experiencias gastronómicas a solo unos clics.
+    📍 Encuentra por ubicación
+    🍽️ Consulta menús digitales al instante
+    📱 Accede desde tu celular sin descargar nada
+    Todo rápido, seguro y sin contacto. ¡Tu próxima comida inolvidable está a un QR de distancia!</p><div class="carousel-wrapper">
     <button class="carousel-btn left" (click)="scrollCarousel('left')">←</button>
     <div class="restobars-carousel" #carousel>
       <mat-card *ngFor="let r of restobares" class="restobar-card" (click)="verDetalle(r)">

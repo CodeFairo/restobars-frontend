@@ -1,13 +1,16 @@
-<div class="menu-container">
   <div class="menu-content">
 
     <div class="slider-wrapper">
       <h2 mat-dialog-title>{{ data.restobar.name }}</h2>
 
       <p>{{ data.restobar.description }}</p>
-      <p><strong>Horario:</strong> {{ data.restobar.horarioAtencion }}</p>
-      <p><strong>Ubícanos en:</strong> {{ data.restobar.direccion }}</p>
-
+      <p *ngIf="data.restobar.horarioAtencion">
+        <strong>Horario:</strong> {{ data.restobar.horarioAtencion }}
+      </p>
+      
+      <p *ngIf="data.restobar.direccion">
+        <strong>Ubícanos en:</strong> {{ data.restobar.direccion }}
+      </p>
       <!-- Compartir enlace -->
       <ng-container *ngIf="datosRestorbar.urlMenu">
         <h3>Mi enlace de Platos a la carta!</h3>
@@ -55,4 +58,3 @@
     </div>
 
   </div>
-</div>

@@ -24,7 +24,7 @@
   }
 
   button {
-    color: white;
+    color: black;
   }
 
   .desktop-only {
@@ -271,4 +271,12 @@
 .search-input {
   width: 100%;
   max-width: 500px;
+}
+
+
+::ng-deep .custom-dialog .mat-dialog-container {
+  padding: 0;
+  border-radius: 16px;
+  background: #f0f2f5;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
