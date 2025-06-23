@@ -70,24 +70,35 @@
       </ng-template>-->
 
         <!-- Sección para compartir el enlace -->
-        <h3>Compartir enlace</h3>
-        <div class="link-section">
-          <input matInput type="text" [value]="urlMenu" readonly class="url-input" />
-          <div class="button-group">
-            <button mat-raised-button color="primary" aria-label="Copiar enlace" (click)="copyLink()">Copiar
-              enlace</button>
-            <button mat-raised-button color="accent" aria-label="Copiar enlace" (click)="verCartaMenu()">Ver Carta del
-              Menú</button>
-          </div>
+        <div class="section-divider">
+          <span>Comparte enlace  de tu carta!</span>
         </div>
+        <div class="copy-link-wrapper">
+            <mat-form-field appearance="outline" class="copy-field">
+              <mat-label>Enlace del menú</mat-label>
+              <input matInput [value]="urlMenu" readonly>
+
+              <!-- Ícono de copiar -->
+              <button mat-icon-button matSuffix (click)="copyLink()" aria-label="Copiar enlace">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+
+              <!-- Ícono de ver -->
+              <button mat-icon-button matSuffix (click)="verCartaMenu()" aria-label="Ver carta del menú">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
 
         <!-- Sección QR -->
-        <h3>Compartir QR</h3>
+        <div class="section-divider">
+          <span>Comparte QR  de tu carta!</span>
+        </div>
         <div class="qr-section">
           <div id="qr-code" class="qr-code">
             <qr-code [value]="urlMenu" size="200" errorCorrectionLevel="M"></qr-code>
           </div>
-          <button mat-raised-button color="primary" (click)="downloadQR()">Descargar QR</button>
+          <button mat-raised-button color="primary" (click)="downloadQR()">Descargar QR de la carta</button>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 <div class="dialog-container">
   <h2 mat-dialog-title class="dialog-title">
-    {{ isEditMode ? 'Actualizar Restaurante' : 'Registrar Restaurante' }}
+    {{ 'Actualizar Restaurante'  }}
   </h2>
 
   <div class="dialog-scrollable-content">
@@ -8,7 +8,7 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" maxlength="100"/>
+        <input matInput formControlName="name" maxlength="100" />
         <mat-error *ngIf="form.get('name')?.hasError('required')">
           El nombre es obligatorio.
         </mat-error>
@@ -16,21 +16,26 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Descripción</mat-label>
-        <input matInput formControlName="description" maxlength="500"/>
+        <input matInput formControlName="description" maxlength="500" />
       </mat-form-field>
-
       <!-- Horario de Atención -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Horario de Atención</mat-label>
-        <input matInput formControlName="horarioAtencion" placeholder="Ej. Lunes a Viernes: 9:00 AM - 6:00 PM" maxlength="50"/>
+        <input matInput formControlName="horarioAtencion" placeholder="Ej. Lunes a Viernes: 9:00 AM - 6:00 PM"
+          maxlength="50" />
         <mat-hint>Ingrese los días y horas de atención al público</mat-hint>
         <mat-error *ngIf="form.get('horarioAtencion')?.hasError('required')">
           El horario de atención es obligatorio.
         </mat-error>
       </mat-form-field>
 
+      <!-- Checkbox -->
+      <mat-checkbox formControlName="actualizarUbicacion" class="mb-4">
+        ¿Actualizar ubicación del restobars?
+      </mat-checkbox>
+
       <!-- Mapa -->
-      <div id="map" class="map-container"></div>
+      <div *ngIf="mostrarMapa" id="map" class="map-container"></div>
 
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Dirección seleccionada</mat-label>
@@ -38,21 +43,15 @@
       </mat-form-field>
 
       <div class="logo-upload center-button">
-  <button
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="onLogoSelected()"
-    class="upload-button"
-  >
-    <mat-icon class="upload-icon">cloud_upload</mat-icon>
-    Subir Logo
-  </button>
+        <button mat-raised-button color="accent" type="button" (click)="onLogoSelected()" class="upload-button">
+          <mat-icon class="upload-icon">cloud_upload</mat-icon>
+          Subir Logo
+        </button>
 
-  <span *ngIf="form.get('logoUrl')?.value" class="logo-name">
-    Logo cargado
-  </span>
-</div>
+        <span *ngIf="form.get('logoUrl')?.value" class="logo-name">
+          Logo cargado
+        </span>
+      </div>
 
     </form>
   </div>
@@ -60,7 +59,7 @@
   <mat-dialog-actions align="end" class="dialog-actions">
     <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
     <button mat-flat-button color="primary" (click)="actualizar()" [disabled]="form.invalid">
-      {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+      {{ 'Actualizar' }}
     </button>
   </mat-dialog-actions>
 </div>

@@ -51,7 +51,7 @@
   <div class="carousel-wrapper">
     <button class="carousel-btn left" (click)="scrollCarousel('left')">←</button>
     <div class="restobars-carousel" #carousel>
-      <mat-card *ngFor="let r of restobares" class="restobar-card">
+      <mat-card *ngFor="let r of restobares" class="restobar-card" (click)="verDetalle(r)">
         <img mat-card-image [src]="r.urlLogo || 'assets/restobar_logo_default.png'" />
         <mat-card-header>
           <mat-card-title>{{ r.name }}</mat-card-title>
@@ -59,14 +59,9 @@
         <mat-card-content>
           <p>{{ r.description }}</p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary" (click)="verDetalle(r)">Ver Detalle</button>
-        </mat-card-actions>
       </mat-card>
     </div>
     <button class="carousel-btn right" (click)="scrollCarousel('right')">→</button>
   </div>
-</div>
-
 
 <app-footer></app-footer>

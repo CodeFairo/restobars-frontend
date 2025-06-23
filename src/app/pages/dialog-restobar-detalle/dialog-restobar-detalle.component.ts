@@ -4,11 +4,24 @@ import html2canvas from 'html2canvas';
 import { QrCodeComponent } from 'ng-qrcode';
 import { FormBuilder } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-dialog-restobar-detalle',
   standalone: true,
-  imports: [QrCodeComponent, NgIf, NgFor],
+  imports: [
+    QrCodeComponent,
+    NgIf,
+    //NgFor,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './dialog-restobar-detalle.component.html',
   styleUrl: './dialog-restobar-detalle.component.css'
 })
@@ -19,11 +32,11 @@ export class DialogRestobarDetalleComponent {
   geocoder = new google.maps.Geocoder();
   mostrarTodosLosItems: boolean = false;
   datosRestorbar: any;
+  private alert = inject(AlertService);
 
 
   constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.datosRestorbar = this.data.restobar;
-    console.log('Datos del diálogo:', data);
   }
 
   ngAfterViewInit() {
@@ -31,13 +44,19 @@ export class DialogRestobarDetalleComponent {
   }
 
   copyLink(): void {
-    navigator.clipboard.writeText(this.data.urlMenu).then(() => {
-      alert('Link copiado al portapapeles');
-    });
+    const url = this.data.restobar?.urlMenu;
+    if (url) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.alert.success('Enlace copiado al portapapeles');
+      });
+    }
   }
 
   verCartaMenu(): void {
-    window.open(this.data.urlMenu, '_blank');
+    const url = this.data.restobar?.urlMenu;
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   downloadQR(): void {

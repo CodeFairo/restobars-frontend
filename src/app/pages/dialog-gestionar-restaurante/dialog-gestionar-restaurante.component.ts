@@ -15,6 +15,7 @@ import { UploadLogoDialogComponent } from '../upload-logo-dialog/upload-logo-dia
 import { MatIcon } from '@angular/material/icon';
 import { RestobarEventService } from '../../services/RestobarEvent.service';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-dialog-registrar-restaurante',
@@ -28,7 +29,8 @@ import { MatSelectModule } from '@angular/material/select';
     GoogleMapsModule,
     MatDialogActions,
     MatIcon,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   templateUrl: './dialog-gestionar-restaurante.component.html',
   styleUrl: './dialog-gestionar-restaurante.component.css'
@@ -39,7 +41,7 @@ export class DialogGestionarRestauranteComponent {
   private restobarService = inject(RestobarService);
   private authService = inject(AuthService);
   private userId = this.authService.getUserId() ?? '';
-  public isEditMode = false;
+  public mostrarMapa: boolean = true;
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
@@ -60,12 +62,14 @@ export class DialogGestionarRestauranteComponent {
     latitud: ['', Validators.required],
     longitud: ['', Validators.required],
     horarioAtencion: ['', Validators.required],
+    actualizarUbicacion: [false]
   });
 
   ngOnInit(): void {
     if (this.data) {
-      console.log('Datos recibidos en el diálogo:', this.data);
-      this.isEditMode = true;
+
+      const tieneUbicacion = this.data.latitud && this.data.longitud;
+
       this.form.patchValue({
         name: this.data.name,
         description: this.data.description,
@@ -73,53 +77,81 @@ export class DialogGestionarRestauranteComponent {
         direccion: this.data.direccion,
         latitud: this.data.latitud,
         longitud: this.data.longitud,
-        horarioAtencion : this.data.horarioAtencion
+        horarioAtencion: this.data.horarioAtencion,
+        actualizarUbicacion: !tieneUbicacion // true si no hay lat/lng
       });
+
+      if (!tieneUbicacion) {
+        this.form.get('actualizarUbicacion')?.disable(); // obligatorio actualizar ubicación
+        this.mostrarMapa = true;
+      } else {
+        this.mostrarMapa = false;
+
+        this.form.get('actualizarUbicacion')?.valueChanges.subscribe(value => {
+          this.mostrarMapa = value;
+
+          if (value) {
+            setTimeout(() => this.initMap(), 0); // inicializa mapa cuando se marca el check
+          }
+        });
+      }
     }
   }
 
   ngAfterViewInit(): void {
-    this.initMap();
+    // Solo carga el mapa si debe mostrarse desde el inicio
+    if (this.mostrarMapa) {
+      this.initMap();
+    }
   }
 
   initMap(): void {
     const mapElement = document.getElementById('map') as HTMLElement;
 
-    if (navigator.geolocation) {
+    const tieneUbicacion = this.form.get('latitud')?.value && this.form.get('longitud')?.value;
+
+    const posicionInicial = tieneUbicacion
+      ? {
+        lat: parseFloat(this.form.get('latitud')?.value),
+        lng: parseFloat(this.form.get('longitud')?.value)
+      }
+      : null;
+
+    const cargarMapa = (pos: google.maps.LatLngLiteral) => {
+      this.map = new google.maps.Map(mapElement, {
+        center: pos,
+        zoom: 15
+      });
+
+      this.placeMarker(pos);
+      this.updateLocation(pos.lat, pos.lng);
+
+      this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
+        if (e.latLng) {
+          const lat = e.latLng.lat();
+          const lng = e.latLng.lng();
+          this.marker.setPosition(e.latLng);
+          this.updateLocation(lat, lng);
+        }
+      });
+
+      this.marker.setDraggable(true);
+      this.marker.addListener('dragend', () => {
+        const pos = this.marker.getPosition();
+        if (pos) {
+          this.updateLocation(pos.lat(), pos.lng());
+        }
+      });
+    };
+
+    if (posicionInicial) {
+      cargarMapa(posicionInicial);
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const userLocation = {
+          cargarMapa({
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          };
-
-          this.map = new google.maps.Map(mapElement, {
-            center: userLocation,
-            zoom: 15
-          });
-
-          this.placeMarker(userLocation);
-
-          // Guardar datos iniciales
-          this.updateLocation(userLocation.lat, userLocation.lng);
-
-          // Escuchar clicks para mover marcador
-          this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
-            if (e.latLng) {
-              const lat = e.latLng.lat();
-              const lng = e.latLng.lng();
-              this.marker.setPosition(e.latLng);
-              this.updateLocation(lat, lng);
-            }
-          });
-
-          // Hacer el marcador draggable y actualizar datos cuando se termine de arrastrar
-          this.marker.setDraggable(true);
-          this.marker.addListener('dragend', () => {
-            const pos = this.marker.getPosition();
-            if (pos) {
-              this.updateLocation(pos.lat(), pos.lng());
-            }
           });
         },
         () => this.loadDefaultMap(mapElement)
@@ -128,6 +160,7 @@ export class DialogGestionarRestauranteComponent {
       this.loadDefaultMap(mapElement);
     }
   }
+
 
   loadDefaultMap(mapElement: HTMLElement) {
     const defaultLocation = { lat: -12.0464, lng: -77.0428 };
@@ -203,16 +236,13 @@ export class DialogGestionarRestauranteComponent {
       return;
     }
 
-    const mensaje = this.isEditMode
-      ? '¿Deseas actualizar el restaurante?'
-      : '¿Deseas registrar el restaurante?';
+    const mensaje = '¿Deseas actualizar el restaurante?'
 
-    const confirmacion = this.isEditMode
-      ? 'Actualizando restaurante...'
-      : 'Registrando restaurante...';
+    const confirmacion = 'Actualizando restaurante...'
 
     const datosRestobar = {
       userId: this.userId,
+      actualizarUbicacion: this.mostrarMapa,
       ...this.form.value
     };
 
@@ -222,18 +252,14 @@ export class DialogGestionarRestauranteComponent {
 
         this.alert.loading(confirmacion);
 
-        const observable = this.isEditMode
-          ? this.restobarService.actualizar(this.data.id, datosRestobar)
-          : this.restobarService.registrar(datosRestobar); // Este debe retornar el ID creado
+        const observable = this.restobarService.actualizar(this.data.id, datosRestobar); // Este debe retornar el ID creado
 
         observable.subscribe({
           next: async (response: any) => {
             this.alert.close();
 
-            const mensajeExito = this.isEditMode ? 'Actualización exitosa' : 'Registro exitoso';
-            const detalleExito = this.isEditMode
-              ? 'El restaurante fue actualizado correctamente'
-              : 'El restaurante fue registrado correctamente';
+            const mensajeExito = 'Actualización exitosa';
+            const detalleExito = 'El restaurante fue actualizado correctamente';
 
             this.alert.success(mensajeExito, detalleExito);
             this.dialogRef.close(true);
@@ -241,7 +267,7 @@ export class DialogGestionarRestauranteComponent {
           error: (err) => {
             this.alert.close();
             console.error('Error:', err);
-            const mensajeError = this.isEditMode ? 'Error al actualizar' : 'Error al registrar';
+            const mensajeError = 'Error al actualizar';
             this.alert.error(mensajeError, 'Ocurrió un error en el proceso');
           }
         });

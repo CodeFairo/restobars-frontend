@@ -222,3 +222,28 @@ mat-card-title {
 .section-divider::after {
   margin-left: 12px;
 }
+
+.copy-link-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.copy-field {
+  width: 100%;
+  max-width: 500px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  mat-icon {
+    color: #555;
+    transition: color 0.2s ease;
+  }
+
+  button:hover mat-icon {
+    color: #3f51b5;
+  }
+}
