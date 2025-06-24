@@ -2,6 +2,7 @@
 <div class="background-overlay"></div>
 
 <mat-toolbar class="toolbar">
+  <img src="assets/logo/favicon-96x96.png" alt="Logo" class="logo-image" />
   <span class="logo">RestobarsOnline</span>
   <span class="spacer"></span>
 
@@ -28,26 +29,7 @@
 <div class="landing-content">
 
   <!-- Contenido encima -->
-  
-    <h1>Bienvenido a RestobarsOnline</h1>
-    <p>Tu carta, más viva que nunca 📲
-      Con RestobarsOnline podrás mostrar tu menú de forma moderna y rápida. Olvídate de imprimir o reenviar PDF: genera tu
-      QR, compártelo y edita tu carta cuando quieras.
-      Fácil, rápido y pensado para que tus clientes disfruten, y tú te concentres en lo que mejor sabes hacer: atenderlos
-      como se merecen.</p>
 
-    <div class="search-bar">
-      <mat-form-field appearance="outline" class="search-input">
-        <mat-label style="color: wheat;">Buscar restobar</mat-label>
-        <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" style="color: wheat;"/>
-        <button mat-icon-button matSuffix (click)="buscarPorNombre()">
-          <mat-icon>search</mat-icon>
-        </button>
-        <button mat-icon-button matSuffix (click)="buscarPorUbicacion()">
-          <mat-icon>place</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
   
 
   <!-- Carrusel horizontal de restobares -->
@@ -56,7 +38,21 @@
     📍 Encuentra por ubicación
     🍽️ Consulta menús digitales al instante
     📱 Accede desde tu celular sin descargar nada
-    Todo rápido, seguro y sin contacto. ¡Tu próxima comida inolvidable está a un QR de distancia!</p><div class="carousel-wrapper">
+    Todo rápido, seguro y sin contacto. ¡Tu próxima comida inolvidable está a un QR de distancia!</p>
+
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label style="color: wheat;">Buscar restobar</mat-label>
+      <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" style="color: wheat;" />
+      <button mat-icon-button matSuffix (click)="buscarPorNombre()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-icon-button matSuffix (click)="buscarPorUbicacion()">
+        <mat-icon>place</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="carousel-wrapper">
     <button class="carousel-btn left" (click)="scrollCarousel('left')">←</button>
     <div class="restobars-carousel" #carousel>
       <mat-card *ngFor="let r of restobares" class="restobar-card" (click)="verDetalle(r)">
@@ -72,4 +68,10 @@
     <button class="carousel-btn right" (click)="scrollCarousel('right')">→</button>
   </div>
 
-<app-footer></app-footer>
+  <p>Tu carta, más viva que nunca 📲
+    Con RestobarsOnline podrás mostrar tu menú de forma moderna y rápida. Olvídate de imprimir o reenviar PDF: genera tu
+    QR, compártelo y edita tu carta cuando quieras.
+    Fácil, rápido y pensado para que tus clientes disfruten, y tú te concentres en lo que mejor sabes hacer: atenderlos
+    como se merecen.</p>
+
+  <app-footer></app-footer>

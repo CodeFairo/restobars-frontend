@@ -1,5 +1,5 @@
 {
-  "logo": "🍽️ Mi Restaurante",
+  "logo": "Mi RestobarOnline",
   "links": [
     { "label": "Inicio", "url": "/" },
     { "label": "Quienes Somos", "url": "/quienes-somos" },
@@ -12,5 +12,5 @@
     { "icon": "fab fa-twitter", "url": "https://twitter.com" },
     { "icon": "fab fa-whatsapp", "url": "https://wa.me/123456789" }
   ],
-  "copyright": "© 2025 Mi Restaurante. Todos los derechos reservados."
+  "copyright": "© 2025 Mi Restobar. Todos los derechos reservados."
 }

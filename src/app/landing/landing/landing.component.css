@@ -1,5 +1,16 @@
+/* =================== GENERAL =================== */
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
 
-/* Barra superior */
+button {
+  cursor: pointer;
+}
+
+/* =================== TOOLBAR =================== */
 .toolbar {
   position: fixed;
   top: 0;
@@ -13,134 +24,74 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: white;
-
-  .logo {
-    font-weight: bold;
-    font-size: 1.4rem;
-  }
-
-  .spacer {
-    flex: 1;
-  }
-
-  button {
-    color: black;
-  }
-
-  .desktop-only {
-    display: flex;
-    gap: 12px;
-  }
-
-  .mobile-only {
-    display: none;
-  }
 }
 
-/* Estilos responsivos */
+.toolbar .logo {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+.toolbar button {
+  color: black;
+}
+
+/* =================== RESPONSIVE =================== */
+.desktop-only {
+  display: flex;
+  gap: 12px;
+}
+
+.mobile-only {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .desktop-only {
     display: none !important;
   }
-
   .mobile-only {
     display: flex !important;
   }
 }
 
-
-/* Media query para modo celular */
 @media (max-width: 400px) {
   .toolbar-buttons {
     display: none;
   }
-
   .menu-icon {
     display: inline-flex;
   }
 }
 
-
-.popover-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px;
-  min-width: 160px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  animation: fadeInScale 0.2s ease-out;
-  transform-origin: top right;
-  margin-top: 6px;
-  margin-right: 6px;
-
-  button {
-    color: #333;
-    text-align: left;
-    font-weight: 500;
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-
-.popover-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px;
-  min-width: 160px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  animation: fadeInScale 0.2s ease-out;
-  transform-origin: top right;
-  margin-top: 6px;
-  margin-right: 6px;
-
-  button {
-    color: #333;
-    text-align: left;
-    font-weight: 500;
-  }
-}
-
-/* Animación suave */
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-
-
-
-/* Contenido principal */
+/* =================== LANDING =================== */
 .landing-content {
   position: relative;
   z-index: 1;
   flex: 1;
-  padding: 96px 24px 24px 24px; /* top-right-bottom-left */
+  padding: 96px 24px 24px 24px;
   text-align: center;
   color: white;
 }
 
-/* Contenedor de tarjetas */
+/* =================== SEARCH =================== */
+.search-bar {
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+}
+
+
+/* =================== RESTOBARS =================== */
 .restobars-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -148,36 +99,34 @@
   padding: 32px;
 }
 
-/* Estilo de tarjetas */
 .restobar-card {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: translateY(-6px);
-  }
-
-  img {
-    height: 200px;
-    object-fit: cover;
-  }
-
-  mat-card-title,
-  mat-card-content {
-    color: #000;
-  }
+  min-width: 280px;
+  max-width: 320px;
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  scroll-snap-align: start;
 }
 
-:host {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 100vh;
+.restobar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilo de carousel */
+.restobar-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.restobar-card mat-card-title,
+.restobar-card mat-card-content {
+  color: #000;
+}
+
+/* =================== CAROUSEL =================== */
 .restobars-carousel {
   display: flex;
   overflow-x: auto;
@@ -192,7 +141,6 @@
 .restobars-carousel::-webkit-scrollbar {
   height: 10px;
 }
-
 
 .restobars-carousel::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
@@ -218,7 +166,6 @@
   padding: 8px 12px;
   border-radius: 50%;
   z-index: 2;
-  cursor: pointer;
   transition: background 0.3s ease;
 }
 
@@ -234,49 +181,67 @@
   right: 8px;
 }
 
-.restobar-card {
-  min-width: 280px;
-  max-width: 320px;
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* =================== POPOVER =================== */
+.popover-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  min-width: 160px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeInScale 0.2s ease-out;
+  transform-origin: top right;
+  margin-top: 6px;
+  margin-right: 6px;
+}
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.popover-menu button {
+  color: #333;
+  text-align: left;
+  font-weight: 500;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-
-  img {
-    height: 200px;
-    object-fit: cover;
-  }
-
-  mat-card-title,
-  mat-card-content {
-    color: #000;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-.search-bar {
-  position: relative;
-  z-index: 1;
-  padding: 16px;
-  text-align: center;
-}
-
-.search-input {
-  width: 100%;
-  max-width: 500px;
-}
-
-
+/* =================== DIALOG =================== */
 ::ng-deep .custom-dialog .mat-dialog-container {
   padding: 0;
   border-radius: 16px;
   background: #f0f2f5;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
+::ng-deep .mat-dialog-container {
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+/* =================== LOGO =================== */
+.logo-image {
+  height: 40px;
+  margin-right: 12px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+body {
+  text-align: justify;
+}
+

@@ -16,7 +16,7 @@ import { AlertService } from '../../services/alert.service';
   imports: [
     QrCodeComponent,
     NgIf,
-    //NgFor,
+    NgFor,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,

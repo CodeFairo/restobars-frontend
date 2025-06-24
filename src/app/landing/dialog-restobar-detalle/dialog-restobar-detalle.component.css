@@ -17,6 +17,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-height: 90vh; /* o 80vh si prefieres un poco más de margen superior e inferior */
+  overflow-y: auto;
+  
 }
 
 /* Tipografía */
@@ -142,4 +145,130 @@ button:hover mat-icon {
   .copy-field {
     max-width: 100%;
   }
+}
+
+.box {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.popover-content {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  margin: auto;
+}
+
+.popover-title {
+  font-size: 22px;
+  color: #3f51b5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  font-size: 16px;
+  color: #333;
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icono-comida {
+  color: #ff9800;
+}
+
+.popover-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+/****************************************/
+.restobar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.restobar-title {
+  font-size: 24px;
+  color: #3f51b5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  text-align: center;
+}
+
+.restobar-description {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #444;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.restobar-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: #555;
+}
+
+.info-icon {
+  color: #ff9800;
+}
+
+.label {
+  font-weight: 600;
+  color: #333;
+}
+
+.value {
+  color: #555;
+}
+
+/*********/
+.btn-ver-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-ver-menu:hover {
+  background-color: #303f9f;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.icon-colored {
+  color: #ffeb3b; /* Amarillo tipo mostaza */
+  font-size: 22px;
 }

@@ -1,16 +1,54 @@
   <div class="menu-content">
 
     <div class="slider-wrapper">
-      <h2 mat-dialog-title>{{ data.restobar.name }}</h2>
-
-      <p>{{ data.restobar.description }}</p>
-      <p *ngIf="data.restobar.horarioAtencion">
-        <strong>Horario:</strong> {{ data.restobar.horarioAtencion }}
-      </p>
+      <div class="restobar-header">
+        <h2 mat-dialog-title class="restobar-title">
+          <mat-icon class="icon-title">restaurant</mat-icon> {{ data.restobar.name }}
+        </h2>
       
-      <p *ngIf="data.restobar.direccion">
-        <strong>Ubícanos en:</strong> {{ data.restobar.direccion }}
-      </p>
+        <p class="restobar-description">{{ data.restobar.description }}</p>
+      
+        <div class="restobar-info" *ngIf="data.restobar.horarioAtencion">
+          <mat-icon class="info-icon">schedule</mat-icon>
+          <span class="label">Horario:</span>
+          <span class="value">{{ data.restobar.horarioAtencion }}</span>
+        </div>
+      
+        <div class="restobar-info" *ngIf="data.restobar.direccion">
+          <mat-icon class="info-icon">location_on</mat-icon>
+          <span class="label">Ubícanos en:</span>
+          <span class="value">{{ data.restobar.direccion }}</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <button *ngIf="data.menuDia.length > 0" class="btn-ver-menu" popovertarget="modal">
+  <mat-icon class="icon-colored">restaurant_menu</mat-icon>
+  Ver menú del día
+</button>
+      
+        <div id="modal" popover class="popover-content">
+          <h2 class="popover-title">
+            <mat-icon class="icon">lunch_dining</mat-icon> El Menú
+          </h2>
+      
+          <ul class="menu-list" *ngIf="data.menuDia.length > 0">
+            <li *ngFor="let item of mostrarTodosLosItems ? data.menuDia : data.menuDia.slice(0, 5); let i = index">
+              <mat-icon class="icono-comida">restaurant</mat-icon> {{ item }}
+            </li>
+          </ul>
+      
+          <div class="popover-buttons" *ngIf="data.menuDia.length > 5">
+            <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems" class="btn btn-toggle">
+              {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + data.menuDia.length + ')' }}
+            </button>
+            <button mat-button class="btn btn-primary" popovertarget="modal">
+              <mat-icon>close</mat-icon> Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Compartir enlace -->
       <ng-container *ngIf="datosRestorbar.urlMenu">
         <h3>Mi enlace de Platos a la carta!</h3>
