@@ -4,7 +4,7 @@
     <mat-card>
 
         <mat-card-header>
-            <mat-card-title>Gestiona tu menu</mat-card-title>
+            <mat-card-title>Gestiona tus platos a la carta</mat-card-title>
         </mat-card-header>
 
         <div class="menu-container">
@@ -21,19 +21,8 @@
 
             <div *ngIf="selectedRestobarId && !loading" class="loading-text">
                 <div class="section-divider">
-                    <span>Menú del día</span>
+                    <span>Agrega platos</span>
                 </div>
-                <!--
-                <mat-form-field appearance="fill" class="full-width">
-                    <input type="text" placeholder="Selecciona una categoría" aria-label="Categoría" matInput
-                        [matAutocomplete]="auto" [(ngModel)]="categoriaInput" (ngModelChange)="filtrarCategorias()" />
-                    <mat-autocomplete #auto="matAutocomplete"
-                        (optionSelected)="onCategoriaSeleccionada($event.option.value)">
-                        <mat-option *ngFor="let categoria of categoriasFiltradas" [value]="categoria">
-                            {{ categoria.nombre }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>-->
 
                 <!-- 1. Selección de restaurante y categoría -->
                 <mat-form-field appearance="fill" class="full-width">
@@ -59,7 +48,7 @@
                         <input matInput type="number" placeholder="Precio" [(ngModel)]="precioItem">
                     </mat-form-field>
 
-                    <button mat-raised-button color="primary" (click)="agregarItem()">
+                    <button mat-raised-button color="primary" class="btn-action" (click)="agregarItem()">
                         {{ editando ? 'Actualizar ítem' : 'Agregar a la categoría' }}
                     </button>
                 </div>
@@ -70,10 +59,14 @@
                     <ul>
                         <li *ngFor="let item of grupo.items; let i = index">
                             <span>{{ item.nombre }} - S/ {{ item.precio }}</span>
-                            <button mat-icon-button color="primary" (click)="editarItem(grupo, item, i)" title="Editar">
+
+                            <button mat-icon-button color="primary" class="btn-icon"
+                                (click)="editarItem(grupo, item, i)" title="Editar">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="warn" (click)="eliminarItem(grupo, i)" title="Eliminar">
+
+                            <button mat-icon-button color="warn" class="btn-icon" (click)="eliminarItem(grupo, i)"
+                                title="Eliminar">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </li>
@@ -81,8 +74,9 @@
                 </div>
 
                 <!-- 4. Guardar JSON -->
-                <button mat-raised-button color="accent" (click)="guardarMenu()">Guardar Menú</button>
-
+                <button mat-raised-button color="accent" class="btn-action" (click)="guardarMenu()">
+                    Guardar Menú
+                </button>
             </div>
         </div>
     </mat-card>

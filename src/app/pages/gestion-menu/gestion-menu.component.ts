@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ItemMenuService } from '../../services/itemMenu.service';
 
 @Component({
   selector: 'app-gestion-menu',
@@ -27,7 +29,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './gestion-menu.component.html',
   styleUrl: './gestion-menu.component.css'
@@ -51,6 +54,7 @@ export class GestionMenuComponent {
   constructor(
     private restobarService: RestobarService,
     private menuService: GestionMenuService,
+    private itemMenuService: ItemMenuService,
     private dialog: MatDialog,
     private alert: AlertService,
   ) { }
@@ -67,10 +71,34 @@ export class GestionMenuComponent {
     if (!this.selectedRestobarId) return;
 
     this.loading = true;
+
+    // Cargar categorías activas
     this.menuService.obtenerCategoriasPorEstado(true).subscribe({
       next: (data) => {
         this.categorias = data;
-        this.loading = false;
+
+        // Luego cargar menú si existe
+        this.itemMenuService.obtenerMenuPorRestaurante(this.selectedRestobarId!).subscribe({
+          next: (resp) => {
+            if (resp?.menuJson) {
+              try {
+                this.menu = JSON.parse(resp.menuJson);
+              } catch (err) {
+                console.error('Error al parsear el menú JSON:', err);
+                this.menu = [];
+              }
+            } else {
+              this.menu = [];
+            }
+
+            this.loading = false;
+          },
+          error: (err) => {
+            console.warn('No se encontró menú para este restaurante', err);
+            this.menu = [];
+            this.loading = false;
+          }
+        });
       },
       error: (err) => {
         console.error('Error cargando categorías', err);
@@ -142,10 +170,23 @@ export class GestionMenuComponent {
     this.categoriaEditandoId = null;
   }
 
-  guardarMenu() {
+  guardarMenu(): void {
+    if (!this.selectedRestobarId || this.menu.length === 0) {
+      this.alert.warning('Selecciona un restaurante y agrega al menos un ítem al menú.');
+      return;
+    }
+
     const json = JSON.stringify(this.menu);
-    console.log('Menú generado:', json);
-    // Llama a tu servicio para guardar el JSON en el backend
+
+    this.itemMenuService.guardarMenu(this.selectedRestobarId, json).subscribe({
+      next: () => {
+        this.alert.success('El menú fue guardado correctamente.');
+      },
+      error: (error) => {
+        console.error('Error al guardar el menú:', error);
+        this.alert.error('Hubo un error al guardar el menú. Intenta nuevamente.');
+      }
+    });
   }
 
 }

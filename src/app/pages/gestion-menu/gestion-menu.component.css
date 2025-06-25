@@ -88,3 +88,22 @@ mat-card-title {
   color: #666;
 }
 
+/*botones*/
+.btn-action {
+  margin-top: 16px;
+  margin-right: 12px;
+  font-weight: 600;
+  text-transform: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.btn-icon {
+  margin-left: 8px;
+  transition: background-color 0.3s ease;
+  border-radius: 50%;
+}
+
+.btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
