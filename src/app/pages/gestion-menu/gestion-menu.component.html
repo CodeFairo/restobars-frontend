@@ -1,0 +1,89 @@
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+<div class="card-container">
+    <mat-card>
+
+        <mat-card-header>
+            <mat-card-title>Gestiona tu menu</mat-card-title>
+        </mat-card-header>
+
+        <div class="menu-container">
+
+            <!-- Selector de restaurante -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Selecciona un restaurante</mat-label>
+                <mat-select [(value)]="selectedRestobarId" (selectionChange)="onRestobarSelected()">
+                    <mat-option *ngFor="let restobar of restobares" [value]="restobar.id">
+                        {{ restobar.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="selectedRestobarId && !loading" class="loading-text">
+                <div class="section-divider">
+                    <span>Menú del día</span>
+                </div>
+                <!--
+                <mat-form-field appearance="fill" class="full-width">
+                    <input type="text" placeholder="Selecciona una categoría" aria-label="Categoría" matInput
+                        [matAutocomplete]="auto" [(ngModel)]="categoriaInput" (ngModelChange)="filtrarCategorias()" />
+                    <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="onCategoriaSeleccionada($event.option.value)">
+                        <mat-option *ngFor="let categoria of categoriasFiltradas" [value]="categoria">
+                            {{ categoria.nombre }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>-->
+
+                <!-- 1. Selección de restaurante y categoría -->
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Selecciona una categoría</mat-label>
+                    <mat-select [(value)]="selectedCategoria">
+                        <mat-option *ngFor="let cat of categorias" [value]="cat">
+                            {{ cat.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- 2. Formulario de ítem -->
+                <div *ngIf="selectedCategoria">
+                    <mat-form-field appearance="fill">
+                        <input matInput placeholder="Nombre del plato" [(ngModel)]="nombreItem">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <input matInput placeholder="Descripción" [(ngModel)]="descripcionItem">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <input matInput type="number" placeholder="Precio" [(ngModel)]="precioItem">
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" (click)="agregarItem()">
+                        {{ editando ? 'Actualizar ítem' : 'Agregar a la categoría' }}
+                    </button>
+                </div>
+
+                <!-- 3. Vista previa de menú por categoría -->
+                <div *ngFor="let grupo of menu">
+                    <h4>{{ grupo.categoriaNombre }}</h4>
+                    <ul>
+                        <li *ngFor="let item of grupo.items; let i = index">
+                            <span>{{ item.nombre }} - S/ {{ item.precio }}</span>
+                            <button mat-icon-button color="primary" (click)="editarItem(grupo, item, i)" title="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="eliminarItem(grupo, i)" title="Eliminar">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 4. Guardar JSON -->
+                <button mat-raised-button color="accent" (click)="guardarMenu()">Guardar Menú</button>
+
+            </div>
+        </div>
+    </mat-card>
+</div>

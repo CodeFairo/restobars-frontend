@@ -14,6 +14,7 @@ import { QuienesSomosComponent } from './layout/quienes-somos/quienes-somos.comp
 import { ContactoComponent } from './layout/contacto/contacto.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
 import { BannerDashboardComponent } from './pages/banner-dashboard/banner-dashboard.component';
+import { GestionMenuComponent } from './pages/gestion-menu/gestion-menu.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full'},
@@ -34,7 +35,8 @@ export const routes: Routes = [
       { path: 'misRestobar', component: GestionRestobarComponent },
       { path: 'compartirCarta', component: CompartirCartamenuComponent },
       { path: 'miperfil', component: PerfilComponent },
-      { path: 'bannerDashboard', component: BannerDashboardComponent }
+      { path: 'bannerDashboard', component: BannerDashboardComponent },
+      { path: 'gestionmenu', component: GestionMenuComponent }
 
       // Puedes agregar más rutas privadas aquí
     ]

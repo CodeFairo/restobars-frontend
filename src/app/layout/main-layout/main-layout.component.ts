@@ -55,6 +55,10 @@ export class MainLayoutComponent {
     this.router.navigate(['compartirCarta']);
   }
 
+  gestionMenu(){
+    this.router.navigate(['gestionmenu']);
+  }
+
   miperfil(){
     this.router.navigate(['miperfil']);
   }

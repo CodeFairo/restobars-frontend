@@ -32,5 +32,6 @@ export class RestobarService {
      cambiarEstado(id: string, estado: boolean) {
           return this.http.put(`${this.baseUrl}api/restobar/estadorestobar/${id}/estado`, { estaActivo: estado });
      }
+     
 
 }
