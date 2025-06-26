@@ -2,7 +2,6 @@ import { Component, inject, OnInit, ViewChild, ElementRef, ViewEncapsulation } f
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { FooterComponent } from "../../layout/footer/footer.component";
 import { Restobar } from '../../interfaces/Restobar';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
@@ -19,6 +18,7 @@ import { BannerService } from '../../services/banner.service';
 import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
 import { LandingService } from '../../services/landing.service';
 import { DialogRestobarDetalleComponent } from '../dialog-restobar-detalle/dialog-restobar-detalle.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-landing',

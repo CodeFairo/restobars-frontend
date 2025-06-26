@@ -8,7 +8,7 @@ import { Restobar } from '../../interfaces/Restobar';
 import { RestobarService } from '../../services/restobar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from '../../services/alert.service';
-import { GestionMenuService } from '../../services/gestionmenu.service';
+import { CategoriaMenuService } from '../../services/categoriaMenu.service';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +16,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ItemMenuService } from '../../services/itemMenu.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-gestion-menu',
@@ -30,7 +32,8 @@ import { ItemMenuService } from '../../services/itemMenu.service';
     MatInputModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ],
   templateUrl: './gestion-menu.component.html',
   styleUrl: './gestion-menu.component.css'
@@ -48,12 +51,13 @@ export class GestionMenuComponent {
   editando = false;
   itemEditIndex: number | null = null;
   categoriaEditandoId: number | null = null;
+  esMenu = false;
 
   menu: MenuCategoria[] = [];
 
   constructor(
     private restobarService: RestobarService,
-    private menuService: GestionMenuService,
+    private categoriaMenuService: CategoriaMenuService,
     private itemMenuService: ItemMenuService,
     private dialog: MatDialog,
     private alert: AlertService,
@@ -73,7 +77,7 @@ export class GestionMenuComponent {
     this.loading = true;
 
     // Cargar categorías activas
-    this.menuService.obtenerCategoriasPorEstado(true).subscribe({
+    this.categoriaMenuService.obtenerCategoriasPorEstado(true).subscribe({
       next: (data) => {
         this.categorias = data;
 
@@ -116,6 +120,7 @@ export class GestionMenuComponent {
       nombre: this.nombreItem,
       descripcion: this.descripcionItem,
       precio: this.precioItem,
+      esMenu: this.esMenu
     };
 
     const categoria = this.menu.find(c => c.categoriaId === this.selectedCategoria.id);
@@ -142,6 +147,7 @@ export class GestionMenuComponent {
     this.nombreItem = item.nombre;
     this.descripcionItem = item.descripcion;
     this.precioItem = item.precio;
+    this.esMenu = item.esMenu ?? false;
 
     // Buscar el objeto original desde this.categorias (para que coincida por referencia con el mat-select)
     const categoriaOriginal = this.categorias.find(c => c.id === categoria.categoriaId);
@@ -165,6 +171,7 @@ export class GestionMenuComponent {
     this.nombreItem = '';
     this.descripcionItem = '';
     this.precioItem = 0;
+    this.esMenu = false;
     this.editando = false;
     this.itemEditIndex = null;
     this.categoriaEditandoId = null;
@@ -188,5 +195,23 @@ export class GestionMenuComponent {
       }
     });
   }
+
+  get menuEsMenu(): MenuCategoria[] {
+  return this.menu
+    .map(grupo => ({
+      ...grupo,
+      items: grupo.items.filter(item => item.esMenu)
+    }))
+    .filter(grupo => grupo.items.length > 0);
+}
+
+get menuPlatosCarta(): MenuCategoria[] {
+  return this.menu
+    .map(grupo => ({
+      ...grupo,
+      items: grupo.items.filter(item => !item.esMenu)
+    }))
+    .filter(grupo => grupo.items.length > 0);
+}
 
 }

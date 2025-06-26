@@ -59,6 +59,14 @@ export class MainLayoutComponent {
     this.router.navigate(['gestionmenu']);
   }
 
+  gestionMesero(){
+    this.router.navigate(['gestionmesero']);
+  }
+  
+  misrestobars(){
+    this.router.navigate(['misrestobars']);
+  }
+
   miperfil(){
     this.router.navigate(['miperfil']);
   }

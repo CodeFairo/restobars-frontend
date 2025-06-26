@@ -107,3 +107,28 @@ mat-card-title {
 .btn-icon:hover {
   background-color: rgba(0, 0, 0, 0.08);
 }
+
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 32px 0;
+  color: #666;
+  font-weight: 500;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.section-divider::before {
+  margin-right: 12px;
+}
+
+.section-divider::after {
+  margin-left: 12px;
+}

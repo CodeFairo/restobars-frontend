@@ -32,6 +32,10 @@ export class RestobarService {
      cambiarEstado(id: string, estado: boolean) {
           return this.http.put(`${this.baseUrl}api/restobar/estadorestobar/${id}/estado`, { estaActivo: estado });
      }
+
+     buscarPorCodigo(codigo: string): Observable<Restobar | null> {
+          return this.http.get<Restobar>(`${this.baseUrl}/api/restobar/buscar-por-codigo/${codigo}`);
+     }
      
 
 }

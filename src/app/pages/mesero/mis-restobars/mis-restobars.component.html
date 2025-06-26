@@ -1,0 +1,23 @@
+<mat-card>
+  <h2>Solicitar ser mesero</h2>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Ingresa el código del restaurante</mat-label>
+    <input matInput [(ngModel)]="codigoRestobar" placeholder="Ej: RESTO123">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="buscarRestobar()">
+    Buscar
+  </button>
+
+  <div *ngIf="restobarEncontrado" class="resultado-restobar">
+    <mat-card class="info-restobar">
+      <h3>{{ restobarEncontrado.name }}</h3>
+      <p><strong>Dirección:</strong> {{ restobarEncontrado.direccion }}</p>
+
+      <button mat-raised-button color="accent" (click)="solicitar()" [disabled]="solicitando">
+        Solicitar ser mesero
+      </button>
+    </mat-card>
+  </div>
+</mat-card>

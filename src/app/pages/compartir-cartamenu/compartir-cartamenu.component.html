@@ -21,38 +21,6 @@
 
       <div *ngIf="selectedRestobarId && !loading" class="loading-text">
         <div class="section-divider">
-          <span>Menú del día</span>
-        </div>
-        <div class="daily-menu-section">
-
-          <div class="input-with-button">
-            <mat-form-field appearance="fill" class="full-width no-margin">
-              <mat-label>Ingresa un ítem del menú</mat-label>
-              <input matInput [(ngModel)]="menuDiaItem" />
-            </mat-form-field>
-            <button mat-icon-button color="primary" (click)="agregarItemMenuDia()">
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
-
-          <ul class="menu-list" *ngIf="menuDia.length > 0">
-            <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
-              {{ item }}
-              <button mat-icon-button color="warn" (click)="eliminarItemMenuDia(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </li>
-          </ul>
-          <div *ngIf="menuDia.length > 5" style="margin-top: 8px;">
-            <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems">
-              {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + menuDia.length + ')' }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="selectedRestobarId && !loading" class="loading-text">
-        <div class="section-divider">
           <span>Carga tu carta!</span>
         </div>
         <button mat-raised-button color="primary" (click)="abrirDialogoCargarMenu()">Cargar nueva carta</button>

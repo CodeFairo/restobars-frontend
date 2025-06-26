@@ -10,11 +10,13 @@ import { RestobarDashboardComponent } from './pages/restobar-dashboard/restobar-
 import { CompartirCartamenuComponent } from './pages/compartir-cartamenu/compartir-cartamenu.component';
 import { RecuperarClaveComponent } from './auth/recuperar-clave/recuperar-clave.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
-import { QuienesSomosComponent } from './layout/quienes-somos/quienes-somos.component';
-import { ContactoComponent } from './layout/contacto/contacto.component';
-import { TerminosComponent } from './layout/terminos/terminos.component';
+import { QuienesSomosComponent } from './landing/quienes-somos/quienes-somos.component';
+import { ContactoComponent } from './landing/contacto/contacto.component';
+import { TerminosComponent } from './landing/terminos/terminos.component';
 import { BannerDashboardComponent } from './pages/banner-dashboard/banner-dashboard.component';
 import { GestionMenuComponent } from './pages/gestion-menu/gestion-menu.component';
+import { GestionMeserosComponent } from './pages/gestion-meseros/gestion-meseros.component';
+import { MisRestobarsComponent } from './pages/mesero/mis-restobars/mis-restobars.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full'},
@@ -36,7 +38,9 @@ export const routes: Routes = [
       { path: 'compartirCarta', component: CompartirCartamenuComponent },
       { path: 'miperfil', component: PerfilComponent },
       { path: 'bannerDashboard', component: BannerDashboardComponent },
-      { path: 'gestionmenu', component: GestionMenuComponent }
+      { path: 'gestionmenu', component: GestionMenuComponent },
+      { path: 'gestionmesero', component: GestionMeserosComponent },
+      { path: 'misrestobars', component: MisRestobarsComponent }
 
       // Puedes agregar más rutas privadas aquí
     ]
