@@ -17,6 +17,7 @@ import { BannerDashboardComponent } from './pages/banner-dashboard/banner-dashbo
 import { GestionMenuComponent } from './pages/gestion-menu/gestion-menu.component';
 import { GestionMeserosComponent } from './pages/gestion-meseros/gestion-meseros.component';
 import { MisRestobarsComponent } from './pages/mesero/mis-restobars/mis-restobars.component';
+import { DialogRestobarDetalleComponent } from './landing/dialog-restobar-detalle/dialog-restobar-detalle.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'quienes-somos', component: QuienesSomosComponent },
   { path: 'contacto', component: ContactoComponent },
   { path: 'terminos-condiciones', component: TerminosComponent },
+  { path: 'detalle-restobar/:id', component: DialogRestobarDetalleComponent },
   
 
   {

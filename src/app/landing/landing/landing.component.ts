@@ -66,37 +66,44 @@ export class LandingComponent implements OnInit {
     this.router.navigate(['registro']);
   }
 
+  // verDetalle(restobar: Restobar) {
+  //   this.loading = true;
+  //   const id = Number(restobar.id);
+  //   const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
+
+  //   this.landingService.getDetalleRestobar(id).subscribe({
+  //     next: (res: RestobarMenuComplemento | null) => {
+
+  //       if (res?.menuDiario) {
+  //         try {
+  //           this.menuDia = JSON.parse(res.menuDiario);
+  //         } catch (e) {
+  //           console.error('Error al parsear menú del día', e);
+  //           this.menuDia = [];
+  //         }
+  //       }
+  //       this.dialog.open(DialogRestobarDetalleComponent, {
+  //         width: isSmallScreen ? '90%' : '50%',
+  //         panelClass: 'custom-dialog',
+  //         data: { restobar, menuDia: this.menuDia }
+  //       });
+  //       this.loading = false;
+
+
+  //       console.log('Menú cargado correctamente:', this.menuDia);
+  //     },
+  //     error: (err) => {
+  //       console.error('Error obteniendo menú', err);
+  //       this.loading = false;
+  //     }
+  //   });
+  // }
+
   verDetalle(restobar: Restobar) {
-    this.loading = true;
     const id = Number(restobar.id);
-    const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
-
-    this.landingService.getDetalleRestobar(id).subscribe({
-      next: (res: RestobarMenuComplemento | null) => {
-
-        if (res?.menuDiario) {
-          try {
-            this.menuDia = JSON.parse(res.menuDiario);
-          } catch (e) {
-            console.error('Error al parsear menú del día', e);
-            this.menuDia = [];
-          }
-        }
-        this.dialog.open(DialogRestobarDetalleComponent, {
-          width: isSmallScreen ? '90%' : '50%',
-          panelClass: 'custom-dialog',
-          data: { restobar, menuDia: this.menuDia }
-        });
-        this.loading = false;
-
-
-        console.log('Menú cargado correctamente:', this.menuDia);
-      },
-      error: (err) => {
-        console.error('Error obteniendo menú', err);
-        this.loading = false;
-      }
-    });
+    localStorage.setItem('data-restobar-detalle', JSON.stringify(restobar));
+    const url = `/detalle-restobar/${id}`;
+    window.open(url, '_blank');
   }
 
   ngOnInit(): void {

@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AlertService } from '../../services/alert.service';
+import { ActivatedRoute } from '@angular/router';
+import { LandingService } from '../../services/landing.service';
 
 @Component({
   selector: 'app-dialog-restobar-detalle',
@@ -26,25 +28,64 @@ import { AlertService } from '../../services/alert.service';
   styleUrl: './dialog-restobar-detalle.component.css'
 })
 export class DialogRestobarDetalleComponent {
-  private fb = inject(FormBuilder);
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   geocoder = new google.maps.Geocoder();
   mostrarTodosLosItems: boolean = false;
   datosRestorbar: any;
+  datosRestorbarComplemento: any;
   private alert = inject(AlertService);
 
+  menuDia: any[] = [];
 
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.datosRestorbar = this.data.restobar;
+  constructor(private route: ActivatedRoute,
+    private landingService: LandingService) {
+
   }
 
+  ngOnInit() {
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  const restobarStr = localStorage.getItem('data-restobar-detalle');
+
+  if (restobarStr) {
+    try {
+      this.datosRestorbar = JSON.parse(restobarStr);
+    } catch (e) {
+      console.error('Error al parsear datosRestorbar', e);
+      this.datosRestorbar = {};
+    }
+
+    this.landingService.getDetalleRestobar(id).subscribe({
+      next: (res) => {
+        this.datosRestorbarComplemento = res;
+
+        if (res?.menuDiario) {
+          try {
+            this.menuDia = JSON.parse(res.menuDiario);
+          } catch (e) {
+            console.error('Error al parsear menú del día', e);
+            this.menuDia = [];
+          }
+          console.log('Menú del día:', this.menuDia);
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar detalles del restobar', err);
+      }
+    });
+
+  } else {
+    console.warn('No se encontraron datos de restobar en localStorage');    
+  }
+}
+
+
   ngAfterViewInit() {
-    this.mostrarMapa();    
+    this.mostrarMapa();
   }
 
   copyLink(): void {
-    const url = this.data.restobar?.urlMenu;
+    const url = this.datosRestorbar?.urlMenu;
     if (url) {
       navigator.clipboard.writeText(url).then(() => {
         this.alert.success('Enlace copiado al portapapeles');
@@ -53,7 +94,7 @@ export class DialogRestobarDetalleComponent {
   }
 
   verCartaMenu(): void {
-    const url = this.data.restobar?.urlMenu;
+    const url = this.datosRestorbar?.urlMenu;
     if (url) {
       window.open(url, '_blank');
     }
@@ -111,7 +152,7 @@ export class DialogRestobarDetalleComponent {
 
     if (!mapaElemento) return;
 
-    const ubicacion = new google.maps.LatLng(this.data.restobar.latitud, this.data.restobar.longitud);
+    const ubicacion = new google.maps.LatLng(this.datosRestorbar.latitud, this.datosRestorbar.longitud);
 
     const opcionesMapa = {
       center: ubicacion,
@@ -128,7 +169,8 @@ export class DialogRestobarDetalleComponent {
   }
 
   cerrarDialog(): void {
-    this.dialogRef.close();
+    //this.dialogRef.close();
+    //localStorage.removeItem('data-restobar-detalle');
   }
 
 }

@@ -1,28 +1,35 @@
 <div class="menu-content">
 
   <div class="slider-wrapper">
-    <div class="restobar-header">
-      <h2 mat-dialog-title class="restobar-title">
-        <mat-icon class="icon-title">restaurant</mat-icon> {{ data.restobar.name }}
+    <div class="restorbar-header">
+      <h2 mat-dialog-title class="datosRestorbar-title">
+        <mat-icon class="icon-title">restaurant</mat-icon>
+        {{ datosRestorbar.name }}
       </h2>
 
-      <p class="restobar-description">{{ data.restobar.description }}</p>
+      <p class="restobar-description">
+        {{ datosRestorbar.description }}
+      </p>
 
-      <div class="restobar-info" *ngIf="data.restobar.horarioAtencion">
+      <div class="restobar-info" *ngIf="datosRestorbar.horarioAtencion">
         <mat-icon class="info-icon">schedule</mat-icon>
         <span class="label">Horario:</span>
-        <span class="value">{{ data.restobar.horarioAtencion }}</span>
+        <span class="value">
+          {{ datosRestorbar.horarioAtencion }}
+        </span>
       </div>
 
-      <div class="restobar-info" *ngIf="data.restobar.direccion">
+      <div class="restorbar-info" *ngIf="datosRestorbar.direccion">
         <mat-icon class="info-icon">location_on</mat-icon>
         <span class="label">Ubícanos en:</span>
-        <span class="value">{{ data.restobar.direccion }}</span>
+        <span class="value">
+          {{ datosRestorbar.direccion }}
+        </span>
       </div>
     </div>
 
     <div class="box">
-      <button *ngIf="data.menuDia.length > 0" class="btn-ver-menu" popovertarget="modal">
+      <button *ngIf="menuDia.length > 0" class="btn-ver-menu" popovertarget="modal">
         <mat-icon class="icon-colored">restaurant_menu</mat-icon>
         Ver menú del día
       </button>
@@ -32,15 +39,15 @@
           <mat-icon class="icon">lunch_dining</mat-icon> El Menú
         </h2>
 
-        <ul class="menu-list" *ngIf="data.menuDia.length > 0">
-          <li *ngFor="let item of mostrarTodosLosItems ? data.menuDia : data.menuDia.slice(0, 5); let i = index">
+        <ul class="menu-list" *ngIf="menuDia.length > 0">
+          <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
             <mat-icon class="icono-comida">restaurant</mat-icon> {{ item }}
           </li>
         </ul>
 
-        <div class="popover-buttons" *ngIf="data.menuDia.length > 5">
+        <div class="popover-buttons" *ngIf="menuDia.length > 5">
           <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems" class="btn btn-toggle">
-            {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + data.menuDia.length + ')' }}
+            {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + menuDia.length + ')' }}
           </button>
           <button mat-button class="btn btn-primary" popovertarget="modal">
             <mat-icon>close</mat-icon> Cerrar
@@ -51,6 +58,7 @@
 
     <!-- Compartir enlace -->
     <ng-container *ngIf="datosRestorbar.urlMenu">
+      <!-- *ngIf="datosRestorbar.urlMenu" -->
       <h3>Mi enlace de Platos a la carta!</h3>
       <div class="link-section">
         <div class="copy-link-wrapper">
@@ -78,7 +86,7 @@
       <h3>Puedes ver mis platos a la carta escaneando este QR</h3>
       <div class="qr-section">
         <div class="qr-code">
-          <qr-code [value]="data.restobar.urlMenu" size="200"></qr-code>
+          <qr-code [value]="datosRestorbar.urlMenu" size="200"></qr-code>
         </div>
         <button class="btn btn-primary" (click)="downloadQR()">Descargar QR</button>
       </div>
