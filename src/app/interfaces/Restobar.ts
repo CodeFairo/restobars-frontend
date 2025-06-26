@@ -11,6 +11,8 @@ export interface Restobar {
      urlMenu:string,
      urlLogo:string,
      horarioAtencion:string,
+     restobarCodigo:string,
+     restobarUUID:string
 
 }
 

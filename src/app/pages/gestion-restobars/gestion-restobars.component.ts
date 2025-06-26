@@ -53,7 +53,7 @@ export class GestionRestobarComponent implements OnInit, OnDestroy {
 
      public listaRestaurante: Restobar[] = [];
 
-     public displayedColumns: string[] = ['name', 'description', 'actions'];
+     public displayedColumns: string[] = ['name', 'description','codigo', 'actions'];
      private breakpointSub!: Subscription;
 
      constructor(
@@ -71,9 +71,9 @@ export class GestionRestobarComponent implements OnInit, OnDestroy {
                Breakpoints.Small
           ]).subscribe(result => {
                if (result.matches) {
-                    this.displayedColumns = ['name', 'actions']; // Oculta description en pantallas pequeñas
+                    this.displayedColumns = ['name', 'codigo','actions']; // Oculta description en pantallas pequeñas
                } else {
-                    this.displayedColumns = ['name', 'description', 'actions']; // Muestra todas en pantallas más grandes
+                    this.displayedColumns = ['name', 'description', 'codigo', 'actions']; // Muestra todas en pantallas más grandes
                }
           });
 
@@ -187,5 +187,25 @@ export class GestionRestobarComponent implements OnInit, OnDestroy {
                     console.error('Error al generar el reporte:', err);
                }
           });
+     }
+
+     copiarCodigo(codigo: string): void {
+          navigator.clipboard.writeText(codigo).then(() => {
+               // Puedes usar SweetAlert2 o SnackBar si deseas
+               alert('Código copiado al portapapeles');
+          });
+     }
+     
+     compartirCodigo(codigo: string): void {
+          const url = `https://miapp.com/restobar/${codigo}`;
+          if (navigator.share) {
+               navigator.share({
+                    title: 'Compartir código de restobar',
+                    text: 'Revisa este restobar:',
+                    url: url,
+               }).catch(err => console.error('Error al compartir', err));
+          } else {
+               alert('Compartir no soportado en este navegador');
+          }
      }
 }
