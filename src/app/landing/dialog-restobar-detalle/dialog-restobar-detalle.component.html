@@ -1,106 +1,127 @@
-<div class="menu-content">
+<div class="menu-wrapper">
+  <div class="menu-content">
+    <div class="split-area" [ngClass]="{ 'horizontal': mostrarMenu }">
+      <div class="contenido-principal">
+        <div class="restobar-header">
+          <h2 mat-dialog-title class="restobar-title">
+            <mat-icon class="icon-title">restaurant</mat-icon>
+            {{ datosRestorbar.name }}
+          </h2>
 
-  <div class="slider-wrapper">
-    <div class="restorbar-header">
-      <h2 mat-dialog-title class="datosRestorbar-title">
-        <mat-icon class="icon-title">restaurant</mat-icon>
-        {{ datosRestorbar.name }}
-      </h2>
+          <p class="restobar-description">
+            {{ datosRestorbar.description }}
+          </p>
 
-      <p class="restobar-description">
-        {{ datosRestorbar.description }}
-      </p>
+          <div class="restobar-info" *ngIf="datosRestorbar.horarioAtencion">
+            <mat-icon class="info-icon">schedule</mat-icon>
+            <span class="label">Horario:</span>
+            <span class="value">
+              {{ datosRestorbar.horarioAtencion }}
+            </span>
+          </div>
 
-      <div class="restobar-info" *ngIf="datosRestorbar.horarioAtencion">
-        <mat-icon class="info-icon">schedule</mat-icon>
-        <span class="label">Horario:</span>
-        <span class="value">
-          {{ datosRestorbar.horarioAtencion }}
-        </span>
+          <div class="restobar-info" *ngIf="datosRestorbar.direccion">
+            <mat-icon class="info-icon">location_on</mat-icon>
+            <span class="label">Ubícanos en:</span>
+            <span class="value">
+              {{ datosRestorbar.direccion }}
+            </span>
+          </div>
+        </div>
+
+        <div class="box">
+          <button *ngIf="menuDia.length > 0" class="btn-ver-menu" popovertarget="modal" (click)="toggleMenu()">
+            <mat-icon class="icon-colored">restaurant_menu</mat-icon>
+            {{ textoBotonMenu }}
+          </button>
+
+          <div id="modal" popover class="popover-content" *ngIf="mostrarDetalles">
+            <h2 class="popover-title">
+              <mat-icon class="icon">lunch_dining</mat-icon> El Menú
+            </h2>
+
+            <ul class="menu-list" *ngIf="menuDia.length > 0">
+              <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
+                <mat-icon class="icono-comida">restaurant</mat-icon> {{ item }}
+              </li>
+            </ul>
+
+            <div class="popover-buttons" *ngIf="menuDia.length > 5">
+              <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems" class="btn btn-toggle">
+                {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + menuDia.length + ')' }}
+              </button>
+              <button mat-button class="btn btn-primary" popovertarget="modal">
+                <mat-icon>close</mat-icon> Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compartir enlace -->
+        <ng-container *ngIf="datosRestorbar.urlMenu">
+          <!-- *ngIf="datosRestorbar.urlMenu" -->
+          <h3>Mi enlace de Platos a la carta!</h3>
+          <div class="link-section">
+            <div class="copy-link-wrapper">
+              <mat-form-field appearance="outline" class="copy-field">
+                <mat-label>Enlace del menú</mat-label>
+                <input matInput [value]="datosRestorbar.urlMenu" readonly>
+
+                <!-- Ícono de copiar -->
+                <button mat-icon-button matSuffix (click)="copyLink()" aria-label="Copiar enlace">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+
+                <!-- Ícono de ver -->
+                <button mat-icon-button matSuffix (click)="verCartaMenu()" aria-label="Ver carta del menú">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="button-group">
+
+            </div>
+          </div>
+
+          <!-- Compartir QR -->
+          <h3>Puedes ver mis platos a la carta escaneando este QR</h3>
+          <div class="qr-section">
+            <div id="qr-code" class="qr-code">
+              <qr-code  [value]="datosRestorbar.urlMenu" size="200"></qr-code>
+            </div>
+            <button class="btn btn-primary" (click)="downloadQR()">Descargar QR</button>
+          </div>
+        </ng-container>
+        <div>
+
+        </div>
       </div>
+      <div class="contenido-secundario" *ngIf="mostrarMenu" [class.show]="mostrarMenu">
 
-      <div class="restorbar-info" *ngIf="datosRestorbar.direccion">
-        <mat-icon class="info-icon">location_on</mat-icon>
-        <span class="label">Ubícanos en:</span>
-        <span class="value">
-          {{ datosRestorbar.direccion }}
-        </span>
+        <div class="info-box">
+          <h2 class="popover-title">
+            <mat-icon class="icon">lunch_dining</mat-icon> El Menú
+          </h2>
+          <ul class="menu-list" *ngIf="menuDia.length > 0">
+            <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
+              <mat-icon class="icono-comida">restaurant</mat-icon> {{ item }}
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
-
-    <div class="box">
-      <button *ngIf="menuDia.length > 0" class="btn-ver-menu" popovertarget="modal">
-        <mat-icon class="icon-colored">restaurant_menu</mat-icon>
-        Ver menú del día
-      </button>
-
-      <div id="modal" popover class="popover-content">
-        <h2 class="popover-title">
-          <mat-icon class="icon">lunch_dining</mat-icon> El Menú
-        </h2>
-
-        <ul class="menu-list" *ngIf="menuDia.length > 0">
-          <li *ngFor="let item of mostrarTodosLosItems ? menuDia : menuDia.slice(0, 5); let i = index">
-            <mat-icon class="icono-comida">restaurant</mat-icon> {{ item }}
-          </li>
-        </ul>
-
-        <div class="popover-buttons" *ngIf="menuDia.length > 5">
-          <button mat-button (click)="mostrarTodosLosItems = !mostrarTodosLosItems" class="btn btn-toggle">
-            {{ mostrarTodosLosItems ? 'Ver menos' : 'Ver todo (' + menuDia.length + ')' }}
-          </button>
-          <button mat-button class="btn btn-primary" popovertarget="modal">
-            <mat-icon>close</mat-icon> Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Compartir enlace -->
-    <ng-container *ngIf="datosRestorbar.urlMenu">
-      <!-- *ngIf="datosRestorbar.urlMenu" -->
-      <h3>Mi enlace de Platos a la carta!</h3>
-      <div class="link-section">
-        <div class="copy-link-wrapper">
-          <mat-form-field appearance="outline" class="copy-field">
-            <mat-label>Enlace del menú</mat-label>
-            <input matInput [value]="datosRestorbar.urlMenu" readonly>
-
-            <!-- Ícono de copiar -->
-            <button mat-icon-button matSuffix (click)="copyLink()" aria-label="Copiar enlace">
-              <mat-icon>content_copy</mat-icon>
-            </button>
-
-            <!-- Ícono de ver -->
-            <button mat-icon-button matSuffix (click)="verCartaMenu()" aria-label="Ver carta del menú">
-              <mat-icon>visibility</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <div class="button-group">
-
-        </div>
-      </div>
-
-      <!-- Compartir QR -->
-      <h3>Puedes ver mis platos a la carta escaneando este QR</h3>
-      <div class="qr-section">
-        <div class="qr-code">
-          <qr-code [value]="datosRestorbar.urlMenu" size="200"></qr-code>
-        </div>
-        <button class="btn btn-primary" (click)="downloadQR()">Descargar QR</button>
-      </div>
-    </ng-container>
-
     <!-- Mapa -->
     <ng-container *ngIf="datosRestorbar.latitud && datosRestorbar.longitud">
-      <h3>Ubícanos en el mapa</h3>
-      <div id="map" class="map-container"></div>
+      <div class="map-wrapper">
+        <h3>Ubícanos en el mapa</h3>
+        <div id="map" class="map-container"></div>
+      </div>
     </ng-container>
-  </div>
 
-  <div class="align-right">
-    <button class="btn btn-primary" (click)="cerrarDialog()">Cerrar</button>
-  </div>
+    <div class="align-right">
+      <button class="btn btn-primary" (click)="volverLanding()">Volver</button>
+    </div>
 
+  </div>
 </div>

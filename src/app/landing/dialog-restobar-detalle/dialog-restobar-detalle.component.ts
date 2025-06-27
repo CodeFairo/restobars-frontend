@@ -9,8 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AlertService } from '../../services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LandingService } from '../../services/landing.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-restobar-detalle',
@@ -22,7 +23,7 @@ import { LandingService } from '../../services/landing.service';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule,
+    MatButtonModule, NgClass
   ],
   templateUrl: './dialog-restobar-detalle.component.html',
   styleUrl: './dialog-restobar-detalle.component.css'
@@ -35,8 +36,11 @@ export class DialogRestobarDetalleComponent {
   datosRestorbar: any;
   datosRestorbarComplemento: any;
   private alert = inject(AlertService);
+  private router = inject(Router);
 
   menuDia: any[] = [];
+  mostrarDetalles: boolean = false;
+  mostrarMenu: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private landingService: LandingService) {
@@ -44,40 +48,39 @@ export class DialogRestobarDetalleComponent {
   }
 
   ngOnInit() {
-  const id = Number(this.route.snapshot.paramMap.get('id'));
-  const restobarStr = localStorage.getItem('data-restobar-detalle');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const restobarStr = localStorage.getItem('data-restobar-detalle');
 
-  if (restobarStr) {
-    try {
-      this.datosRestorbar = JSON.parse(restobarStr);
-    } catch (e) {
-      console.error('Error al parsear datosRestorbar', e);
-      this.datosRestorbar = {};
-    }
-
-    this.landingService.getDetalleRestobar(id).subscribe({
-      next: (res) => {
-        this.datosRestorbarComplemento = res;
-
-        if (res?.menuDiario) {
-          try {
-            this.menuDia = JSON.parse(res.menuDiario);
-          } catch (e) {
-            console.error('Error al parsear menú del día', e);
-            this.menuDia = [];
-          }
-          console.log('Menú del día:', this.menuDia);
-        }
-      },
-      error: (err) => {
-        console.error('Error al cargar detalles del restobar', err);
+    if (restobarStr) {
+      try {
+        this.datosRestorbar = JSON.parse(restobarStr);
+      } catch (e) {
+        console.error('Error al parsear datosRestorbar', e);
+        this.datosRestorbar = {};
       }
-    });
 
-  } else {
-    console.warn('No se encontraron datos de restobar en localStorage');    
+      this.landingService.getDetalleRestobar(id).subscribe({
+        next: (res) => {
+
+          if (res?.menuDiario) {
+            try {
+              this.menuDia = JSON.parse(res.menuDiario);
+            } catch (e) {
+              console.error('Error al parsear menú del día', e);
+              this.menuDia = [];
+            }
+            console.log('Menú del día:', this.menuDia);
+          }
+        },
+        error: (err) => {
+          console.error('Error al cargar detalles del restobar', err);
+        }
+      });
+
+    } else {
+      console.warn('No se encontraron datos de restobar en localStorage');
+    }
   }
-}
 
 
   ngAfterViewInit() {
@@ -102,6 +105,7 @@ export class DialogRestobarDetalleComponent {
 
   downloadQR(): void {
     const qrElement = document.getElementById('qr-code');
+    console.log("qrElement", qrElement);
     if (!qrElement) return;
 
     html2canvas(qrElement, { backgroundColor: null }).then((canvas) => {
@@ -168,9 +172,21 @@ export class DialogRestobarDetalleComponent {
     });
   }
 
-  cerrarDialog(): void {
-    //this.dialogRef.close();
-    //localStorage.removeItem('data-restobar-detalle');
+  toggleMenu(): void {
+    if (window.innerWidth <= 493) {
+      this.mostrarDetalles = !this.mostrarDetalles;
+    } else {
+      this.mostrarMenu = !this.mostrarMenu;
+    }
+  }
+
+  get textoBotonMenu(): string {
+    return (this.mostrarDetalles || this.mostrarMenu) ? 'Ocultar menú' : 'Ver menú del día';
+  }
+
+  volverLanding(): void {
+    localStorage.removeItem('data-restobar-detalle');
+    this.router.navigate(['']);
   }
 
 }

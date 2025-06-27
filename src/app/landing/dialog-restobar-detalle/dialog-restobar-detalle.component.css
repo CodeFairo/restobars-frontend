@@ -7,19 +7,92 @@
   box-sizing: border-box;
 }
 
+.menu-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* altura total de la ventana */
+  padding: 16px; /* para evitar que se pegue demasiado a los bordes en pantallas pequeñas */  
+  background-image: linear-gradient(45deg, #1d3557, #2c2c2c, #541212, #e76f51);
+  box-sizing: border-box;
+}
+
 .menu-content {
   padding: 32px;
   background: #fff;
   border-radius: 16px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1500px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 90vh; /* o 80vh si prefieres un poco más de margen superior e inferior */
+  max-height: 90vh;
   overflow-y: auto;
-  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Aplica el layout dividido cuando se activa la vista extendida */
+.menu-content.split-view .contenido-principal,
+.menu-content.split-view .contenido-secundario {
+  display: inline-block;
+  vertical-align: top;
+  width: 48%;
+}
+
+.map-wrapper {
+  margin-top: 24px;
+  width: 100%;
+}
+
+/* Contenedor que alterna layout */
+.split-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Cuando está en modo horizontal (pantallas grandes y botón activado) */
+.split-area.horizontal {
+  flex-direction: row;
+}
+
+/* Los divs internos */
+.contenido-principal, .contenido-secundario {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Margen entre columnas en modo horizontal */
+.split-area.horizontal .contenido-secundario {
+  margin-left: 24px;
+}
+
+/* Añade separación entre los dos divs */
+.contenido-secundario {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Cuando se muestra */
+.contenido-secundario.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Responsive: en pantallas pequeñas, que se apilen */
+@media (max-width: 768px) {
+  .split-area.horizontal {
+    flex-direction: column;
+  }
+
+  .contenido-secundario,
+  .contenido-secundario.show {
+    display: none !important;
+  }
 }
 
 /* Tipografía */
@@ -230,6 +303,7 @@ button:hover mat-icon {
   gap: 6px;
   font-size: 15px;
   color: #555;
+  margin: 0 auto;
 }
 
 .info-icon {
@@ -271,4 +345,29 @@ button:hover mat-icon {
 .icon-colored {
   color: #ffeb3b; /* Amarillo tipo mostaza */
   font-size: 22px;
+}
+
+/* Tarjeta de menú */
+.menu-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenedor de info secundaria con estilo similar */
+.info-box {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }

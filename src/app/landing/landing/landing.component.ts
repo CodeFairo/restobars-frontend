@@ -11,13 +11,11 @@ import { FormsModule } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { RestobarMenuComplementoService } from '../../services/restobarMenuComplemento.service';
-import { RestobarMenuComplemento } from '../../interfaces/RestobarMenuComplemento';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { BannerService } from '../../services/banner.service';
 import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
 import { LandingService } from '../../services/landing.service';
-import { DialogRestobarDetalleComponent } from '../dialog-restobar-detalle/dialog-restobar-detalle.component';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
@@ -65,39 +63,6 @@ export class LandingComponent implements OnInit {
   registrarse() {
     this.router.navigate(['registro']);
   }
-
-  // verDetalle(restobar: Restobar) {
-  //   this.loading = true;
-  //   const id = Number(restobar.id);
-  //   const isSmallScreen = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
-
-  //   this.landingService.getDetalleRestobar(id).subscribe({
-  //     next: (res: RestobarMenuComplemento | null) => {
-
-  //       if (res?.menuDiario) {
-  //         try {
-  //           this.menuDia = JSON.parse(res.menuDiario);
-  //         } catch (e) {
-  //           console.error('Error al parsear menú del día', e);
-  //           this.menuDia = [];
-  //         }
-  //       }
-  //       this.dialog.open(DialogRestobarDetalleComponent, {
-  //         width: isSmallScreen ? '90%' : '50%',
-  //         panelClass: 'custom-dialog',
-  //         data: { restobar, menuDia: this.menuDia }
-  //       });
-  //       this.loading = false;
-
-
-  //       console.log('Menú cargado correctamente:', this.menuDia);
-  //     },
-  //     error: (err) => {
-  //       console.error('Error obteniendo menú', err);
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
 
   verDetalle(restobar: Restobar) {
     const id = Number(restobar.id);
