@@ -49,96 +49,49 @@ mat-card-title {
 }
 
 
-
-
 .full-width {
   width: 100%;
 }
 
-
-.resultado-restobar {
-  margin-top: 20px;
+.mesa-form {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  flex-wrap: wrap;
 }
 
-.info-restobar {
-  padding: 16px;
-  border-left: 5px solid #3f51b5;
-  border-radius: 8px;
+.mesa-lista {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
-.section-divider {
-  margin: 32px 0 16px;
-  font-size: 1.3rem;
-  font-weight: 500;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 6px;
-  color: #555;
-}
-
-.lista-solicitudes {
-  padding: 16px;
-}
-
-.solicitud-item {
+.mesa-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
-  flex-wrap: wrap;
-}
-
-.solicitud-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 1rem;
-}
-
-.estado {
-  font-weight: bold;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  width: fit-content;
-}
-
-.estado.pendiente {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.estado.aceptado {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.estado.rechazado {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-.acciones {
-  margin-top: 10px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-/* Responsive */
-@media (min-width: 768px) {
-  .solicitud-item {
-    flex-wrap: nowrap;
-  }
-
-  .acciones {
-    margin-top: 0;
-  }
-}
-
-.sin-solicitudes {
-  margin-top: 16px;
   padding: 12px;
-  text-align: center;
-  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.acciones-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.acciones-footer button {
+  min-width: 160px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .acciones-footer {
+    justify-content: center;
+    margin-top: 24px;
+  }
 }

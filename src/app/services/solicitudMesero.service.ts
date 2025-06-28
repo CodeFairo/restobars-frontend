@@ -20,13 +20,13 @@ export class SolicitudMeseroService {
      */
     solicitarSerMesero(restobarId: string): Observable<void> {
         const userId = this.authService.getUserId();
-        const url = `${this.baseUrl}/api/meseros/solicitar/user/${userId}/restobar/${restobarId}`;
+        const url = `${this.baseUrl}api/meseros/solicitar/user/${userId}/restobar/${restobarId}`;
         return this.http.post<void>(url, null);
     }
 
     listarSolicitudesPorUsuario(): Observable<any[]> {
         const userId = this.authService.getUserId();
-        const url = `${this.baseUrl}/api/meseros/solicitudes/user/${userId}`;
+        const url = `${this.baseUrl}api/meseros/solicitudes/user/${userId}`;
         return this.http.get<any[]>(url);
     }
 
@@ -34,7 +34,7 @@ export class SolicitudMeseroService {
      * Obtener solicitudes de un restobar (para el administrador)
      */
     obtenerSolicitudesPorRestobar(restobarId: number): Observable<any[]> {
-        const url = `${this.baseUrl}/api/meseros/solicitudes/restobar/${restobarId}`;
+        const url = `${this.baseUrl}api/meseros/solicitudes/restobar/${restobarId}`;
         return this.http.get<any[]>(url);
     }
 
@@ -43,7 +43,7 @@ export class SolicitudMeseroService {
      */
     obtenerSolicitudesPorAdministrador(): Observable<any[]> {
         const userId = this.authService.getUserId();
-        const url = `${this.baseUrl}/api/meseros/solicitudes/administrador/userId/${userId}`;
+        const url = `${this.baseUrl}api/meseros/solicitudes/administrador/userId/${userId}`;
         return this.http.get<any[]>(url);
     }
 
@@ -51,7 +51,7 @@ export class SolicitudMeseroService {
      * Obtener solicitudes hechas por un usuario
      */
     obtenerSolicitudesPorUsuario(userId: number): Observable<any[]> {
-        const url = `${this.baseUrl}/api/meseros/solicitudes/usuario/${userId}`;
+        const url = `${this.baseUrl}api/meseros/solicitudes/usuario/${userId}`;
         return this.http.get<any[]>(url);
     }
 
@@ -59,16 +59,15 @@ export class SolicitudMeseroService {
      * Cambiar el estado de una solicitud (ACEPTADO, RECHAZADO, PENDIENTE)
      */
     cambiarEstadoSolicitud(solicitudId: number, estado: string): Observable<void> {
-        const url = `${this.baseUrl}/api/meseros/solicitud/${solicitudId}/estado`;
-        const params = new HttpParams().set('estado', estado);
-        return this.http.patch<void>(url, null, { params });
+        const url = `${this.baseUrl}api/meseros/solicitar/user/${solicitudId}/estado/${estado}`;
+        return this.http.patch<void>(url, null);
     }
 
     /**
      * Eliminar una solicitud
      */
     eliminarSolicitud(solicitudId: number): Observable<void> {
-        const url = `${this.baseUrl}/api/meseros/solicitud/${solicitudId}`;
+        const url = `${this.baseUrl}api/meseros/eliminarsolicitud/${solicitudId}`;
         return this.http.delete<void>(url);
     }
 }

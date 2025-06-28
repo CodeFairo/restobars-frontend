@@ -16,7 +16,7 @@ import { FirebaseStorageService } from '../../services/firebaseStorage.service';
 import { AlertService } from '../../services/alert.service';
 import { environment } from '../../../environments/environment';
 import { NgIf } from '@angular/common';
-import { DialogGestionarBannerComponent } from '../dialog-gestionar-banner/dialog-gestionar-banner.component';
+import { DialogGestionarBannerComponent } from '../administrador/dialog-gestionar-banner/dialog-gestionar-banner.component';
 @Component({
   selector: 'app-banner-dashboard',
   standalone: true,

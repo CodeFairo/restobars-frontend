@@ -1,3 +1,4 @@
+/* Container */
 /* Contenedor general */
 .card-container {
   padding: 0;
@@ -50,95 +51,63 @@ mat-card-title {
 
 
 
-
 .full-width {
   width: 100%;
 }
 
-
-.resultado-restobar {
-  margin-top: 20px;
+.solicitud-card {
+  margin-bottom: 20px;
 }
 
-.info-restobar {
+.solicitud-card-inner {
   padding: 16px;
-  border-left: 5px solid #3f51b5;
-  border-radius: 8px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.section-divider {
-  margin: 32px 0 16px;
-  font-size: 1.3rem;
-  font-weight: 500;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 6px;
-  color: #555;
-}
-
-.lista-solicitudes {
-  padding: 16px;
-}
-
-.solicitud-item {
+.solicitud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
-  flex-wrap: wrap;
 }
 
-.solicitud-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 1rem;
+.solicitud-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #3f51b5;
 }
 
-.estado {
-  font-weight: bold;
+.estado-chip {
   padding: 4px 12px;
-  border-radius: 12px;
+  border-radius: 16px;
   font-size: 0.85rem;
-  width: fit-content;
+  font-weight: 500;
+  color: white;
 }
 
-.estado.pendiente {
-  background-color: #fff3cd;
-  color: #856404;
+.estado-chip.pendiente {
+  background-color: #ffc107;
 }
 
-.estado.aceptado {
-  background-color: #d4edda;
-  color: #155724;
+.estado-chip.aceptado {
+  background-color: #4caf50;
 }
 
-.estado.rechazado {
-  background-color: #f8d7da;
-  color: #721c24;
+.estado-chip.rechazado {
+  background-color: #f44336;
 }
 
-.acciones {
-  margin-top: 10px;
+.solicitud-detalle p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.solicitud-acciones {
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
-  flex-wrap: wrap;
-}
-
-/* Responsive */
-@media (min-width: 768px) {
-  .solicitud-item {
-    flex-wrap: nowrap;
-  }
-
-  .acciones {
-    margin-top: 0;
-  }
-}
-
-.sin-solicitudes {
-  margin-top: 16px;
-  padding: 12px;
-  text-align: center;
-  background-color: #f9f9f9;
 }

@@ -1,0 +1,47 @@
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+<div class="card-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Solicitudes de Meseros</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="loading">Cargando solicitudes...</div>
+
+      <div *ngIf="!loading && solicitudes.length > 0">
+        <div *ngFor="let solicitud of solicitudes" class="solicitud-card">
+          <mat-card class="solicitud-card-inner mat-elevation-z3">
+            <div class="solicitud-header">
+              <h3>{{ solicitud.restobarNombre }}</h3>
+              <span class="estado-chip" [ngClass]="solicitud.estado.toLowerCase()">
+                {{ solicitud.estado }}
+              </span>
+            </div>
+
+            <div class="solicitud-detalle">
+              <p><strong>Mesero:</strong> {{ solicitud.fullName }}</p>
+              <p><strong>Fecha:</strong> {{ solicitud.fechaSolicitud | date:'short' }}</p>
+            </div>
+
+            <div class="solicitud-acciones">
+              <button mat-icon-button color="primary" aria-label="Aceptar"
+                (click)="cambiarEstado(solicitud.id, 'ACEPTADO')" [disabled]="solicitud.estado === 'ACEPTADO'">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" aria-label="Rechazar"
+                (click)="cambiarEstado(solicitud.id, 'RECHAZADO')" [disabled]="solicitud.estado === 'RECHAZADO'">
+                <mat-icon>close</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" aria-label="Eliminar" (click)="eliminarSolicitud(solicitud.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+      <div *ngIf="!loading && solicitudes.length === 0">
+        <p>No hay solicitudes pendientes.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

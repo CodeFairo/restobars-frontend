@@ -59,6 +59,10 @@ export class MainLayoutComponent {
     this.router.navigate(['gestionmenu']);
   }
 
+  gestionmesas(){
+    this.router.navigate(['gestionmesas']);
+  }
+
   gestionMesero(){
     this.router.navigate(['gestionmesero']);
   }

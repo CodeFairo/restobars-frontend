@@ -1,0 +1,58 @@
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+
+<div class="card-container">
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <div class="header-info">
+        <mat-card-title>Bienvenido {{ dashboardData?.fullName }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ dashboardData?.email }} | Rol: <strong>{{ dashboardData?.rol }}</strong>
+        </mat-card-subtitle>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content class="dashboard-content">
+
+      <!-- Sección Restobars -->
+      <div class="dashboard-section">
+        <h3>📋 Información de Restobars</h3>
+        <div class="grid">
+          <p>Total: <strong>{{ dashboardData?.totalRestobars }}</strong></p>
+          <p>Activos: <strong>{{ dashboardData?.restobarsActivos }}</strong></p>
+          <p>Última Actualización: <strong>{{ dashboardData?.ultimaActualizacion }}</strong></p>
+        </div>
+      </div>
+
+      <!-- Sección Recursos -->
+      <div class="dashboard-section">
+        <h3>👥 Recursos Actuales</h3>
+        <div class="grid">
+          <p>Meseros: <strong>{{ dashboardData?.cantidadMesero }}</strong></p>
+          <p>Cajas: <strong>{{ dashboardData?.cantidadCaja }}</strong></p>
+        </div>
+      </div>
+
+      <!-- Sección Plan -->
+      <div class="dashboard-section">
+        <h3>💼 Plan de Usuario</h3>
+        <div class="grid">
+          <p>Tipo: <strong>{{ dashboardData?.tipoPlan }}</strong></p>
+          <p>Inicio: <strong>{{ dashboardData?.fechaInicioPlan }}</strong></p>
+          <p>Fin: <strong>{{ dashboardData?.fechaFinPlan }}</strong></p>
+          <p>Máx. Restaurantes: <strong>{{ dashboardData?.maximoRestaurantes }}</strong></p>
+          <p>Máx. Meseros: <strong>{{ dashboardData?.maximoMeseros }}</strong></p>
+          <p>Máx. Cajeros: <strong>{{ dashboardData?.maximoCajeros }}</strong></p>
+          <p>Usuario de pago: <strong>{{ dashboardData?.esUsuarioDePago ? 'SI' : 'NO' }}</strong></p>
+        </div>
+      </div>
+
+      <!-- Sección Notificaciones -->
+      <div class="dashboard-section">
+        <h3>🔔 Notificaciones</h3>
+        <p><strong>{{ dashboardData?.notificaciones ? 'Habilitadas' : 'Inactivas' }}</strong></p>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

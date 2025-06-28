@@ -1,0 +1,134 @@
+/* Contenedor general */
+.card-container {
+  padding: 0;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  width: 100%;
+  display: flex;
+}
+
+/* Tarjeta principal */
+mat-card {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  backdrop-filter: blur(4px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+mat-card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-transform: uppercase;
+  display: flex; /* Asegura que justify-content funcione */
+  justify-content: flex-start; /* Alineación por defecto en pantallas grandes */
+}
+
+@media (max-width: 768px) {
+  mat-card-title {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+
+
+
+.menu-container {
+  width: 90%; /* ← clave para asegurar el 90% del contenedor */
+  margin: 40px auto;
+  padding: 32px;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.menu-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #222;
+  font-weight: 600;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-form-field {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.loading-text,
+.no-menu-message {
+  text-align: center;
+  font-style: italic;
+  margin-top: 20px;
+  color: #666;
+}
+
+/*botones*/
+.btn-action {
+  margin-top: 16px;
+  margin-right: 12px;
+  font-weight: 600;
+  text-transform: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.btn-icon {
+  margin-left: 8px;
+  transition: background-color 0.3s ease;
+  border-radius: 50%;
+}
+
+.btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 32px 0;
+  color: #666;
+  font-weight: 500;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.section-divider::before {
+  margin-right: 12px;
+}
+
+.section-divider::after {
+  margin-left: 12px;
+}

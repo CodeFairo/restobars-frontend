@@ -1,23 +1,66 @@
-<mat-card>
-  <h2>Solicitar ser mesero</h2>
+<div class="background-blur"></div>
+<div class="background-overlay"></div>
+<div class="card-container">
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Ingresa el código del restaurante</mat-label>
-    <input matInput [(ngModel)]="codigoRestobar" placeholder="Ej: RESTO123">
-  </mat-form-field>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Solicitar ser mesero</mat-card-title>
+    </mat-card-header>
 
-  <button mat-raised-button color="primary" (click)="buscarRestobar()">
-    Buscar
-  </button>
+    <!-- Formulario de código -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ingresa el código del restaurante</mat-label>
+      <input matInput [(ngModel)]="codigoRestobar" placeholder="Ej: RESTO123" />
+    </mat-form-field>
 
-  <div *ngIf="restobarEncontrado" class="resultado-restobar">
-    <mat-card class="info-restobar">
-      <h3>{{ restobarEncontrado.name }}</h3>
-      <p><strong>Dirección:</strong> {{ restobarEncontrado.direccion }}</p>
+    <button mat-flat-button color="primary" (click)="buscarRestobar()">
+      Buscar
+    </button>
 
-      <button mat-raised-button color="accent" (click)="solicitar()" [disabled]="solicitando">
-        Solicitar ser mesero
-      </button>
+    <!-- Resultado del restaurante -->
+    <div *ngIf="restobarEncontrado" class="resultado-restobar">
+      <mat-card class="info-restobar mat-elevation-z3">
+        <h3>{{ restobarEncontrado.name }}</h3>
+        <p><strong>Dirección:</strong> {{ restobarEncontrado.direccion }}</p>
+
+        <button mat-raised-button color="accent" (click)="solicitar()" [disabled]="solicitando">
+          Solicitar ser mesero
+        </button>
+      </mat-card>
+    </div>
+
+    <!-- Divider -->
+    <div class="section-divider"><span>Mis solicitudes</span></div>
+
+    <!-- Lista de solicitudes -->
+    <mat-card *ngIf="solicitudes.length > 0" class="lista-solicitudes mat-elevation-z2">
+      <div *ngFor="let s of solicitudes" class="solicitud-item">
+        <div class="solicitud-info">
+          <strong>{{ s.restobarNombre }}</strong>
+          <span class="estado" [ngClass]="{
+          'pendiente': s.estado === 'PENDIENTE',
+          'aceptado': s.estado === 'ACEPTADO',
+          'rechazado': s.estado === 'RECHAZADO'
+        }">
+            {{ s.estado }}
+          </span>
+        </div>
+
+        <div class="acciones">
+          <button *ngIf="s.estado === 'PENDIENTE'" mat-stroked-button color="warn" (click)="cancelarSolicitud(s.id)">
+            Cancelar
+          </button>
+
+          <button *ngIf="s.estado === 'ACEPTADO' || s.estado === 'RECHAZADO'" mat-stroked-button color="warn"
+            (click)="abandonarRestobar(s.id)">
+            Abandonar
+          </button>
+        </div>
+      </div>
     </mat-card>
-  </div>
-</mat-card>
+
+    <mat-card *ngIf="solicitudes.length === 0" class="sin-solicitudes mat-elevation-z1">
+      <p>No tienes solicitudes registradas.</p>
+    </mat-card>
+  </mat-card>
+</div>
