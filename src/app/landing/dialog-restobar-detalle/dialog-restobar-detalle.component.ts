@@ -185,7 +185,7 @@ export class DialogRestobarDetalleComponent {
   }
 
   volverLanding(): void {
-    localStorage.removeItem('data-restobar-detalle');
+    // localStorage.removeItem('data-restobar-detalle');
     this.router.navigate(['']);
   }
 

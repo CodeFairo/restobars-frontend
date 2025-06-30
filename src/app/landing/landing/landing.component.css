@@ -245,3 +245,37 @@ body {
   text-align: justify;
 }
 
+.modal-overlay {
+  /* Fondo oscuro */
+  position: fixed; /* Se queda fijo en la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Color negro con 60% de opacidad */
+  z-index: 1000; /* Se asegura que esté por encima de otros elementos */
+
+  /* Centrado del contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  /* Estilos de la ventana */
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
+  /* Responsive */
+  width: 90%;
+  max-width: 500px; /* Ancho máximo para no ser demasiado grande en pantallas de escritorio */
+  transition: max-width 0.3s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 700px; /* Un ancho máximo más grande para PC */
+  }
+}

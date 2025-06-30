@@ -17,6 +17,8 @@ import { BannerService } from '../../services/banner.service';
 import { DashBoardBanner } from '../../interfaces/DashBoardBanner';
 import { LandingService } from '../../services/landing.service';
 import { FooterComponent } from '../footer/footer.component';
+import { data } from '../dataLanding/jsonHelper.landing';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-landing',
@@ -44,15 +46,34 @@ export class LandingComponent implements OnInit {
   private bannerService = inject(BannerService);
   busquedaNombre: string = '';
   private breakpointObserver = inject(BreakpointObserver);
-  constructor(private dialog: MatDialog, private menuService: RestobarMenuComplementoService) { }
 
-  restobares: Restobar[] = [];
+  services = data.dataServices;
+
+  features = data.dataFeatures;
+
+  restobars: Restobar[] = [];
   banners: DashBoardBanner[] = [];
   loading = false;
   menuDia: string[] = [];
   isPopoverOpen = false;
   isCollapsed = false;
 
+  isMenuOpen = false;
+  currentSlide = 0;
+  selectedFeature: any;
+  formData = {
+    name: '',
+    email: '',
+    restaurant: '',
+    message: ''
+  };
+
+  isBusquedaOpen = false;
+
+  constructor(private alert: AlertService) {
+    this.selectedFeature = this.features[0];
+    this.startCarousel();
+  }
 
   @ViewChild('carousel') carouselRef!: ElementRef;
 
@@ -67,17 +88,17 @@ export class LandingComponent implements OnInit {
   verDetalle(restobar: Restobar) {
     const id = Number(restobar.id);
     localStorage.setItem('data-restobar-detalle', JSON.stringify(restobar));
-    const url = `/detalle-restobar/${id}`;
+    const url = `/detalle-restobar/${id}`;    
     window.open(url, '_blank');
   }
 
   ngOnInit(): void {
     this.landingService.listaAll().subscribe({
       next: (data) => {
-        this.restobares = data;
+        this.restobars = data;        
       },
       error: (error) => {
-        console.error('Error al cargar los restobares:', error);
+        console.error('Error al cargar los restobars:', error);
       }
     });
   }
@@ -94,7 +115,7 @@ export class LandingComponent implements OnInit {
     }
     this.landingService.buscarPorNombre(this.busquedaNombre.trim()).subscribe({
       next: (data) => {
-        this.restobares = data;
+        this.restobars = data;
       },
       error: (err) => console.error('Error al buscar:', err)
     });
@@ -108,7 +129,7 @@ export class LandingComponent implements OnInit {
 
         this.landingService.buscarPorUbicacion(lat, lng, this.busquedaNombre).subscribe({
           next: (data) => {
-            this.restobares = data;
+            this.restobars = data;
           },
           error: (err) => console.error('Error al buscar por ubicación:', err)
         });
@@ -123,5 +144,56 @@ export class LandingComponent implements OnInit {
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
+  /*Desde aqui se esta agregando para el nuevo front */
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
+  startCarousel() {
+    setInterval(() => {
+      this.nextSlide();
+    }, 5000);
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.restobars.length;
+  }
+
+  previousSlide() {
+    this.currentSlide = this.currentSlide === 0 ? this.restobars.length - 1 : this.currentSlide - 1;
+  }
+
+  goToSlide(index: number) {
+    this.currentSlide = index;
+  }
+
+  selectFeature(feature: any) {
+    this.selectedFeature = feature;
+  }
+
+  submitForm() {/*Pendiente para añadir tabla para recepcionar el feedback */
+    console.log('Form submitted:', this.formData);
+    this.alert.success('¡Gracias por tu mensaje!', 'Te contactaremos pronto.');
+    // Reset form
+    this.formData = {
+      name: '',
+      email: '',
+      restaurant: '',
+      message: ''
+    };
+  }
+
+  mostrarPopupBusqueda() {
+    this.isBusquedaOpen = true;
+  }
+
+  ocultarPopupBusqueda() {
+    this.isBusquedaOpen = false;
+  }
+
 
 }

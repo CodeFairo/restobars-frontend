@@ -1,49 +1,304 @@
-<div class="background-blur"></div>
-<div class="background-overlay"></div>
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="nav-content">
+        <div class="logo">
+          <span class="logo-text">RestobarsOnline</span>
+        </div>
+        <div class="nav-links" [class.nav-links-open]="isMenuOpen">
+          <a href="#inicio" class="nav-link" (click)="closeMenu()">Inicio</a>
+          <a href="#servicios" class="nav-link" (click)="closeMenu()">Servicios</a>
+          <!-- <a href="#caracteristicas" class="nav-link" (click)="closeMenu()">Características</a> -->
+          <a href="#sobre-nosotros" class="nav-link" (click)="closeMenu()">Sobre Nosotros</a>
+          <a href="#contacto" class="nav-link" (click)="closeMenu()">Contacto</a>
+          <button class="btn-primary" (click)="ingresar()">Iniciar sesion</button>
+        </div>
+        <button class="menu-toggle" (click)="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
 
-<mat-toolbar class="toolbar">
-  <img src="assets/logo/favicon-96x96.png" alt="Logo" class="logo-image" />
-  <span class="logo">RestobarsOnline</span>
-  <span class="spacer"></span>
+  <!-- Hero Section -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Busca tu lugar favorito para comer o beber lo que tu quieras..</h1>
+        <p class="hero-subtitle">Explora nuestra red de restaurantes afiliados y descubre nuevas experiencias
+          gastronómicas a solo unos clics.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary-large" (click)="registrarse()">Registrate</button>
+          <button class="btn-secondary-large" (click)="mostrarPopupBusqueda()">Buscar</button>
+        </div>
+        <!-- <div class="hero-stats">
+              <div class="stat">
+                <span class="stat-number">1000+</span>
+                <span class="stat-label">Restaurantes</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">50M+</span>
+                <span class="stat-label">Órdenes Procesadas</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">Uptime</span>
+              </div>
+            </div> -->
+      </div>
+      <div class="hero-image">
+        <img src="https://images.pexels.com/photos/3184168/pexels-photo-3184168.jpeg?auto=compress&cs=tinysrgb&w=800"
+          alt="Restaurant Management Dashboard" />
+      </div>
+    </div>
+  </section>
 
-  <!-- Botones grandes (desktop) -->
-  <div class="toolbar-buttons desktop-only">
-    <button mat-button (click)="registrarse()">Registrarse</button>
-    <button mat-button (click)="ingresar()">Ingresar</button>
-  </div>
+  <!-- Banner Carousel -->
+  <section id="banners" class="carousel-section">
+    <div class="container">
+      <h2 class="section-title">Ya trabajan con nosotros..</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+          <div class="carousel-slide" *ngFor="let restobar of restobars">
+            <div class="banner-content">
+              <div class="banner-text">
+                <h3 class="banner-title">{{ restobar.name }}</h3>
+                <p class="banner-description">{{ restobar.description }}</p>
+                <button class="btn-banner" (click)="verDetalle(restobar)">Visitar..</button>
+              </div>
+              <div class="banner-image">
+                <img [src]="restobar.urlMenu" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-indicators">
+          <button *ngFor="let restobar of restobars; let i = index" class="indicator"
+            [class.active]="i === currentSlide" (click)="goToSlide(i)">
+          </button>
+        </div>
+        <button class="carousel-nav prev" (click)="previousSlide()">‹</button>
+        <button class="carousel-nav next" (click)="nextSlide()">›</button>
+      </div>
+    </div>
+  </section>
 
-  <!-- Menú hamburguesa (mobile) -->
-  <div class="mobile-only">
-    <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
+  <!-- Services Section -->
+  <section id="servicios" class="services-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Servicios Principales</h2>
+        <p class="section-subtitle">Todo lo que necesitas para gestionar tu restaurante en una sola plataforma</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" *ngFor="let service of services">
+          <div class="service-icon">{{ service.icon }}</div>
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-description">{{ service.description }}</p>
+          <ul class="service-features">
+            <li *ngFor="let feature of service.features">{{ feature }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Menú desplegable para móvil -->
-<mat-menu #mobileMenu="matMenu">
-  <button mat-menu-item (click)="registrarse()">Registrarse</button>
-  <button mat-menu-item (click)="ingresar()">Ingresar</button>
-</mat-menu>
+  <!-- Features Section -->
+  <section id="caracteristicas" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Características Avanzadas</h2>
+        <p class="section-subtitle">Herramientas poderosas diseñadas para restaurantes modernos</p>
+      </div>
+      <div class="features-content">
+        <div class="features-list">
+          <div class="feature-item" *ngFor="let feature of features" (click)="selectFeature(feature)"
+            [class.active]="selectedFeature === feature">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <div class="feature-text">
+              <h4 class="feature-title">{{ feature.title }}</h4>
+              <p class="feature-description">{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-showcase">
+          <img [src]="selectedFeature.image" [alt]="selectedFeature.title" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="landing-content">
+  <!-- About Section -->
+  <section id="sobre-nosotros" class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2 class="section-title">Sobre RestobarsOnline</h2>
+          <p class="about-description">
+            Somos un grupo de amigos desarrolladores apasionados por la tecnología y el emprendimiento, enfocados en
+            impulsar el sector gastronómico, desde pequeños negocios hasta grandes empresas.
+          </p>
+          <div class="about-highlights">
+            <div class="highlight">
+              <h4>Nuestra Misión</h4>
+              <p>Crear una plataforma digital accesible y funcional que permita a los negocios gastronómicos compartir
+                su información, destacar sus productos y conectar con nuevos clientes, mejorando su visibilidad y
+                crecimiento.</p>
+            </div>
+            <div class="highlight">
+              <h4>Nuestra Visión</h4>
+              <p>Ser una solución tecnológica moderna y centrada en la experiencia del usuario, que contribuya al
+                desarrollo y digitalización del rubro gastronómico a nivel local y regional.</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="About Us" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Contenido encima -->
+  <!-- Testimonials Section -->
+  <!-- <section class="testimonials-section">
+        <div class="container">
+          <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+          <div class="testimonials-grid">
+            <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+              <div class="testimonial-content">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"{{ testimonial.text }}"</p>
+                <div class="testimonial-author">
+                  <img [src]="testimonial.avatar" [alt]="testimonial.name" />
+                  <div class="author-info">
+                    <h4 class="author-name">{{ testimonial.name }}</h4>
+                    <p class="author-title">{{ testimonial.title }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
 
-  
+  <!-- Contact Section -->
+  <section id="contacto" class="contact-section">
+    <div class="container">
+      <div class="contact-content">
+        <div class="contact-info">
+          <h2 class="section-title">¿Tienes dudas, sugerencias o quieres comunicarte con nosotros? ¡Estaremos encantados
+            de escucharte!</h2>
+          <p class="contact-description">
+            Contáctanos hoy y descubre cómo RestobarsOnline puede ayudarte a optimizar
+            tu negocio y aumentar tus ganancias.
+          </p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-icon">📞</span>
+              <span>+51 998477005</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">✉️</span>
+              <span>restobarsonline&#64;gmail.com</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📍</span>
+              <span>Av. Peru S/N</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" (ngSubmit)="submitForm()" #contactForm="ngForm">
+          <div class="form-group">
+            <label for="name">Nombre Completo</label>
+            <input type="text" id="name" name="name" [(ngModel)]="formData.name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" [(ngModel)]="formData.email" required />
+          </div>
+          <div class="form-group">
+            <label for="restaurant">Nombre del Restaurante</label>
+            <input type="text" id="restaurant" name="restaurant" [(ngModel)]="formData.restaurant" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea id="message" name="message" [(ngModel)]="formData.message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary-large" [disabled]="!contactForm.form.valid">
+            Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-  <!-- Carrusel horizontal de restobares -->
-  <p>🔎 Busca tu Restobar Favorito Cerca de Ti
-    Explora nuestra red de restaurantes afiliados y descubre nuevas experiencias gastronómicas a solo unos clics.
-    📍 Encuentra por ubicación
-    🍽️ Consulta menús digitales al instante
-    📱 Accede desde tu celular sin descargar nada
-    Todo rápido, seguro y sin contacto. ¡Tu próxima comida inolvidable está a un QR de distancia!</p>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">RestobarsOnline</h3>
+          <p class="footer-description">
+            La plataforma integral para la gestión moderna de tu Restaurante.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link">📘</a>
+            <a href="#" class="social-link">🐦</a>
+            <a href="#" class="social-link">📷</a>
+            <a href="#" class="social-link">💼</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-section-title">Producto</h4>
+          <ul class="footer-links">
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#caracteristicas">Características</a></li>
+            <!-- <li><a href="#">Precios</a></li>
+                <li><a href="#">API</a></li> -->
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-section-title">Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+            <!-- <li><a href="#">Carreras</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Prensa</a></li> -->
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-section-title">Soporte</h4>
+          <ul class="footer-links">
+            <li><a href="#contacto">Contacto</a></li>
+            <!-- <li><a href="#">Centro de Ayuda</a></li>
+                <li><a href="#">Documentación</a></li>
+                <li><a href="#">Estado del Sistema</a></li> -->
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 RestobarsOnline. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Términos de Servicio</a>
+          <!-- <a href="#">Política de Privacidad</a>
+              <a href="#">Cookies</a> -->
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
 
-  <div class="search-bar">
+<div class="modal-overlay" *ngIf="isBusquedaOpen">
+  <div class="modal-content">
+    <h2>Título del Modal</h2>
+    <div class="search-bar">
     <mat-form-field appearance="outline" class="search-input">
-      <mat-label style="color: wheat;">Buscar restobar</mat-label>
-      <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" style="color: wheat;" />
+      <mat-label style="color: darkgray;">Buscar restobar</mat-label>
+      <input matInput [(ngModel)]="busquedaNombre" (keyup.enter)="buscarPorNombre()" style="color: darkgrey;" />
       <button mat-icon-button matSuffix (click)="buscarPorNombre()">
         <mat-icon>search</mat-icon>
       </button>
@@ -55,7 +310,7 @@
   <div class="carousel-wrapper">
     <button class="carousel-btn left" (click)="scrollCarousel('left')">←</button>
     <div class="restobars-carousel" #carousel>
-      <mat-card *ngFor="let r of restobares" class="restobar-card" (click)="verDetalle(r)">
+      <mat-card *ngFor="let r of restobars" class="restobar-card" (click)="verDetalle(r)">
         <img mat-card-image [src]="r.urlLogo || 'assets/restobar_logo_default.png'" />
         <mat-card-header>
           <mat-card-title>{{ r.name }}</mat-card-title>
@@ -67,11 +322,6 @@
     </div>
     <button class="carousel-btn right" (click)="scrollCarousel('right')">→</button>
   </div>
-
-  <p>Tu carta, más viva que nunca 📲
-    Con RestobarsOnline podrás mostrar tu menú de forma moderna y rápida. Olvídate de imprimir o reenviar PDF: genera tu
-    QR, compártelo y edita tu carta cuando quieras.
-    Fácil, rápido y pensado para que tus clientes disfruten, y tú te concentres en lo que mejor sabes hacer: atenderlos
-    como se merecen.</p>
-
-  <app-footer></app-footer>
+    <button class="btn-primary-large" (click)="ocultarPopupBusqueda()">Cerrar</button>
+  </div>
+</div>
